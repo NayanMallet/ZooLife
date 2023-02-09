@@ -51,63 +51,49 @@ int main() {
         // }
 
         // Constructeur(*Coq) {
-            // Alimentation(Viande)
+            // Alimentation(Graines)
+            // Alimentation par jour(0.18kg)
             // Jours avant faim(2)
-            // fin de reproduction(14 ans)
-            // Espérance de vie(25 ans)
-            // if FEMELLE
-                // Alimentation par jour(10kg)
-                // Maturité sexuelle (4 ans)
-                // Ponte / portée(3 individus par portée / max 1 portée tous les 20 mois)
-                // Gestation(3 mois)
-                // Mortalité infantile(33%)
-            // else MALE
-                // Alimentation par jour(12kg)
-                // Maturité sexuelle (6 mois)
+            // Maturité sexuelle (6 mois)
+            // fin de reproduction(8 ans)
+            // Espérance de vie(15 ans)
         // }
 
         // Constructeur(*Poule) {
-            // Alimentation(Viande)
-            // Jours avant faim(2)
-            // fin de reproduction(14 ans)
-            // Espérance de vie(25 ans)
-            // if FEMELLE
-                // Alimentation par jour(10kg)
-                // Maturité sexuelle (4 ans)
-                // Ponte / portée(3 individus par portée / max 1 portée tous les 20 mois)
-                // Gestation(3 mois)
-                // Mortalité infantile(33%)
-            // else MALE
-                // Alimentation par jour(12kg)
-                // Maturité sexuelle (6 mois)
+            // Alimentation(Graines)
+            // Alimentation par jour(0.15kg)
+            // Jours avant faim(1)
+            // Ponte / portée(200 oeufs par an)
+            // Maturité sexuelle (6 mois)
+            // Gestation(6 semaines)
+            // fin de reproduction(8 ans)
+            // Espérance de vie(15 ans)
         // }
 
 
 
-    // TODO: 3. Créer une classe Ianimal 🔴
+    // TODO: 4. Créer une classe Ianimal 🔴
         // -> Nom
         // -> Sexe
         // -> Age
 
-        // TODO: 1.1 Créer une classe Tigre : public Ianimal
+        // TODO: 4.1 Créer une classe Tigre : public Ianimal
             // Tigre() -> param
             // => Stat(SexeAnimal, Age)
 
-
-
-        // TODO: 1.2 Créer une classe Aigle : public Ianimal
+        // TODO: 4.2 Créer une classe Aigle : public Ianimal
             // Aigle() -> param
             // => Stat(SexeAnimal, Age)
             // Remarque : Fidéle
 
-        // TODO: 1.3 Créer une classe Coq : public Ianimal
+        // TODO: 4.3 Créer une classe Coq : public Ianimal
             // Coq() -> param
             // => Stat(SexeAnimal, Age)
 
-        // TODO: 1.4 Créer une classe Poule : public Ianimal
+        // TODO: 4.4 Créer une classe Poule : public Ianimal
             // Poule() -> param
             // => Stat(SexeAnimal, Age)
-            // Remarque : Fidéle
+
 
 
 
@@ -122,8 +108,8 @@ int main() {
         // 4.1 Créer une classe Mois
             // 4.1.1 Créer une classe Semaine
     vector<Tigre*> coupleTigre(2);
-    coupleTigre.push_back(new Tigre("Tigre1"));
-    coupleTigre.push_back(new Tigre("Tigre2"));
+    coupleTigre.push_back(new Tigre("Tigre Male"));
+    coupleTigre.push_back(new Tigre("Tigre Femelle"));
     vector<Aigle*> coupleAigle(2);
     cout << "Hello, World!" << endl;
     return 0;
