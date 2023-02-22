@@ -1,13 +1,13 @@
 #include <iostream>
-
+#include "Aliment.h"
 using namespace std;
 
 int main() {
     // Mettez en place un scénario type : 2 couples de tigre, 2 couples d’aigle, 1 coq, 10 poules sur 10 ans
-    // TODO: 1. Créer une classe Aliment
-        // -> nom
-        // -> Prix / kg
-
+    auto *Graine = new Aliment("Graine", 5.0);
+    auto *Viande = new Aliment("Viande", 2.5);
+    Graine->show();
+    Viande->show();
     // TODO: 2 Créer une classe Habitat 🔴
         // -> nom
         // -> capacité
@@ -107,10 +107,10 @@ int main() {
     // 4. Créer une classe Annee
         // 4.1 Créer une classe Mois
             // 4.1.1 Créer une classe Semaine
-    vector<Tigre*> coupleTigre(2);
-    coupleTigre.push_back(new Tigre("Tigre Male"));
-    coupleTigre.push_back(new Tigre("Tigre Femelle"));
-    vector<Aigle*> coupleAigle(2);
-    cout << "Hello, World!" << endl;
+//    vector<Tigre*> coupleTigre(2);
+//    coupleTigre.push_back(new Tigre("Tigre Male"));
+//    coupleTigre.push_back(new Tigre("Tigre Femelle"));
+//    vector<Aigle*> coupleAigle(2);
+//    cout << "Hello, World!" << endl;
     return 0;
 }
