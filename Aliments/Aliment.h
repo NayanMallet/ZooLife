@@ -15,9 +15,12 @@ public:
     void show();
     string getNom();
     float getPrixKg() const;
+    float getQuantite();
+    void subQuantite(float qt);
 private:
     string m_nom;
     float m_prixKg;
+    float m_quantite;
 };
 
 
