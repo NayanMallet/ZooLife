@@ -9,10 +9,13 @@ using namespace std;
 
 class Habitat {
 public:
+    vector<IAnimal*> m_animaux;
+
     Habitat(string nom, string typeAnimal);
 
     void show();
-    void showAnimals();
+    void showAnimals() const;
+    string listAnimals() const;
 
     void ajouterAnimal(IAnimal *animal);
 
@@ -24,7 +27,6 @@ private:
     int m_prixAchat, m_prixVente;
     int m_perteSurPop;
     float m_probaMaladie;
-    vector<IAnimal*> m_animaux;
 };
 
 #endif //ZOOLIFE_HABITAT_H

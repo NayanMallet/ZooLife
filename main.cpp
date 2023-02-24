@@ -152,11 +152,8 @@ int main() {
     habitat5->ajouterAnimal(Poule2);
     habitat5->ajouterAnimal(Poule3);
 
-    habitat->show();
-    habitat2->show();
-    habitat3->show();
-    habitat4->show();
     habitat5->show();
+//    habitat5->showAnimals();
     return 0;
 }
 
@@ -164,3 +161,5 @@ int main() {
 // -> Aliment Class Working
 // -> IAnimal && theses animals class created
 //      -> TODO: adding params to every animals class
+// ✅ => Complete
+// ⭐️ => Optimised
