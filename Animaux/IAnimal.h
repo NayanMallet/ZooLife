@@ -12,19 +12,20 @@ using namespace std;
 
 class IAnimal {
 public:
-    IAnimal(string name, char sexe, int age);
+    IAnimal(string name, char sexe, int age, string typeAnimal);
 
     virtual void show() = 0;
 
     string getName();
     char getSexe() const;
     int getAge() const;
+    string getTypeAnimal() const;
 
 private:
     string m_name;
     char m_sexe{};
     int m_age; // en jours
-
+    string m_typeAnimal;
 };
 
 

@@ -3,9 +3,12 @@
 #include "Animaux/Tigre.h"
 #include "Animaux/Poule.h"
 #include "Animaux/Aigle.h"
+#include "Animaux/Coq.h"
+#include "Habitats/Habitat.h"
 #include "Aliments/Graines.h"
 #include "Aliments/Viande.h"
 #include "Functions/functions.h"
+
 #include <vector>
 
 using namespace std;
@@ -92,45 +95,68 @@ int main() {
     Aigle *AigleF2 = new Aigle("Haagen", 'F', 0);
 
     // Le Coq
-    Poule *Zizou = new Poule("Zizou", 'M', 0);
+    Coq *Zizou = new Coq("Zizou", 0);
 
     // Les Poules
-    Poule *Poule1 = new Poule("Poule1", 'F', 0);
-    Poule *Poule2 = new Poule("Poule2", 'F', 0);
-    Poule *Poule3 = new Poule("Poule3", 'F', 0);
-    Poule *Poule4 = new Poule("Poule4", 'F', 0);
-    Poule *Poule5 = new Poule("Poule5", 'F', 0);
-    Poule *Poule6 = new Poule("Poule6", 'F', 0);
-    Poule *Poule7 = new Poule("Poule7", 'F', 0);
-    Poule *Poule8 = new Poule("Poule8", 'F', 0);
-    Poule *Poule9 = new Poule("Poule9", 'F', 0);
-    Poule *Poule10 = new Poule("Poule10", 'F', 0);
+    Poule *Poule1 = new Poule("Poule1", 0);
+    Poule *Poule2 = new Poule("Poule2", 0);
+    Poule *Poule3 = new Poule("Poule3", 0);
+    Poule *Poule4 = new Poule("Poule4", 0);
+    Poule *Poule5 = new Poule("Poule5", 0);
+    Poule *Poule6 = new Poule("Poule6", 0);
+    Poule *Poule7 = new Poule("Poule7", 0);
+    Poule *Poule8 = new Poule("Poule8", 0);
+    Poule *Poule9 = new Poule("Poule9", 0);
+    Poule *Poule10 = new Poule("Poule10", 0);
 
-    cout << "Couple Tigre 1 ✅" << endl;
-    TigreM1->show();
-    TigreF1->show();
-    cout << "Couple Tigre 2 ✅" << endl;
-    TigreM2->show();
-    TigreF2->show();
-    cout << "Couple Aigle 1 ✅" << endl;
-    AigleM1->show();
-    AigleF1->show();
-    cout << "Couple Aigle 2 ✅" << endl;
-    AigleM2->show();
-    AigleF2->show();
-    cout << "Le Coq ✅" << endl;
-    Zizou->show();
-    cout << "Les Poules ✅" << endl;
-    Poule1->show();
-    Poule2->show();
-    Poule3->show();
-    Poule4->show();
-    Poule5->show();
-    Poule6->show();
-    Poule7->show();
-    Poule8->show();
-    Poule9->show();
-    Poule10->show();
+//    cout << "Couple Tigre 1 ✅" << endl;
+//    TigreM1->show();
+//    TigreF1->show();
+//    cout << "Couple Tigre 2 ✅" << endl;
+//    TigreM2->show();
+//    TigreF2->show();
+//    cout << "Couple Aigle 1 ✅" << endl;
+//    AigleM1->show();
+//    AigleF1->show();
+//    cout << "Couple Aigle 2 ✅" << endl;
+//    AigleM2->show();
+//    AigleF2->show();
+//    cout << "Le Coq ✅" << endl;
+//    Zizou->show();
+//    cout << "Les Poules ✅" << endl;
+//    Poule1->show();
+//    Poule2->show();
+//    Poule3->show();
+//    Poule4->show();
+//    Poule5->show();
+//    Poule6->show();
+//    Poule7->show();
+//    Poule8->show();
+//    Poule9->show();
+//    Poule10->show();
+    Habitat *habitat = new Habitat("Couple de Tigre 1", "tigre");
+    habitat->ajouterAnimal(TigreM1);
+    habitat->ajouterAnimal(TigreF1);
+    Habitat *habitat2 = new Habitat("Couple de Tigre 2", "tigre");
+    habitat2->ajouterAnimal(TigreM2);
+    habitat2->ajouterAnimal(TigreF2);
+    Habitat *habitat3 = new Habitat("Couple Aigle 1", "aigle");
+    habitat3->ajouterAnimal(AigleM1);
+    habitat3->ajouterAnimal(AigleF1);
+    Habitat *habitat4 = new Habitat("Couple Aigle 2", "aigle");
+    habitat4->ajouterAnimal(AigleM2);
+    habitat4->ajouterAnimal(AigleF2);
+    Habitat *habitat5 = new Habitat("KFC", "poule");
+    habitat5->ajouterAnimal(Zizou);
+    habitat5->ajouterAnimal(Poule1);
+    habitat5->ajouterAnimal(Poule2);
+    habitat5->ajouterAnimal(Poule3);
+
+    habitat->show();
+    habitat2->show();
+    habitat3->show();
+    habitat4->show();
+    habitat5->show();
     return 0;
 }
 

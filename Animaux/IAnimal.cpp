@@ -7,9 +7,19 @@
 
 #include <utility>
 
-IAnimal::IAnimal(string name, char sexe, int age): m_name(std::move(name)), m_age(age) {
-    assert((sexe == 'M' || sexe == 'F') && "Le sexe ne peut être que Male(M) ou Femelle(M)");
+IAnimal::IAnimal(string name, char sexe, int age, string typeAnimal): m_name(std::move(name)) {
+    if (sexe != 'M' && sexe != 'F') {
+        throw invalid_argument("Le sexe doit être M ou F");
+    }
     m_sexe = sexe;
+    if (age < 0) {
+        throw invalid_argument("L'age doit être positif");
+    }
+    m_age = age;
+    if (typeAnimal != "tigre" && typeAnimal != "aigle" && typeAnimal != "poule" && typeAnimal != "coq") {
+        throw invalid_argument("Le type d'animal doit être tigre, aigle, poule ou coq");
+    }
+    m_typeAnimal = std::move(typeAnimal);
 }
 // Constructeur(*Tigre){
 // Alimentation(Viande)
@@ -71,3 +81,5 @@ string IAnimal::getName() { return m_name; };
 char IAnimal::getSexe() const { return m_sexe; };
 
 int IAnimal::getAge() const { return m_age; };
+
+string IAnimal::getTypeAnimal() const { return m_typeAnimal; };
