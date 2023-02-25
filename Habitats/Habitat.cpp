@@ -76,6 +76,16 @@ void Habitat::showAnimals() const {
     );
 }
 
+string Habitat::getName() const { return m_nom; }
+
+int Habitat::getCapacite() const { return m_capacite; }
+
+int Habitat::getNbrOfAnimals() const { return m_animaux.size(); }
+
+string Habitat::getTypeAnimal() const { return m_typeAnimal; }
+
+
+
 // Ajouter un animal à l'habitat ⭐️
 void Habitat::ajouterAnimal(IAnimal* animal) {
     // Vérifier si l'habitat est plein ou si l'animal n'est pas du bon type

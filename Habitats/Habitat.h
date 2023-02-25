@@ -17,6 +17,11 @@ public:
     void showAnimals() const;
     string listAnimals() const;
 
+    string getName() const;
+    int getCapacite() const;
+    int getNbrOfAnimals() const;
+    string getTypeAnimal() const;
+
     void ajouterAnimal(IAnimal *animal);
 
     void enleverAnimal(IAnimal *animal);
