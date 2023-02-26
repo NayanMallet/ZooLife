@@ -25,3 +25,21 @@ void Coq::show() {
            dateConverter(m_maturiteSexuelle).c_str()
     );
 }
+
+void Coq::resetDaysBeforeFed() { m_joursAvantFaim = 2; }
+
+void Coq::fedAnimal(Aliment* food) {
+    if (food->getFoodType() != FoodType::GRAINES) {
+        cout << food->getNom() << " ne conviens pas a " << getName() << " !" << endl;
+        return;
+    }
+    if (food->getQuantite() < m_AlimentationJour) {
+        cout << "Pas assez d'aliment pour nourrir " << getName() << endl;
+        return;
+    }
+    food->subQuantite(m_AlimentationJour);
+    resetDaysBeforeFed();
+    //
+    cout << "L'animal " << getName() << " a été nourri avec succès !" << endl;
+    //
+}

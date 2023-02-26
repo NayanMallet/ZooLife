@@ -8,19 +8,23 @@
 
 using namespace std;
 
+enum class FoodType { VIANDE, GRAINES };
 
 class Aliment {
 public:
-    Aliment(string nom, float prixKg);
+    Aliment(string nom, float prixKg, FoodType foodType);
     void show();
     string getNom();
     float getPrixKg() const;
     float getQuantite();
     void subQuantite(float qt);
+    void addQuantite(float qt);
+    FoodType getFoodType();
 private:
     string m_nom;
     float m_prixKg;
     float m_quantite;
+    FoodType m_foodType;
 };
 
 

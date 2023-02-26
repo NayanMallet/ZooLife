@@ -12,6 +12,8 @@ public:
     Coq(string name, int age);
 
     void show() override;
+    void fedAnimal(Aliment* food) override;
+    void resetDaysBeforeFed() override;
 private:
     int
     m_joursAvantFaim{2}, // 2 jours

@@ -1,17 +1,13 @@
-//
-// Created by Nayan Mallet on 22/02/2023.
-//
-
 #include <string>
-#include <iostream>
 #include <utility>
 #include "Aliment.h"
-#include <cmath>
+
 using namespace std;
 
-Aliment::Aliment(string nom, float prixKg): m_nom(std::move(nom)), m_prixKg(prixKg){};
+Aliment::Aliment(string nom, float prixKg, FoodType foodType): m_nom(nom), m_prixKg(prixKg), m_foodType(foodType){};
 
 void Aliment::show() {
+    // TODO: ADD FOODTYPE
     printf("----- %s ------\n=> Prix: %.2f€/kg\n=> Quantite: %.2fkg\n\n", m_nom.c_str(), m_prixKg, m_quantite);
 }
 
@@ -21,7 +17,13 @@ float Aliment::getPrixKg() const { return m_prixKg; }
 
 float Aliment::getQuantite() { return m_quantite; };
 
+FoodType Aliment::getFoodType() { return m_foodType; }
+
 void Aliment::subQuantite(float qt) {
     assert((qt <= m_quantite) && "Vide !");
     m_quantite -= qt;
+};
+
+void Aliment::addQuantite(float qt) {
+    m_quantite += qt;
 };
