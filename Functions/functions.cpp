@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "../Animaux/IAnimal.h"
 
 using namespace std;
 
@@ -48,4 +49,17 @@ string dateConverter(int jours) {
     }
 
     return resultat;
+}
+
+string animalTypeToString(AnimalType type) {
+    switch (type) {
+        case AnimalType::TIGRE:
+            return "Tigre";
+        case AnimalType::AIGLE:
+            return "Aigle";
+        case AnimalType::POULE:
+            return "Poule";
+        default:
+            return "Inconnu";
+    }
 }

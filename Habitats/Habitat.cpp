@@ -4,29 +4,48 @@
 
 using namespace std;
 
-Habitat::Habitat(const string& nom, const string& typeAnimal) : m_nom(nom), m_typeAnimal(typeAnimal) {
-    if (!isValidType(m_typeAnimal)) {
-        throw invalid_argument("Le type d'animal doit être tigre, aigle, poule ou coq");
+Habitat::Habitat(string nom, AnimalType typeAnimal) : m_nom(nom), m_typeAnimal(typeAnimal) {
+    switch (typeAnimal) {
+        case AnimalType::TIGRE:
+            m_capacite = 2;
+            m_prixAchat = 2000;
+            m_prixVente = 500;
+            m_perteSurPop = 1;
+            m_probaMaladie = 20;
+        case AnimalType::AIGLE:
+            m_capacite = 4;
+            m_prixAchat = 2000;
+            m_prixVente = 500;
+            m_perteSurPop = 1;
+            m_probaMaladie = 10;
+        case AnimalType::POULE:
+            m_capacite = 10;
+            m_prixAchat = 300;
+            m_prixVente = 50;
+            m_perteSurPop = 4;
+            m_probaMaladie = 5;
+        default:
+            break;
     }
-    if (m_typeAnimal == "tigre") {
+
+    if (m_typeAnimal == AnimalType::TIGRE) {
         m_prixAchat = 2000;
         m_prixVente = 500;
         m_capacite = 2;
         m_perteSurPop = 1;
         m_probaMaladie = 20;
-    } else if (m_typeAnimal == "aigle") {
+    } else if (m_typeAnimal == AnimalType::AIGLE) {
         m_prixAchat = 2000;
         m_prixVente = 500;
         m_capacite = 4;
         m_perteSurPop = 1;
         m_probaMaladie = 10;
-    } else if (m_typeAnimal == "poule" || m_typeAnimal == "coq") {
+    } else if (m_typeAnimal == AnimalType::POULE) {
         m_prixAchat = 300;
         m_prixVente = 50;
         m_capacite = 10;
         m_perteSurPop = 4;
         m_probaMaladie = 5;
-        m_typeAnimal = "poule";
     }
 }
 
@@ -49,7 +68,7 @@ void Habitat::show() const {
            "=> Animaux: %zu/%d\n"
            "Liste des animaux:\n%s"
            "---------------------------\n",
-           m_nom.c_str(), m_typeAnimal.c_str(),
+           m_nom.c_str(), animalTypeToString(m_typeAnimal).c_str(),
            m_capacite,
            m_prixAchat, m_prixVente,
            m_perteSurPop,
@@ -74,7 +93,7 @@ void Habitat::showAnimals() const {
             "----- Habitat %s (%s) -----\n"
             "%s"
             "---------------------------\n",
-            m_nom.c_str(), m_typeAnimal.c_str(),
+            m_nom.c_str(), animalTypeToString(m_typeAnimal).c_str(),
             listAnimals().c_str()
     );
 }
@@ -83,12 +102,12 @@ void Habitat::showAnimals() const {
 const string& Habitat::getName() const { return m_nom; }
 int Habitat::getCapacite() const { return m_capacite; }
 int Habitat::getNbrOfAnimals() const { return m_animaux.size(); }
-const string& Habitat::getTypeAnimal() const { return m_typeAnimal; }
+AnimalType Habitat::getTypeAnimal() const { return m_typeAnimal; }
 
 // Ajouter un animal à l'habitat ⭐️
 void Habitat::addAnimal(IAnimal* animal) {
     // Vérifier si l'habitat est plein ou si l'animal est du mauvais type
-    if (m_animaux.size() == m_capacite || (animal->getTypeAnimal() != m_typeAnimal && !(animal->getTypeAnimal() == "coq" && m_typeAnimal == "poule"))) {
+    if (m_animaux.size() == m_capacite || (animal->getTypeAnimal() != m_typeAnimal)) {
         printf("Impossible d'ajouter l'animal à l'habitat !\n");
         return;
     }
@@ -99,7 +118,7 @@ void Habitat::addAnimal(IAnimal* animal) {
 // Enlever un animal de l'habitat ⭐️
 void Habitat::removeAnimal(IAnimal* animal) {
 // Vérifier si l'habitat est vide ou si l'animal est du mauvais type
-    if (m_animaux.empty() || (animal->getTypeAnimal() != m_typeAnimal && !(animal->getTypeAnimal() == "coq" && m_typeAnimal == "poule"))) {
+    if (m_animaux.empty() || (animal->getTypeAnimal() != m_typeAnimal)) {
         printf("Impossible d'enlever l'animal de l'habitat !\n");
         return;
     }
@@ -107,13 +126,6 @@ void Habitat::removeAnimal(IAnimal* animal) {
     m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), animal), m_animaux.end());
 }
 
-// Méthode privée pour vérifier si le type d'animal est valide ⭐️
-bool Habitat::isValidType(const string& typeAnimal) {
-    static const unordered_set<string> validTypes = {"tigre", "aigle", "poule", "coq"};
-    return validTypes.count(typeAnimal);
-}
-// -> conteneur unordered_set pour stocker les types valides d'animaux, ce qui est une structure
-// de données efficace pour rechercher rapidement si un élément est présent dans le conteneur.
 
 
 //// Calculer la perte liée à la surpopulation

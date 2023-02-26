@@ -11,7 +11,7 @@ class Habitat {
 public:
     vector<IAnimal*> m_animaux;
 
-    Habitat(const string& nom, const string& typeAnimal);
+    Habitat(string nom, AnimalType typeAnimal);
     ~Habitat();
 
     void show() const;
@@ -21,7 +21,7 @@ public:
     const string & getName() const;
     int getCapacite() const;
     int getNbrOfAnimals() const;
-    const string & getTypeAnimal() const;
+    AnimalType getTypeAnimal() const;
 
     void addAnimal(IAnimal* animal);
 
@@ -29,12 +29,10 @@ public:
 private:
     string m_nom;
     int m_capacite;
-    string m_typeAnimal;
+    AnimalType m_typeAnimal;
     int m_prixAchat, m_prixVente;
     int m_perteSurPop;
     float m_probaMaladie;
-
-    static bool isValidType(const string& typeAnimal);
 };
 
 #endif //ZOOLIFE_HABITAT_H

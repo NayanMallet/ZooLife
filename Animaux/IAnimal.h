@@ -6,24 +6,24 @@
 
 using namespace std;
 
-//enum class AnimalType { TIGRE, AIGLE, POULE, COQ };
+enum class AnimalType { TIGRE, AIGLE, POULE };
 
 class IAnimal {
 public:
-    IAnimal(string name, char sexe, int age, const string& typeAnimal);
+    IAnimal(string name, char sexe, int age, AnimalType typeAnimal);
 
     virtual void show() = 0;
 
     string getName();
     char getSexe() const;
     int getAge() const;
-    const string& getTypeAnimal() const;
+    AnimalType getTypeAnimal() const;
 
 private:
     string m_name;
     char m_sexe{};
-    int m_age; // en jours
-    const string& m_typeAnimal;
+    int m_age{}; // en jours
+    AnimalType m_typeAnimal{};
 };
 
 

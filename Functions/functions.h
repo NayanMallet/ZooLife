@@ -10,4 +10,6 @@ using namespace std;
 
 string dateConverter(int jours);
 
+string animalTypeToString(AnimalType type);
+
 #endif //ZOOLIFE_FUNCTIONS_H

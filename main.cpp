@@ -48,19 +48,19 @@ int main() {
     Poule *Poule9 = new Poule("Poule9", 0);
     Poule *Poule10 = new Poule("Poule10", 0);
 
-    Habitat *habitat = new Habitat("Couple de Tigre 1", "tigre");
+    Habitat *habitat = new Habitat("Couple de Tigre 1", AnimalType::TIGRE);
     habitat->addAnimal(TigreM1);
     habitat->addAnimal(TigreF1);
-    Habitat *habitat2 = new Habitat("Couple de Tigre 2", "tigre");
+    Habitat *habitat2 = new Habitat("Couple de Tigre 2", AnimalType::TIGRE);
     habitat2->addAnimal(TigreM2);
     habitat2->addAnimal(TigreF2);
-    Habitat *habitat3 = new Habitat("Couple Aigle 1", "aigle");
+    Habitat *habitat3 = new Habitat("Couple Aigle 1", AnimalType::AIGLE);
     habitat3->addAnimal(AigleM1);
     habitat3->addAnimal(AigleF1);
-    Habitat *habitat4 = new Habitat("Couple Aigle 2", "aigle");
+    Habitat *habitat4 = new Habitat("Couple Aigle 2", AnimalType::AIGLE);
     habitat4->addAnimal(AigleM2);
     habitat4->addAnimal(AigleF2);
-    Habitat *habitat5 = new Habitat("KFC", "poule");
+    Habitat *habitat5 = new Habitat("KFC", AnimalType::POULE);
     habitat5->addAnimal(Zizou);
     habitat5->addAnimal(Poule1);
     habitat5->addAnimal(Poule2);

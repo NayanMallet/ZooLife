@@ -5,7 +5,7 @@
 #include "Coq.h"
 #include "../Functions/functions.h"
 
-Coq::Coq(string name, int age): IAnimal(std::move(name), 'M', age, "coq"){};
+Coq::Coq(string name, int age): IAnimal(std::move(name), 'M', age, AnimalType::POULE){};
 
 void Coq::show() {
     printf("----- %s (%c) -----\n"
