@@ -49,22 +49,24 @@ int main() {
     Poule *Poule10 = new Poule("Poule10", 0);
 
     Habitat *habitat = new Habitat("Couple de Tigre 1", "tigre");
-    habitat->ajouterAnimal(TigreM1);
-    habitat->ajouterAnimal(TigreF1);
+    habitat->addAnimal(TigreM1);
+    habitat->addAnimal(TigreF1);
     Habitat *habitat2 = new Habitat("Couple de Tigre 2", "tigre");
-    habitat2->ajouterAnimal(TigreM2);
-    habitat2->ajouterAnimal(TigreF2);
+    habitat2->addAnimal(TigreM2);
+    habitat2->addAnimal(TigreF2);
     Habitat *habitat3 = new Habitat("Couple Aigle 1", "aigle");
-    habitat3->ajouterAnimal(AigleM1);
-    habitat3->ajouterAnimal(AigleF1);
+    habitat3->addAnimal(AigleM1);
+    habitat3->addAnimal(AigleF1);
     Habitat *habitat4 = new Habitat("Couple Aigle 2", "aigle");
-    habitat4->ajouterAnimal(AigleM2);
-    habitat4->ajouterAnimal(AigleF2);
+    habitat4->addAnimal(AigleM2);
+    habitat4->addAnimal(AigleF2);
     Habitat *habitat5 = new Habitat("KFC", "poule");
-    habitat5->ajouterAnimal(Zizou);
-    habitat5->ajouterAnimal(Poule1);
-    habitat5->ajouterAnimal(Poule2);
-    habitat5->ajouterAnimal(Poule3);
+    habitat5->addAnimal(Zizou);
+    habitat5->addAnimal(Poule1);
+    habitat5->addAnimal(Poule2);
+    habitat5->addAnimal(Poule3);
+
+
 
 
     Zoo *zooLife = new Zoo("ZooLife");
@@ -73,7 +75,7 @@ int main() {
     zooLife->addHabitat(habitat3);
     zooLife->addHabitat(habitat4);
     zooLife->addHabitat(habitat5);
-    zooLife->showHabitats();
+    zooLife->show();
     return 0;
 }
 

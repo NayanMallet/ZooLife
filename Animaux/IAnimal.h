@@ -1,7 +1,3 @@
-//
-// Created by theos on 1/23/2023.
-//
-
 #ifndef CORRECTION_TP_FEU_IANIMAL_H
 #define CORRECTION_TP_FEU_IANIMAL_H
 
@@ -10,22 +6,24 @@
 
 using namespace std;
 
+//enum class AnimalType { TIGRE, AIGLE, POULE, COQ };
+
 class IAnimal {
 public:
-    IAnimal(string name, char sexe, int age, string typeAnimal);
+    IAnimal(string name, char sexe, int age, const string& typeAnimal);
 
     virtual void show() = 0;
 
     string getName();
     char getSexe() const;
     int getAge() const;
-    string getTypeAnimal() const;
+    const string& getTypeAnimal() const;
 
 private:
     string m_name;
     char m_sexe{};
     int m_age; // en jours
-    string m_typeAnimal;
+    const string& m_typeAnimal;
 };
 
 
