@@ -1,12 +1,33 @@
-*.swp
-*.ninja
-.ninja*
+# Fichiers objets
+*.o
+
+# Fichiers binaires
+*.exe
+*.out
+
+# Fichiers de dépendance
+*.d
+
+# Fichiers de sauvegarde d'éditeur de texte
+*~
+
+# Fichiers générés par CMake
+CMakeFiles/
 CMakeCache.txt
-CMakeFiles
 cmake_install.cmake
-libskia.*
-example
-example.png
-include
-skia_compile_arguments.txt
-skia_link_arguments.txt
+Makefile
+
+# Fichiers générés par Visual Studio Code
+.vscode/
+
+# Fichiers générés par Xcode
+*.xcodeproj/
+
+# Fichiers générés par Qt Creator
+build-*/
+
+# Fichiers de configuration spécifiques à l'environnement
+*.user
+*.suo
+*.userprefs
+*.xcuserstate
