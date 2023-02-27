@@ -13,10 +13,10 @@ public:
     vector<Habitat*> m_habitats;
     vector<Aliment*> m_aliments;
 
-    Vendeur(string nom, int argent);
+    Vendeur(string nom);
     ~Vendeur();
 
-    void show() const;
+//    void show() const;
     void showAnimals() const;
     void showHabitats() const;
     void showAliments() const;

@@ -8,6 +8,7 @@
 #include "Habitats/Habitat.h"
 #include "Functions/functions.h"
 #include "Zoo/Zoo.h"
+#include "Vendeur/Vendeur.h"
 
 #include <vector>
 
@@ -81,7 +82,19 @@ int main() {
     zooLife->addHabitat(habitat3);
     zooLife->addHabitat(habitat4);
     zooLife->addHabitat(habitat5);
-    zooLife->show();
+//    zooLife->show();
+
+    Vendeur *Bourebabab = new Vendeur("Bourebabab");
+    Bourebabab->addAnimal(TigreM1);
+    Bourebabab->addAnimal(AigleF1);
+    Bourebabab->addAnimal(Poule1);
+    Bourebabab->addHabitat(habitat);
+    Bourebabab->addHabitat(habitat3);
+    Bourebabab->addAliment(a);
+    Bourebabab->showAnimals();
+    Bourebabab->showHabitats();
+    Bourebabab->showAliments();
+
     return 0;
 }
 
