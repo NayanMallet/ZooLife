@@ -13,8 +13,8 @@ void Coq::show() {
            "=> Alimentation: Graines, %.2fkg/j\n"
            "=> Jours avant faim: %s\n"
            "=> Fin de reproduction: %s\n"
-           "=> Espérance de vie: %s\n"
-           "=> Maturité sexuelle: %s\n"
+           "=> Esperance de vie: %s\n"
+           "=> Maturite sexuelle: %s\n"
            "---------------------\n",
            getName().c_str(), getSexe(),
            dateConverter(getAge()).c_str(),
@@ -40,6 +40,6 @@ void Coq::fedAnimal(Aliment* food) {
     food->subQuantite(m_AlimentationJour);
     resetDaysBeforeFed();
     //
-    cout << "L'animal " << getName() << " a été nourri avec succès !" << endl;
+    cout << "L'animal " << getName() << " a ete nourri avec succes !" << endl;
     //
 }

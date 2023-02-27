@@ -23,9 +23,9 @@ void Aigle::show() {
                "=> Alimentation: Viande, %.2fkg/j\n"
                "=> Jours avant faim: %s\n"
                "=> Fin de reproduction: %s\n"
-               "=> Espérance de vie: %s\n"
-               "=> Maturité sexuelle: %s\n"
-               "=> Remarque: Fidéle\n"
+               "=> Esperance de vie: %s\n"
+               "=> Maturite sexuelle: %s\n"
+               "=> Remarque: Fidele\n"
                "---------------------\n",
                getName().c_str(), getSexe(),
                dateConverter(getAge()).c_str(),
@@ -41,12 +41,12 @@ void Aigle::show() {
                "=> Alimentation: Viande, %.2fkg/j\n"
                "=> Jours avant faim: %s\n"
                "=> Fin de reproduction: %s\n"
-               "=> Espérance de vie: %s\n"
-               "=> Maturité sexuelle: %s\n"
-               "=> Ponte / portée: %s\n"
+               "=> Esperance de vie: %s\n"
+               "=> Maturite sexuelle: %s\n"
+               "=> Ponte / portee: %s\n"
                "=> Gestation: %s\n"
                "=> Mortalité infantile: %.2f%%\n"
-               "=> Remarque: Fidéle\n"
+               "=> Remarque: Fidele\n"
                "---------------------\n",
                getName().c_str(), getSexe(),
                dateConverter(getAge()).c_str(),
@@ -79,6 +79,6 @@ void Aigle::fedAnimal(Aliment* food) {
     food->subQuantite(m_AlimentationJour);
     resetDaysBeforeFed();
     //
-    cout << "L'animal " << getName() << " a été nourri avec succès !" << endl;
+    cout << "L'animal " << getName() << " a ete nourri avec succes !" << endl;
     //
 }
