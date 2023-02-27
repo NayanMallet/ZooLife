@@ -20,7 +20,9 @@ float Aliment::getQuantite() { return m_quantite; }
 FoodType Aliment::getFoodType() { return m_foodType; }
 
 void Aliment::subQuantite(float qt) {
-    assert((qt <= m_quantite) && "Vide !");
+    if (qt > m_quantite) {
+        throw invalid_argument("Quantité insuffisante !");
+    }
     m_quantite -= qt;
 };
 

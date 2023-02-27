@@ -1,5 +1,6 @@
 #include "Zoo.h"
 #include <string>
+#include <algorithm>
 #include "../Functions/functions.h"
 
 using namespace std;

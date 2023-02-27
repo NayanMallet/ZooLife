@@ -1,7 +1,3 @@
-//
-// Created by theos on 1/23/2023.
-//
-
 #ifndef CORRECTION_TP_FEU_ZOO_H
 #define CORRECTION_TP_FEU_ZOO_H
 

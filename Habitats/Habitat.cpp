@@ -1,5 +1,6 @@
 #include <unordered_set>
 #include "Habitat.h"
+#include <algorithm>
 #include "../Functions/functions.h"
 
 using namespace std;
