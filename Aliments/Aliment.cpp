@@ -1,5 +1,6 @@
 #include <string>
 #include <utility>
+#include <stdexcept>
 #include "Aliment.h"
 
 using namespace std;
