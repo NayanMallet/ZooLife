@@ -17,8 +17,8 @@ void Poule::show() {
                "=> Alimentation: Graines, %.2fkg/j\n"
                "=> Jours avant faim: %s\n"
                "=> Fin de reproduction: %s\n"
-               "=> Espérance de vie: %s\n"
-               "=> Maturité sexuelle: %s\n"
+               "=> Esperance de vie: %s\n"
+               "=> Maturite sexuelle: %s\n"
                "=> Ponte / portée: %s\n"
                "=> Gestation: %s\n"
                "=> Mortalité infantile: %.2f%%\n"
@@ -50,6 +50,6 @@ void Poule::fedAnimal(Aliment* food) {
     food->subQuantite(m_AlimentationJour);
     resetDaysBeforeFed();
     //
-    cout << "L'animal " << getName() << " a été nourri avec succès !" << endl;
+    cout << "L'animal " << getName() << " a ete nourri avec succes !" << endl;
     //
 }

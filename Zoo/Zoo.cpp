@@ -20,7 +20,7 @@ Zoo::~Zoo() {
 
 void Zoo::show() const {
     printf("----- Zoo %s -----\n"
-           "=> Prix Actuel: %i€\n"
+           "=> Prix Actuel: %i$\n"
            "=> Nombre d'Enclos: %i\n"
            "=> Liste des Enclos:\n%s"
            "---------------------------\n",

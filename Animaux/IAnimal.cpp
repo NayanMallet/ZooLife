@@ -7,7 +7,7 @@ IAnimal::IAnimal(string name, char sexe, int age, AnimalType typeAnimal)
         throw invalid_argument("Le sexe doit être M ou F");
     }
     if (age < 0) {
-        throw invalid_argument("L'age doit être positif");
+        throw invalid_argument("L'age doit etre positif");
     }
 }
 

@@ -30,7 +30,7 @@ void Tigre::show() {
                "=> Alimentation: Viande, %.2fkg/j\n"
                "=> Jours avant faim: %s\n"
                "=> Fin de reproduction: %s\n"
-               "=> Espérance de vie: %s\n"
+               "=> Esperance de vie: %s\n"
                "=> Maturité sexuelle: %s\n"
                "---------------------\n",
                getName().c_str(), getSexe(),
@@ -47,7 +47,7 @@ void Tigre::show() {
                "=> Alimentation: Viande, %.2fkg/j\n"
                "=> Jours avant faim: %s\n"
                "=> Fin de reproduction: %s\n"
-               "=> Espérance de vie: %s\n"
+               "=> Esperance de vie: %s\n"
                "=> Maturité sexuelle: %s\n"
                "=> Ponte / portée: %s\n"
                "=> Gestation: %s\n"
@@ -84,6 +84,6 @@ void Tigre::fedAnimal(Aliment* food) {
     food->subQuantite(m_AlimentationJour);
     resetDaysBeforeFed();
     //
-    cout << "L'animal " << getName() << " a été nourri avec succès !" << endl;
+    cout << "L'animal " << getName() << " a ete nourri avec succes !" << endl;
     //
 }
