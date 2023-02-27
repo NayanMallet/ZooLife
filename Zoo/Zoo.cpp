@@ -7,7 +7,7 @@ using namespace std;
 
 
 // Constructeur de la classe Zoo ⭐️
-Zoo::Zoo(string nom):m_name(nom), m_days(0) {}
+Zoo::Zoo(string nom):m_name(nom) {}
 
 // Destructeur de la classe Zoo ⭐️
 Zoo::~Zoo() {
@@ -20,12 +20,12 @@ Zoo::~Zoo() {
 
 void Zoo::show() const {
     printf("----- Zoo %s -----\n"
-           "=> Prix Actuel: %i$\n"
+           "=> Budget: %i$\n"
            "=> Nombre d'Enclos: %i\n"
            "=> Liste des Enclos:\n%s"
            "---------------------------\n",
            m_name.c_str(),
-           10000,// to change
+           m_budget->getBudget(),
            getNbrOfEnclos(),
            listHabitats().c_str()
     );

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include "../Budget/Budget.h"
 #include "../Habitats/Habitat.h"
 
 using namespace std;
@@ -31,7 +32,8 @@ public:
 
 private:
     string m_name;
-    int m_days;
+    int m_days{0};
+    Budget *m_budget{ new Budget(80000)};
 };
 
 
