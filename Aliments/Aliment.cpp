@@ -15,7 +15,7 @@ string Aliment::getNom() { return m_nom; }
 
 float Aliment::getPrixKg() const { return m_prixKg; }
 
-float Aliment::getQuantite() { return m_quantite; };
+float Aliment::getQuantite() { return m_quantite; }
 
 FoodType Aliment::getFoodType() { return m_foodType; }
 

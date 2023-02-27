@@ -1,7 +1,3 @@
-//
-// Created by Nayan Mallet on 22/02/2023.
-//
-
 #ifndef ZOOLIFE_ALIMENT_H
 #define ZOOLIFE_ALIMENT_H
 #include <string>
