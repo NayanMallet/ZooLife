@@ -5,6 +5,9 @@
 #include <vector>
 #include "../Budget/Budget.h"
 #include "../Habitats/Habitat.h"
+#include "../Aliments/Aliment.h"
+#include "../Aliments/Graines.h"
+#include "../Aliments/Viande.h"
 
 using namespace std;
 
@@ -30,14 +33,19 @@ public:
 
     void sellAnimal(Habitat *habitat, IAnimal *animal);
     void buyAnimal(Habitat *habitat, IAnimal *animal);
+    bool verifHabitat(Habitat *habitat);
 
 //void sellHabitat(Habitat *habitat);
 //void buyHabitat(Habitat *habitat);
-    bool verifHabitat(Habitat *habitat);
+
+void sellAliment(Aliment *aliment);
+void buyAliment(Aliment *aliment);
+
 private:
     string m_name;
     int m_days{0};
     Budget *m_budget{ new Budget(80000)};
+    vector<Aliment*> m_stockAliment{ new Graines("Graines"), new Viande("Viande")}
 };
 
 

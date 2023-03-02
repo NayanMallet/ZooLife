@@ -17,10 +17,10 @@ public:
     void addQuantite(float qt);
     FoodType getFoodType();
 private:
-    string m_nom;
-    float m_prixKg;
-    float m_quantite;
-    FoodType m_foodType;
+    string m_nom{};
+    float m_prixKg{};
+    float m_quantite{0};
+    FoodType m_foodType{};
 };
 
 
