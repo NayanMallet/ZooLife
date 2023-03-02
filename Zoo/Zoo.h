@@ -23,13 +23,17 @@ public:
     int getNbrOfEnclos() const;
 
     void addHabitat(Habitat *habitat);
-
     void removeHabitat(Habitat *habitat);
 
     // TODO : Passing to the next year func
 //    void nextYear();
 
+    void sellAnimal(Habitat *habitat, IAnimal *animal);
+    void buyAnimal(Habitat *habitat, IAnimal *animal);
 
+//void sellHabitat(Habitat *habitat);
+//void buyHabitat(Habitat *habitat);
+    bool verifHabitat(Habitat *habitat);
 private:
     string m_name;
     int m_days{0};

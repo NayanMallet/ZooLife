@@ -1,7 +1,3 @@
-//
-// Created by theos on 1/23/2023.
-//
-
 #ifndef CORRECTION_TP_FEU_AIGLE_H
 #define CORRECTION_TP_FEU_AIGLE_H
 
@@ -20,7 +16,7 @@ public:
     void resetDaysBeforeFed() override;
 private:
     int
-    m_joursAvantFaim{10}, // 10 jours
+            m_joursAvantFaim{10}, // 10 jours
     m_finDeReprod{365 * 14}, // 14 ans
     m_esperanceDeVie{365 * 25}; // 25 ans
     float m_AlimentationJour; // en kg

@@ -26,6 +26,8 @@ public:
     void addAnimal(IAnimal* animal);
 
     void removeAnimal(IAnimal* animal);
+
+    bool verifAnimal(IAnimal* animal);
 private:
     string m_nom;
     int m_capacite;
@@ -33,6 +35,7 @@ private:
     int m_prixAchat, m_prixVente;
     int m_perteSurPop;
     float m_probaMaladie;
+
 };
 
 #endif //ZOOLIFE_HABITAT_H

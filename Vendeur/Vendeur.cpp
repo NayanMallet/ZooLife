@@ -42,7 +42,7 @@ void Vendeur::removeAnimal(IAnimal *animal) {
 }
 
 void Vendeur::removeHabitat(Habitat *habitat) {
-for (int i = 0; i < m_habitats.size(); i++) {
+    for (int i = 0; i < m_habitats.size(); i++) {
         if (m_habitats[i] == habitat) {
             m_habitats.erase(m_habitats.begin() + i);
             return;
@@ -51,7 +51,7 @@ for (int i = 0; i < m_habitats.size(); i++) {
 }
 
 void Vendeur::removeAliment(Aliment *aliment) {
-for (int i = 0; i < m_aliments.size(); i++) {
+    for (int i = 0; i < m_aliments.size(); i++) {
         if (m_aliments[i] == aliment) {
             m_aliments.erase(m_aliments.begin() + i);
             return;

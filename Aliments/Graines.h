@@ -1,7 +1,3 @@
-//
-// Created by Nayan Mallet on 23/02/2023.
-//
-
 #ifndef ZOOLIFE_GRAINES_H
 #define ZOOLIFE_GRAINES_H
 #include "Aliment.h"

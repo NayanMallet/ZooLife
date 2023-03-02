@@ -127,7 +127,10 @@ void Habitat::removeAnimal(IAnimal* animal) {
     m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), animal), m_animaux.end());
 }
 
-
+// Verifier si l'animal est dans l'habitat ⭐️
+bool Habitat::verifAnimal(IAnimal* animal) {
+    return std::find(m_animaux.begin(), m_animaux.end(), animal) != m_animaux.end();
+}
 
 //// Calculer la perte liée à la surpopulation
 //double Habitat::calculerPerteSurpopulation() const {

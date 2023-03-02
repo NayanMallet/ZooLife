@@ -1,7 +1,3 @@
-//
-// Created by theos on 1/23/2023.
-//
-
 #ifndef CORRECTION_TP_FEU_POULE_H
 #define CORRECTION_TP_FEU_POULE_H
 
@@ -20,8 +16,8 @@ public:
 
 private:
     int
-    m_joursAvantFaim{1},
-    m_finDeReprod{365 * 8}, // 8 ans
+            m_joursAvantFaim{1},
+            m_finDeReprod{365 * 8}, // 8 ans
     m_esperanceDeVie{365 * 15}; // 15 ans
     float m_AlimentationJour{0.15}; // en kg
     int m_maturiteSexuelle{30 * 6}; // 6 mois

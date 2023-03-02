@@ -1,7 +1,3 @@
-//
-// Created by theos on 1/23/2023.
-//
-
 #include "Tigre.h"
 #include "../Functions/functions.h"
 

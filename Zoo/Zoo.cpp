@@ -72,3 +72,37 @@ void Zoo::removeHabitat(Habitat *habitat) {
         printf("L'habitat n'est pas dans le Zoo !\n");
     }
 }
+
+// Vendre Animal dans le Zoo ⭐️
+void Zoo::sellAnimal(Habitat *habitat, IAnimal *animal) {
+    if (verifHabitat(habitat) && habitat->verifAnimal(animal)){
+        m_budget->addBudget(animal->getPrix('V'));
+        habitat->removeAnimal(animal);
+    } else {
+        printf("L'habitat n'est pas dans le Zoo ou l'animal n'est pas dans l'habitat !\n");
+    }
+}
+
+// Achat Animal dans le Zoo ⭐️
+void Zoo::buyAnimal(Habitat* habitat, IAnimal* animal) {
+    // Vérifier si l'habitat est dans le zoo et si l'animal est dans l'habitat
+    if (!verifHabitat(habitat)) {
+        printf("L'habitat n'est pas dans le Zoo !\n");
+        return;
+    }
+
+    // Vérifier s'il y a de la place et que l'animal est du bon type
+    if (habitat->getCapacite() > habitat->getNbrOfAnimals() && habitat->getTypeAnimal() == animal->getTypeAnimal()) {
+        // Soustraire le prix de l'animal au budget
+        m_budget->removeBudget(animal->getPrix('A'));
+        // Ajouter l'animal dans l'habitat
+        habitat->addAnimal(animal);
+    } else {
+        printf("L'habitat est plein ou n'est pas du bon type !\n");
+    }
+}
+
+// Verifier si l'habitat est dans le zoo ⭐️
+bool Zoo::verifHabitat(Habitat *habitat) {
+    return std::find(m_enclos.begin(), m_enclos.end(), habitat) != m_enclos.end();
+}

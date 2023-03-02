@@ -83,14 +83,37 @@ int main() {
     zooLife->addHabitat(habitat4);
     zooLife->addHabitat(habitat5);
     zooLife->show();
+
+    auto tigree = new Tigre("Tigrou", 'M', 190);
+    auto jean = new Tigre("Jean", 'M', 190);
+    auto jeanette = new Tigre("hors de l'habitat", 'F', 190);
+    auto habitat34 = new Habitat("Dans le Zoo", AnimalType::TIGRE);
+    auto habitat64 = new Habitat("Hors du Zoo", AnimalType::TIGRE);
+    habitat34->addAnimal(jean);
+    zooLife->addHabitat(habitat34);
+    habitat64->addAnimal(jeanette);
 //
-//    Vendeur *Bourebabab = new Vendeur("Bourebabab");
-//    Bourebabab->addAnimal(TigreM1);
-//    Bourebabab->addAnimal(AigleF1);
-//    Bourebabab->addAnimal(Poule1);
-//    Bourebabab->addHabitat(habitat);
-//    Bourebabab->addHabitat(habitat3);
-//    Bourebabab->addAliment(a);
+//    zooLife->buyAnimal(habitat34, jeanette);
+//    zooLife->show();
+//    zooLife->sellAnimal(habitat34,jeanette);
+//    zooLife->show();
+
+
+    zooLife->buyAnimal(habitat34, jeanette);
+    cout << "Buy animal not in habitat test ✅" << endl;
+    zooLife->show();
+    zooLife->sellAnimal(habitat34,jeanette);
+    cout << "Sell animal not in habitat test ✅" << endl;
+    zooLife->show();
+
+//
+    Vendeur *Bourebabab = new Vendeur("Bourebabab");
+    Bourebabab->addAnimal(TigreM1);
+    Bourebabab->addAnimal(AigleF1);
+    Bourebabab->addAnimal(Poule1);
+    Bourebabab->addHabitat(habitat);
+    Bourebabab->addHabitat(habitat3);
+    Bourebabab->addAliment(a);
 //    Bourebabab->showAnimals();
 //    Bourebabab->showHabitats();
 //    Bourebabab->showAliments();

@@ -1,7 +1,3 @@
-//
-// Created by Nayan Mallet on 27/02/2023.
-//
-
 #include "Budget.h"
 #include <iostream>
 
@@ -24,7 +20,7 @@ void Budget::addBudget(int budget) {
         cout << "Vous ne pouvez pas ajouter une somme negative !" << endl;
         return;
     }
-    m_budget = budget;
+    m_budget += budget;
 }
 
 void Budget::removeBudget(int budget) {

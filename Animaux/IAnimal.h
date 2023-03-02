@@ -21,6 +21,8 @@ public:
     char getSexe() const;
     int getAge() const;
     AnimalType getTypeAnimal() const;
+    int getPrix(char type) const;
+
 
 private:
     string m_name;
