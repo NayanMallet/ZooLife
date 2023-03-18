@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include <unordered_set>
+#include <random>
 #include "../Functions/functions.h"
 
 using namespace std;
@@ -236,9 +237,49 @@ void Zoo::buyHabitat(string nom, AnimalType typeAnimal) {
 }
 
 void Zoo::foodMonthlyUpdate() {
-    for (const auto &habitat: m_enclos) {
-        for (const auto &animal: habitat->m_animaux) {
-            buyAliment(animal->getFoodType(), animal->getFoodQuantity());
-            }
-        }
+    viandeAvarieMonthly();
+    graineNuisibleMonthly();
+//    for (const auto &habitat: m_enclos) {
+//        for (const auto &animal: habitat->m_animaux) {
+//            buyAliment(animal->getFoodType(), animal->getFoodQuantity());
+//            }
+//        }
+//    }
+
+}
+
+void Zoo::viandeAvarieMonthly() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::bernoulli_distribution dist(0.1);
+
+    if (!dist(gen)) {
+        printf("Pas de viande avarié !\n");
+        return;
     }
+
+    m_stockAliment[1]->subQuantite(float(m_stockAliment[1]->getQuantite() * 0.2));
+    printf("Il y a eu une avarie sur la viande !\n");
+}
+
+void Zoo::graineNuisibleMonthly() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::bernoulli_distribution dist(0.2);
+
+    if (!dist(gen)) {
+        printf("Pas de nuisibles sur les graines !\n");
+        return;
+    }
+
+    m_stockAliment[0]->subQuantite(float(m_stockAliment[0]->getQuantite() * 0.1));
+    printf("Il y a eu des nuisibles sur les graines !\n");
+}
+
+void Zoo::volSpecimenMonthly() {
+
+}
+
+void Zoo::incendieMonthly() {
+
+}

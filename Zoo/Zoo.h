@@ -25,6 +25,10 @@ public:
     string listHabitats() const;
 
     void foodMonthlyUpdate();
+    void graineNuisibleMonthly();
+    void viandeAvarieMonthly();
+    void volSpecimenMonthly();
+    void incendieMonthly();
 
     const string & getName() const;
     int getNbrOfEnclos() const;

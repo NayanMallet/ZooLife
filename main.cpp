@@ -85,7 +85,13 @@ void scenario() {
 }
 
 int main() {
-    scenario();
+    Zoo *zooLife = new Zoo("ZooLife");
+    zooLife->buyAliment(FoodType::GRAINES, 2000);
+    zooLife->buyAliment(FoodType::VIANDE, 5000);
+    for (int i = 0; i < 12; i++) {
+        zooLife->foodMonthlyUpdate();
+    }
+    zooLife->show();
     return 0;
 }
 
