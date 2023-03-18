@@ -22,6 +22,7 @@ public:
     int getCapacite() const;
     int getNbrOfAnimals() const;
     AnimalType getTypeAnimal() const;
+    float getPrix(char type) const;
 
     void addAnimal(IAnimal* animal);
 

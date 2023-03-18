@@ -19,7 +19,7 @@ int IAnimal::getAge() const { return m_age; }
 
 AnimalType IAnimal::getTypeAnimal() const { return m_typeAnimal; }
 
-int IAnimal::getPrix(char type) const {
+float IAnimal::getPrix(char type) const {
     switch (type) {
         case 'A':
             switch (m_typeAnimal) {
@@ -114,5 +114,4 @@ int IAnimal::getPrix(char type) const {
         default:
             return 0;
     }
-
 }

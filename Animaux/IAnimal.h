@@ -21,7 +21,7 @@ public:
     char getSexe() const;
     int getAge() const;
     AnimalType getTypeAnimal() const;
-    int getPrix(char type) const;
+    float getPrix(char type) const;
 
 
 private:

@@ -72,12 +72,10 @@ void scenario() {
 int main() {
 
     Zoo *zooLife = new Zoo("ZooLife");
-    zooLife->show();
-    zooLife->buyAliment(FoodType::VIANDE, 10);
-    zooLife->show();
-    zooLife->sellAliment(FoodType::GRAINES, 10);
-    zooLife->show();
 
+    zooLife->buyHabitat("Couple de Tigre 1", AnimalType::TIGRE);
+    zooLife->buyHabitat("Couple de Tigre 1", AnimalType::TIGRE);
+    zooLife->show();
 
 
 //    Vendeur *Bourebabab = new Vendeur("Bourebabab");

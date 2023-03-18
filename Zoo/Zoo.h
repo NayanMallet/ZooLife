@@ -35,11 +35,11 @@ public:
     void buyAnimal(Habitat *habitat, IAnimal *animal);
     bool verifHabitat(Habitat *habitat);
 
-//void sellHabitat(Habitat *habitat);
-//void buyHabitat(Habitat *habitat);
-
     void sellAliment(FoodType alimentType, float quantite);
     void buyAliment(FoodType alimentType, float quantite);
+
+    void sellHabitat(Habitat *habitat);
+    void buyHabitat(string nom, AnimalType typeAnimal);
 
 private:
     string m_name;

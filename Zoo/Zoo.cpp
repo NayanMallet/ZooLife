@@ -1,6 +1,7 @@
 #include "Zoo.h"
 #include <string>
 #include <algorithm>
+#include <unordered_set>
 #include "../Functions/functions.h"
 
 using namespace std;
@@ -165,3 +166,46 @@ void Zoo::buyAliment(FoodType alimentType, float quantite) {
     printf("Vous avez acheté %.2fkg de %s pour %.2f$\n", quantite, aliment->getNom().c_str(), prixTotal);
 }
 
+
+// Vente d'habitat dans le Zoo ⭐️
+void Zoo::sellHabitat(Habitat *habitat) {
+    if (!verifHabitat(habitat)) {
+        printf("L'habitat n'est pas dans le Zoo !\n");
+        return;
+    }
+    if (habitat->getNbrOfAnimals() > 0) {
+        printf("Il y a encore des animaux dans l'habitat !\n");
+        return;
+    }
+    m_budget->addBudget(habitat->getPrix('V'));
+    removeHabitat(habitat);
+    printf("Vous avez vendu l'habitat %s pour %.2f$\n", habitat->getName().c_str(), habitat->getPrix('V'));
+}
+
+// Vérifier si l'habitat est déjà dans le zoo en utilisant un unordered_set pour une recherche plus rapide
+void Zoo::buyHabitat(string nom, AnimalType typeAnimal) {
+    unordered_set<string> habitatNames;
+    for (const auto &habitat: m_enclos) {
+        habitatNames.insert(habitat->getName());
+    }
+    if (habitatNames.find(nom) != habitatNames.end()) {
+        printf("L'habitat est déjà dans le Zoo !\n");
+        return;
+    }
+
+    // Créer l'habitat
+    Habitat *habitat = new Habitat(nom, typeAnimal);
+    float prixTotal = habitat->getPrix('A');
+
+    // Vérifier si le budget est suffisant
+    if (m_budget->getBudget() < prixTotal) {
+        printf("Il n'y a pas assez d'argent dans le Zoo !\n");
+        delete habitat;
+        return;
+    }
+
+    // Ajouter l'habitat au zoo
+    addHabitat(habitat);
+    m_budget->removeBudget(prixTotal);
+    printf("Vous avez acheté l'habitat %s pour %.2f$\n", nom.c_str(), prixTotal);
+}

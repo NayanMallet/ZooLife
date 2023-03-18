@@ -132,6 +132,35 @@ bool Habitat::verifAnimal(IAnimal* animal) {
     return std::find(m_animaux.begin(), m_animaux.end(), animal) != m_animaux.end();
 }
 
+float Habitat::getPrix(char type) const {
+    switch (type) {
+        case 'A':
+            switch (m_typeAnimal) {
+                case AnimalType::TIGRE:
+                    return 2000;
+                case AnimalType::AIGLE:
+                    return 2000;
+                case AnimalType::POULE:
+                    return 300;
+                default:
+                    return 0;
+            }
+        case 'V':
+            switch (m_typeAnimal) {
+                case AnimalType::TIGRE:
+                    return 500;
+                case AnimalType::AIGLE:
+                    return 500;
+                case AnimalType::POULE:
+                    return 50;
+                default:
+                    return 0;
+            }
+        default:
+            return 0;
+    }
+}
+
 //// Calculer la perte liée à la surpopulation
 //double Habitat::calculerPerteSurpopulation() const {
 //    // Générer un nombre aléatoire entre 0 et 1
