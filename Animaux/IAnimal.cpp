@@ -65,3 +65,32 @@ float IAnimal::getPrix(char type) const {
     }
 }
 
+bool IAnimal::getReproduction() const {
+    return m_reproduction;
+}
+
+bool IAnimal::getFed() const {
+    return m_fed;
+}
+
+bool IAnimal::getMaladie() const {
+    return m_maladie;
+}
+
+void IAnimal::setReproduction(bool reproduction) {
+    m_reproduction = reproduction;
+}
+
+void IAnimal::setFed(bool fed) {
+    m_fed = fed;
+}
+
+void IAnimal::setAge(int age) {
+    m_age = age;
+}
+
+void IAnimal::setMaladie(bool maladie) {
+    m_maladie = maladie;
+
+}
+

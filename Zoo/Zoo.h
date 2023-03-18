@@ -24,6 +24,8 @@ public:
     void showHabitats() const;
     string listHabitats() const;
 
+    void foodMonthlyUpdate();
+
     const string & getName() const;
     int getNbrOfEnclos() const;
 

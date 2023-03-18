@@ -13,8 +13,15 @@ public:
     ~Aigle() override = default;
 
     void show() override;
-    void fedAnimal(Aliment* food) override;
+    bool fedAnimal(Aliment* food) override;
     void resetDaysBeforeFed() override;
+    void update(Aliment* food) override;
+    int getMaturingTime() override;
+    FoodType getFoodType() override;
+    float getFoodQuantity() override;
+
+    void setMaturingTime(int days) override;
+
 private:
     int
             m_joursAvantFaim{10}, // 10 jours

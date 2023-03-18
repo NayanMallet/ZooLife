@@ -34,18 +34,53 @@ void Poule::show() {
 
 void Poule::resetDaysBeforeFed() { m_joursAvantFaim = 1; }
 
-void Poule::fedAnimal(Aliment* food) {
+bool Poule::fedAnimal(Aliment* food) {
     if (food->getFoodType() != FoodType::GRAINES) {
-        cout << food->getNom() << " ne conviens pas a " << getName() << " !" << endl;
-        return;
+        return true;
     }
     if (food->getQuantite() < m_AlimentationJour) {
-        cout << "Pas assez d'aliment pour nourrir " << getName() << endl;
-        return;
+        return true;
     }
     food->subQuantite(m_AlimentationJour);
     resetDaysBeforeFed();
-    //
-    cout << "L'animal " << getName() << " a ete nourri avec succes !" << endl;
-    //
+    return false;
+}
+
+int Poule::getMaturingTime() {
+    return m_maturiteSexuelle;
+}
+
+void Poule::setMaturingTime(int days) {
+    m_maturiteSexuelle = days;
+}
+
+void Poule::update(Aliment* food) {
+    m_joursAvantFaim--;
+    setAge(getAge() + 1);
+
+    // update de la faim
+    if (m_joursAvantFaim == 0) {
+        setFed(fedAnimal(food));
+    }
+
+    // update de la reproduction
+    if ((m_maturiteSexuelle <= getAge() <= m_finDeReprod) && !getMaladie() && getFed()) {
+        setReproduction(true);
+    } else {
+        setReproduction(false);
+    }
+
+    if (getAge() == m_esperanceDeVie) {
+        cout << getName() << " est mort de vieillesse !" << endl;
+        Poule::~Poule();
+        return;
+    }
+}
+
+FoodType Poule::getFoodType() {
+    return FoodType::GRAINES;
+}
+
+float Poule::getFoodQuantity() {
+    return m_AlimentationJour;
 }

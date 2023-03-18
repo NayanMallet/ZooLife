@@ -40,6 +40,9 @@ void scenario() {
     auto *Poule5 = new Poule("Poule5", 0);
     auto *Poule6 = new Poule("Poule6", 0);
     auto *Poule7 = new Poule("Poule7", 0);
+    auto *Poule8 = new Poule("Poule8", 0);
+    auto *Poule9 = new Poule("Poule9", 0);
+    auto *Poule10 = new Poule("Poule10", 0);
 
     // Les Habitats
     auto *habitat = new Habitat("Couple de Tigre 1", AnimalType::TIGRE);
@@ -59,6 +62,13 @@ void scenario() {
     habitat5->addAnimal(Poule1);
     habitat5->addAnimal(Poule2);
     habitat5->addAnimal(Poule3);
+    habitat5->addAnimal(Poule4);
+    habitat5->addAnimal(Poule5);
+    habitat5->addAnimal(Poule6);
+    habitat5->addAnimal(Poule7);
+    habitat5->addAnimal(Poule8);
+    habitat5->addAnimal(Poule9);
+    habitat5->addAnimal(Poule10);
 
     Zoo *zooLife = new Zoo("ZooLife");
     zooLife->addHabitat(habitat);
@@ -66,40 +76,16 @@ void scenario() {
     zooLife->addHabitat(habitat3);
     zooLife->addHabitat(habitat4);
     zooLife->addHabitat(habitat5);
+    zooLife->buyAliment(FoodType::GRAINES, 2000);
+    zooLife->buyAliment(FoodType::VIANDE, 5000);
+    cout << "ZooLife Before Maxime: " << endl;
     zooLife->show();
+    zooLife->nextYear();
+    cout << "ZooLife After Maxime: " << endl;
 }
 
 int main() {
-    Zoo *zooLife = new Zoo("ZooLife");
-    auto *AigleM1 = new Aigle("Marckou", 'M', 0);
-    auto *AigleM2 = new Aigle("Dalyll", 'M', 0);
-    auto *AigleM3= new Aigle("Dalyll", 'M', 0);
-    auto *AigleM4 = new Aigle("Dalyll", 'M', 0);
-    auto *AigleM5 = new Aigle("Dalyll", 'M', 0);
-    auto *AigleM6 = new Aigle("Dalyll", 'M', 0);
-    auto *AigleM7 = new Aigle("Dalyll", 'M', 0);
-    auto *AigleM8 = new Aigle("Dalyll", 'M', 0);
-    auto *AigleF1 = new Aigle("Leo", 'F', 0);
-    auto *AigleF2 = new Aigle("Haagen", 'F', 0);
-    auto *AigleF3 = new Aigle("Haagen", 'F', 0);
-
-    auto *habitat3 = new Habitat("Couple Aigle 1", AnimalType::AIGLE);
-    habitat3->addAnimal(AigleM1);
-    habitat3->addAnimal(AigleM2);
-    habitat3->addAnimal(AigleF1);
-    habitat3->addAnimal(AigleF2);
-    habitat3->addAnimal(AigleM3);
-    habitat3->addAnimal(AigleM4);
-    habitat3->addAnimal(AigleF3);
-    habitat3->addAnimal(AigleM5);
-    habitat3->addAnimal(AigleM6);
-    habitat3->addAnimal(AigleM7);
-    habitat3->addAnimal(AigleM8);
-    zooLife->addHabitat(habitat3);
-    zooLife->m_enclos[0]->show();
-    zooLife->m_enclos[0]->PerteSurpopulation();
-    zooLife->m_enclos[0]->show();
-
+    scenario();
     return 0;
 }
 

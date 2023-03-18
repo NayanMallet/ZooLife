@@ -31,6 +31,8 @@ public:
     bool verifAnimal(IAnimal* animal);
 
     void PerteSurpopulation();
+
+    void update(int days, Aliment *food);
 private:
     string m_nom;
     int m_capacite;

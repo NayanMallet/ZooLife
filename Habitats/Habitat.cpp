@@ -97,6 +97,11 @@ void Habitat::addAnimal(IAnimal* animal) {
         m_perteSurPop = true;
     }
 
+    // Les animaux ne se reproduisent pas avant 1 mois
+    if (animal->getAge() >= animal->getMaturingTime()) {
+        animal->setMaturingTime(animal->getAge() + 31);
+    }
+
     // Ajouter l'animal
     m_animaux.push_back(animal);
 }
@@ -142,7 +147,6 @@ float Habitat::getPrix(char type) const {
 
 // Gestion de la surpopulation ⭐️
 void Habitat::PerteSurpopulation() {
-
     static std::random_device rd;
     static std::mt19937 gen(rd());
     static std::bernoulli_distribution dist(0.5);
@@ -184,5 +188,17 @@ void Habitat::PerteSurpopulation() {
     // Vérifier si la capacité est atteinte
     if (m_animaux.size() <= m_capacite) {
         m_perteSurPop = false;
+    }
+}
+
+void Habitat::update(int days, Aliment *food) {
+    for (int i = 0; i < days; i++) {
+        // Vérifier si l'habitat est vide
+        if (m_animaux.empty()) {
+            return;
+        }
+        for (auto &animal: m_animaux) {
+            animal->update(food);
+        }
     }
 }

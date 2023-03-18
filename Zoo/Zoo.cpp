@@ -22,8 +22,8 @@ void Zoo::show() const {
     printf("----- Zoo %s -----\n"
            "=> Age: %s\n"
            "=> Stock Aliment:\n"
-           "   -> Graines: %.2f\n"
-           "   -> Viande: %.2f\n"
+           "   -> Graines: %.2fkg\n"
+           "   -> Viande: %.2fkg\n"
            "=> Budget: %.2f$\n"
            "=> Nombre d'Enclos: %i\n"
            "=> Liste des Enclos:\n%s"
@@ -40,10 +40,29 @@ void Zoo::show() const {
 
 
 void Zoo::nextYear() {
-    m_days += 365;
-//    for (auto& habitat : m_enclos) {
-//        habitat->nextYear();
-//    }
+    // update monthly
+    for (int i = 0; i < 12; ++i) {
+//        m_budget->update(31);
+//        foodMonthlyUpdate();
+        m_days += 31;
+        cout << "Month: " << i << endl;
+        for (auto& habitat : m_enclos) {
+            if (habitat->getNbrOfAnimals() > habitat->getCapacite()) {
+                habitat->PerteSurpopulation();
+            }
+            switch (habitat->getTypeAnimal()) {
+                case AnimalType::TIGRE:
+                case AnimalType::AIGLE:
+                    habitat->update(31, m_stockAliment[1]);
+                    break;
+                case AnimalType::POULE:
+                    habitat->update(31, m_stockAliment[0]);
+                    break;
+            }
+        }
+        show();
+        cout << "--------------------" << endl;
+    }
 }
 
 
@@ -217,3 +236,11 @@ void Zoo::buyHabitat(string nom, AnimalType typeAnimal) {
     m_budget->removeBudget(prixTotal);
     printf("Vous avez acheté l'habitat %s pour %.2f$\n", nom.c_str(), prixTotal);
 }
+
+void Zoo::foodMonthlyUpdate() {
+    for (const auto &habitat: m_enclos) {
+        for (const auto &animal: habitat->m_animaux) {
+            buyAliment(animal->getFoodType(), animal->getFoodQuantity());
+            }
+        }
+    }
