@@ -73,7 +73,7 @@ int main() {
 
     Zoo *zooLife = new Zoo("ZooLife");
     zooLife->show();
-    zooLife->buyAliment(FoodType::GRAINES, 10);
+    zooLife->buyAliment(FoodType::VIANDE, 10);
     zooLife->show();
     zooLife->sellAliment(FoodType::GRAINES, 10);
     zooLife->show();
