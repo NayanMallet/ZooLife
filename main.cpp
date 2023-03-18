@@ -70,24 +70,35 @@ void scenario() {
 }
 
 int main() {
-
     Zoo *zooLife = new Zoo("ZooLife");
+    auto *AigleM1 = new Aigle("Marckou", 'M', 0);
+    auto *AigleM2 = new Aigle("Dalyll", 'M', 0);
+    auto *AigleM3= new Aigle("Dalyll", 'M', 0);
+    auto *AigleM4 = new Aigle("Dalyll", 'M', 0);
+    auto *AigleM5 = new Aigle("Dalyll", 'M', 0);
+    auto *AigleM6 = new Aigle("Dalyll", 'M', 0);
+    auto *AigleM7 = new Aigle("Dalyll", 'M', 0);
+    auto *AigleM8 = new Aigle("Dalyll", 'M', 0);
+    auto *AigleF1 = new Aigle("Leo", 'F', 0);
+    auto *AigleF2 = new Aigle("Haagen", 'F', 0);
+    auto *AigleF3 = new Aigle("Haagen", 'F', 0);
 
-    zooLife->buyHabitat("Couple de Tigre 1", AnimalType::TIGRE);
-    zooLife->buyHabitat("Couple de Tigre 1", AnimalType::TIGRE);
-    zooLife->show();
-
-
-//    Vendeur *Bourebabab = new Vendeur("Bourebabab");
-//    Bourebabab->addAnimal(TigreM1);
-//    Bourebabab->addAnimal(AigleF1);
-//    Bourebabab->addAnimal(Poule1);
-//    Bourebabab->addHabitat(habitat);
-//    Bourebabab->addHabitat(habitat3);
-//    Bourebabab->addAliment(a);
-//    Bourebabab->showAnimals();
-//    Bourebabab->showHabitats();
-//    Bourebabab->showAliments();
+    auto *habitat3 = new Habitat("Couple Aigle 1", AnimalType::AIGLE);
+    habitat3->addAnimal(AigleM1);
+    habitat3->addAnimal(AigleM2);
+    habitat3->addAnimal(AigleF1);
+    habitat3->addAnimal(AigleF2);
+    habitat3->addAnimal(AigleM3);
+    habitat3->addAnimal(AigleM4);
+    habitat3->addAnimal(AigleF3);
+    habitat3->addAnimal(AigleM5);
+    habitat3->addAnimal(AigleM6);
+    habitat3->addAnimal(AigleM7);
+    habitat3->addAnimal(AigleM8);
+    zooLife->addHabitat(habitat3);
+    zooLife->m_enclos[0]->show();
+    zooLife->m_enclos[0]->PerteSurpopulation();
+    zooLife->m_enclos[0]->show();
 
     return 0;
 }

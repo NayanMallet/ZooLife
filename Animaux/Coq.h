@@ -6,6 +6,7 @@
 class Coq: public IAnimal {
 public:
     Coq(string name, int age);
+    ~Coq() override = default;
 
     void show() override;
     void fedAnimal(Aliment* food) override;

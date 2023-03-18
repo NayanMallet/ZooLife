@@ -29,12 +29,14 @@ public:
     void removeAnimal(IAnimal* animal);
 
     bool verifAnimal(IAnimal* animal);
+
+    void PerteSurpopulation();
 private:
     string m_nom;
     int m_capacite;
     AnimalType m_typeAnimal;
     int m_prixAchat, m_prixVente;
-    int m_perteSurPop;
+    bool m_perteSurPop{false};
     float m_probaMaladie;
 
 };

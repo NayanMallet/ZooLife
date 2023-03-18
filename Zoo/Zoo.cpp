@@ -18,7 +18,6 @@ Zoo::~Zoo() {
     m_enclos.clear();
 }
 
-
 void Zoo::show() const {
     printf("----- Zoo %s -----\n"
            "=> Age: %s\n"
@@ -38,6 +37,15 @@ void Zoo::show() const {
            listHabitats().c_str()
     );
 }
+
+
+void Zoo::nextYear() {
+    m_days += 365;
+//    for (auto& habitat : m_enclos) {
+//        habitat->nextYear();
+//    }
+}
+
 
 // Afficher le nom du Zoo ⭐️
 void Zoo::showHabitats() const {

@@ -11,6 +11,8 @@ IAnimal::IAnimal(string name, char sexe, int age, AnimalType typeAnimal)
     }
 }
 
+
+
 string IAnimal::getName() { return m_name; }
 
 char IAnimal::getSexe() const { return m_sexe; }
@@ -20,94 +22,41 @@ int IAnimal::getAge() const { return m_age; }
 AnimalType IAnimal::getTypeAnimal() const { return m_typeAnimal; }
 
 float IAnimal::getPrix(char type) const {
+    if (m_age <= 180) { // Si l'animal a moins de 6 mois, le prix est toujours 0
+        return 0;
+    }
     switch (type) {
         case 'A':
             switch (m_typeAnimal) {
                 case AnimalType::TIGRE:
-                    if (m_age > 365 * 14) {
-                        // 14 ans
-                        return 60000;
-                    } else if (m_age > 365 * 4) {
-                        // 4 ans
-                        return 120000;
-                    } else if (m_age > 180) {
-                        // 6 mois
-                        return 3000;
-                    }
+                    return (m_age > 365 * 14) ? 60000 : float(((m_age > 365 * 4) ? 120000 : 3000));
                 case AnimalType::AIGLE:
-                    if (m_age > 365 * 14) {
-                        // 14 ans
-                        return 2000;
-                    } else if (m_age > 365 * 4) {
-                        // 4 ans
-                        return 4000;
-                    } else if (m_age > 180) {
-                        // 6 mois
-                        return 1000;
-                    }
+                    return (m_age > 365 * 14) ? 2000 : float(((m_age > 365 * 4) ? 4000 : 1000));
                 case AnimalType::POULE:
-                    switch (getSexe()) {
-                        case 'M':
-                            // Coq
-                            if (m_age > 180) {
-                                // 6 mois
-                                return 100;
-                            }
-                        case 'F':
-                            // Poule
-                            if (m_age > 180) {
-                                // 6 mois
-                                return 20;
-                            }
-                        default:
-                            return 0;
+                    if (getSexe() == 'M') { // Coq
+                        return (m_age > 180) ? 100 : 0;
+                    } else if (getSexe() == 'F') { // Poule
+                        return (m_age > 180) ? 20 : 0;
+                    } else { // Autre
+                        return 0;
                     }
-
                 default:
                     return 0;
             }
         case 'V':
             switch (m_typeAnimal) {
                 case AnimalType::TIGRE:
-                    if (m_age > 365 * 14) {
-                        // 14 ans
-                        return 10000;
-                    } else if (m_age > 365 * 4) {
-                        // 4 ans
-                        return 60000;
-                    } else if (m_age > 180) {
-                        // 6 mois
-                        return 1500;
-                    }
+                    return (m_age > 365 * 14) ? 10000 : float(((m_age > 365 * 4) ? 60000 : 1500));
                 case AnimalType::AIGLE:
-                    if (m_age > 365 * 14) {
-                        // 14 ans
-                        return 400;
-                    } else if (m_age > 365 * 4) {
-                        // 4 ans
-                        return 2000;
-                    } else if (m_age > 180) {
-                        // 6 mois
-                        return 500;
-                    }
+                    return (m_age > 365 * 14) ? 400 : float(((m_age > 365 * 4) ? 2000 : 500));
                 case AnimalType::POULE:
-                    switch (getSexe()) {
-                        case 'M':
-                            // Coq
-                            if (m_age > 180) {
-                                // 6 mois
-                                return 20;
-                            }
-                        case 'F':
-                            // Poule
-                            if (m_age > 180) {
-                                // 6 mois
-                                return 10;
-                            }
-                        default:
-                            return 0;
+                    if (getSexe() == 'M') { // Coq
+                        return (m_age > 180) ? 20 : 0;
+                    } else if (getSexe() == 'F') { // Poule
+                        return (m_age > 180) ? 10 : 0;
+                    } else { // Autre
+                        return 0;
                     }
-
                 default:
                     return 0;
             }
@@ -115,3 +64,4 @@ float IAnimal::getPrix(char type) const {
             return 0;
     }
 }
+

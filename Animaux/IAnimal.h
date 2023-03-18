@@ -12,6 +12,7 @@ enum class AnimalType { TIGRE, AIGLE, POULE };
 class IAnimal {
 public:
     IAnimal(string name, char sexe, int age, AnimalType typeAnimal);
+    virtual ~IAnimal() = default;
 
     virtual void show() = 0;
     virtual void fedAnimal(Aliment* food) = 0;

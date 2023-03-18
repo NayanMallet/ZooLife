@@ -11,6 +11,8 @@
 
 using namespace std;
 
+enum class Months { JANVIER, FEVRIER, MARS, AVRIL, MAI, JUIN, JUILLET, AOUT, SEPTEMBRE, OCTOBRE, NOVEMBRE, DECMEMBRE};
+
 class Zoo {
 public:
     vector<Habitat*> m_enclos;
@@ -29,7 +31,7 @@ public:
     void removeHabitat(Habitat *habitat);
 
     // TODO : Passing to the next year func
-//    void nextYear();
+    void nextYear();
 
     void sellAnimal(Habitat *habitat, IAnimal *animal);
     void buyAnimal(Habitat *habitat, IAnimal *animal);
