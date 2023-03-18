@@ -104,8 +104,8 @@ void Tigre::update(Aliment* food) {
         setReproduction(false);
     }
 
-    if (getAge() == m_esperanceDeVie) {
-        cout << getName() << " est mort de vieillesse !" << endl;
+    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
+        cout << getName() << " est mort !" << endl;
         Tigre::~Tigre();
         return;
     }

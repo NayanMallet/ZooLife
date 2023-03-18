@@ -76,8 +76,8 @@ void scenario() {
     zooLife->addHabitat(habitat3);
     zooLife->addHabitat(habitat4);
     zooLife->addHabitat(habitat5);
-    zooLife->buyAliment(FoodType::GRAINES, 2000);
-    zooLife->buyAliment(FoodType::VIANDE, 5000);
+//    zooLife->buyAliment(FoodType::GRAINES, 2000);
+//    zooLife->buyAliment(FoodType::VIANDE, 5000);
     cout << "ZooLife Before Maxime: " << endl;
     zooLife->show();
     zooLife->nextYear();
@@ -89,10 +89,8 @@ int main() {
     return 0;
 }
 
-// Updates :)
-// -> Aliment Class
-// -> IAnimals Class
-// -> Zoo Class
+// TODO: Maladie => 1ans
+// TODO:
 
 // ✅ => Complete
 // ⭐️ => Optimised

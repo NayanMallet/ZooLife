@@ -42,8 +42,8 @@ void Zoo::show() const {
 void Zoo::nextYear() {
     // update monthly
     for (int i = 0; i < 12; ++i) {
-//        m_budget->update(31);
-//        foodMonthlyUpdate();
+//        TODO: m_budget->update(31);
+        foodMonthlyUpdate();
         m_days += 31;
         cout << "Month: " << i << endl;
         for (auto& habitat : m_enclos) {
@@ -164,7 +164,6 @@ void Zoo::sellAliment(FoodType alimentType, float quantite) {
 
     aliment->subQuantite(quantite);
     m_budget->addBudget(aliment->getPrixKg() * quantite);
-    printf("Vous avez vendu %.2fkg de %s pour %.2f$\n", quantite, aliment->getNom().c_str(), aliment->getPrixKg() * quantite);
 }
 
 // Achat Aliment dans le Zoo ⭐️
@@ -190,7 +189,6 @@ void Zoo::buyAliment(FoodType alimentType, float quantite) {
 
     aliment->addQuantite(quantite);
     m_budget->removeBudget(prixTotal);
-    printf("Vous avez acheté %.2fkg de %s pour %.2f$\n", quantite, aliment->getNom().c_str(), prixTotal);
 }
 
 
