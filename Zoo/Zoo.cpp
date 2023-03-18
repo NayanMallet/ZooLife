@@ -42,11 +42,13 @@ void Zoo::show() const {
 
 void Zoo::nextYear() {
     // update monthly
-    for (int i = 0; i < 12; ++i) {
-//        TODO: m_budget->update(31);
+    for (auto& habitat : m_enclos) {
+        habitat->MaladieAnuelle();
+    }
+
+    for (auto& month : {"JANVIER", "FEVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECMEMBRE"}) {
+        cout << "----- " << month << " -----" << endl;
         foodMonthlyUpdate();
-        m_days += 31;
-        cout << "Month: " << i << endl;
         for (auto& habitat : m_enclos) {
             if (habitat->getNbrOfAnimals() > habitat->getCapacite()) {
                 habitat->PerteSurpopulation();
@@ -61,7 +63,6 @@ void Zoo::nextYear() {
                     break;
             }
         }
-        show();
         cout << "--------------------" << endl;
     }
 }
@@ -239,14 +240,12 @@ void Zoo::buyHabitat(string nom, AnimalType typeAnimal) {
 void Zoo::foodMonthlyUpdate() {
     viandeAvarieMonthly();
     graineNuisibleMonthly();
-//    for (const auto &habitat: m_enclos) {
-//        for (const auto &animal: habitat->m_animaux) {
-//            buyAliment(animal->getFoodType(), animal->getFoodQuantity());
-//            }
-//        }
-//    }
-
-}
+    for (const auto &habitat: m_enclos) {
+        for (const auto &animal: habitat->m_animaux) {
+            buyAliment(animal->getFoodType(), animal->getFoodQuantity());
+            }
+        }
+    }
 
 void Zoo::viandeAvarieMonthly() {
     static std::random_device rd;

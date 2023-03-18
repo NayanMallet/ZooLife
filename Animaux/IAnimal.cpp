@@ -73,7 +73,7 @@ bool IAnimal::getFed() const {
     return m_fed;
 }
 
-bool IAnimal::getMaladie() const {
+int IAnimal::getMaladie() const {
     return m_maladie;
 }
 

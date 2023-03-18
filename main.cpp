@@ -76,22 +76,19 @@ void scenario() {
     zooLife->addHabitat(habitat3);
     zooLife->addHabitat(habitat4);
     zooLife->addHabitat(habitat5);
-//    zooLife->buyAliment(FoodType::GRAINES, 2000);
-//    zooLife->buyAliment(FoodType::VIANDE, 5000);
     cout << "ZooLife Before Maxime: " << endl;
     zooLife->show();
     zooLife->nextYear();
     cout << "ZooLife After Maxime: " << endl;
+    for (auto & m_enclo : zooLife->m_enclos) {
+        for (auto & j : m_enclo->m_animaux) {
+            printf("Animal %s, malade: %s\n", j->getName().c_str() ,(j->getMaladie() ? "Oui" : "Non"));
+        }
+    }
 }
 
 int main() {
-    Zoo *zooLife = new Zoo("ZooLife");
-    zooLife->buyAliment(FoodType::GRAINES, 2000);
-    zooLife->buyAliment(FoodType::VIANDE, 5000);
-    for (int i = 0; i < 12; i++) {
-        zooLife->foodMonthlyUpdate();
-    }
-    zooLife->show();
+    scenario();
     return 0;
 }
 

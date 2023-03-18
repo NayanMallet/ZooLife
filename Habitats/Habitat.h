@@ -32,6 +32,8 @@ public:
 
     void PerteSurpopulation();
 
+    void MaladieAnuelle();
+
     void update(int days, Aliment *food);
 private:
     string m_nom;

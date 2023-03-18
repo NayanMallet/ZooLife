@@ -31,7 +31,7 @@ public:
     float getPrix(char type) const;
     bool getReproduction() const;
     bool getFed() const;
-    bool getMaladie() const;
+    int getMaladie() const;
 
     void setReproduction(bool reproduction);
     void setFed(bool fed);
@@ -47,7 +47,7 @@ private:
     FoodType m_foodType{};
     bool m_fed{false};
     bool m_reproduction{false};
-    bool m_maladie{false};
+    int m_maladie{0};
 
 };
 

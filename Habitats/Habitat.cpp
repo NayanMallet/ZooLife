@@ -202,3 +202,23 @@ void Habitat::update(int days, Aliment *food) {
         }
     }
 }
+
+void Habitat::MaladieAnuelle() {
+    if (m_animaux.empty()) {
+        return;
+    }
+    // Stocker le type d'animal dans une variable locale pour éviter de l'appeler plusieurs fois
+    AnimalType type = Habitat::getTypeAnimal();
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::bernoulli_distribution dist(float((type == AnimalType::TIGRE) ? 0.3 : (type == AnimalType::AIGLE) ? 0.1 : 0.05));
+
+    if (!dist(gen)) {
+        printf("Pas de maladie anuelle !\n");
+        return;
+    }
+
+    // Passe la maladie à un animal au hasard de l'habitat
+    m_animaux[rand() % m_animaux.size()]->setMaladie(int((type == AnimalType::TIGRE) ? 15 : (type == AnimalType::AIGLE) ? 30 : 5));
+    printf("Un %s est tombé malade pour une durée de %d jours !\n", (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")), (type == AnimalType::TIGRE) ? 15 : (type == AnimalType::AIGLE) ? 30 : 5);
+}
