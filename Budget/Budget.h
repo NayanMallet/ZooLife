@@ -4,14 +4,14 @@
 
 class Budget {
 public:
-    Budget(int budget);
+    Budget(float budget);
 
-    void setBudget(int budget);
-    int getBudget();
-    void addBudget(int budget);
-    void removeBudget(int budget);
+    void setBudget(float budget);
+    float getBudget();
+    void addBudget(float budget);
+    void removeBudget(float budget);
 private:
-    int m_budget;
+    float m_budget;
 
 };
 

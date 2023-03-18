@@ -20,11 +20,18 @@ Zoo::~Zoo() {
 
 void Zoo::show() const {
     printf("----- Zoo %s -----\n"
-           "=> Budget: %i$\n"
+           "=> Age: %s\n"
+           "=> Stock Aliment:\n"
+           "   -> Graines: %.2f\n"
+           "   -> Viande: %.2f\n"
+           "=> Budget: %.2f$\n"
            "=> Nombre d'Enclos: %i\n"
            "=> Liste des Enclos:\n%s"
            "---------------------------\n",
            m_name.c_str(),
+           dateConverter(m_days).c_str(),
+           m_stockAliment[0]->getQuantite(),
+           m_stockAliment[1]->getQuantite(),
            m_budget->getBudget(),
            getNbrOfEnclos(),
            listHabitats().c_str()
@@ -105,4 +112,54 @@ void Zoo::buyAnimal(Habitat* habitat, IAnimal* animal) {
 // Verifier si l'habitat est dans le zoo ⭐️
 bool Zoo::verifHabitat(Habitat *habitat) {
     return std::find(m_enclos.begin(), m_enclos.end(), habitat) != m_enclos.end();
+}
+
+// Vendre Aliment dans le Zoo
+void Zoo::sellAliment(FoodType alimentType, float quantite) {
+    switch (alimentType) {
+        case FoodType::GRAINES:
+            if (m_stockAliment[0]->getQuantite() < quantite) {
+                printf("Il n'y a pas assez d'aliment dans le Zoo !\n");
+                return;
+            }
+            m_stockAliment[0]->subQuantite(quantite);
+            m_budget->addBudget(m_stockAliment[0]->getPrixKg() * quantite);
+            printf("Vous avez vendu %.2fkg de Graines pour %.2f$\n", quantite, m_stockAliment[0]->getPrixKg() * quantite);
+            break;
+
+        case FoodType::VIANDE:
+            if (m_stockAliment[1]->getQuantite() < quantite) {
+                printf("Il n'y a pas assez d'aliment dans le Zoo !\n");
+                return;
+            }
+            m_stockAliment[1]->subQuantite(quantite);
+            m_budget->addBudget(m_stockAliment[1]->getPrixKg() * quantite);
+            printf("Vous avez vendu %.2fkg de Viande pour %.2f$\n", quantite, m_stockAliment[1]->getPrixKg() * quantite);
+            break;
+    }
+
+}
+
+// Achat Aliment dans le Zoo
+void Zoo::buyAliment(FoodType alimentType, float quantite) {
+    switch (alimentType) {
+        case FoodType::GRAINES:
+            if (m_budget->getBudget() < m_stockAliment[0]->getPrixKg() * quantite) {
+                printf("Il n'y a pas assez d'argent dans le Zoo !\n");
+                return;
+            }
+            m_stockAliment[0]->addQuantite(quantite);
+            m_budget->removeBudget(m_stockAliment[0]->getPrixKg() * quantite);
+            printf("Vous avez acheté %.2fkg de Graines pour %.2f$\n", quantite, m_stockAliment[0]->getPrixKg() * quantite);
+            break;
+        case FoodType::VIANDE:
+            if (m_budget->getBudget() < m_stockAliment[0]->getPrixKg() * quantite) {
+                printf("Il n'y a pas assez d'argent dans le Zoo !\n");
+                return;
+            }
+            m_stockAliment[1]->addQuantite(quantite);
+            m_budget->removeBudget(m_stockAliment[1]->getPrixKg() * quantite);
+            printf("Vous avez acheté %.2fkg de Viande pour %.2f$\n", quantite, m_stockAliment[1]->getPrixKg() * quantite);
+            break;
+    }
 }

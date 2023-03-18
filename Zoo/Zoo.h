@@ -38,14 +38,14 @@ public:
 //void sellHabitat(Habitat *habitat);
 //void buyHabitat(Habitat *habitat);
 
-void sellAliment(Aliment *aliment);
-void buyAliment(Aliment *aliment);
+    void sellAliment(FoodType alimentType, float quantite);
+    void buyAliment(FoodType alimentType, float quantite);
 
 private:
     string m_name;
     int m_days{0};
     Budget *m_budget{ new Budget(80000)};
-    vector<Aliment*> m_stockAliment{ new Graines("Graines"), new Viande("Viande")}
+    vector<Aliment*> m_stockAliment{ new Graines("Graines"), new Viande("Viande")};
 };
 
 
