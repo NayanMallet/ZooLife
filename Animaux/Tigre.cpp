@@ -91,6 +91,9 @@ void Tigre::setMaturingTime(int days) {
 void Tigre::update(Aliment* food) {
     m_joursAvantFaim--;
     setAge(getAge() + 1);
+    if (getMaladie() > 0) {
+        setMaladie(getMaladie() - 1);
+    }
 
     // update de la faim
     if (m_joursAvantFaim == 0) {
@@ -104,6 +107,7 @@ void Tigre::update(Aliment* food) {
         setReproduction(false);
     }
 
+//    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
     if (getAge() == m_esperanceDeVie) {
         cout << getName() << " est mort !" << endl;
         Tigre::~Tigre();
