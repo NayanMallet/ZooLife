@@ -235,7 +235,6 @@ void Habitat::update(string month, Aliment *food) {
             break;
     }
 
-
     for (int i = 0; i < 31; i++) {
         // Vérifier si l'habitat est vide
         if (m_animaux.empty()) {
@@ -256,24 +255,40 @@ void Habitat::update(string month, Aliment *food) {
             } else if (animal->getGestation() == 0 && animal->getPortee()) {
                 // Naissance
                 animal->setPortee(false);
+                static std::random_device rd;
+                static std::mt19937 gen(rd());
+                static std::bernoulli_distribution distS(0.5);
+                static std::bernoulli_distribution distT(0.33);
+                static std::bernoulli_distribution distAP(0.5);
                 switch (type) {
                     case AnimalType::TIGRE:
-                       // 3 individus
-//                        addAnimal();
-//                        addAnimal();
-//                        addAnimal();
-                        cout << "3 bébé tigre sont nées !" << endl;
+                        // 3 individus
+                        for (int j = 1; j <= 3; j++) {
+                            if (distT(gen)) {
+                                printf("Un bébé tigre n'as pas survécu à l'accouchement !\n");
+                            } else {
+//                                addAnimal(new Tigre("Bébé tigre", (distS(gen) ? 'M' : 'F'), 0));
+                                printf("Un bébé tigre (%c) est née !\n", (distS(gen) ? 'M' : 'F'));
+                            }
+                        }
                     case AnimalType::AIGLE:
                         // 2 oeufs
-//                        addAnimal();
-//                        addAnimal();
-                        cout << "2 bébés aigles sont nées !" << endl;
+                        for (int j = 1; j <= 2; j++) {
+                            if (distAP(gen)) {
+                                printf("Un bébé aigle n'as pas survécu à l'accouchement !\n");
+                            } else {
+                                printf("Un bébé aigle (%c) est née !\n", (distS(gen) ? 'M' : 'F'));
+                            }
+                        }
                     case AnimalType::POULE:
                         // 25 oeufs
-                        for (int p = 1; p < 26; p++) {
-//                            addAnimal();
+                        for (int j = 1; j <= 25; j++) {
+                            if (distAP(gen)) {
+                                printf("Un poussin n'as pas survécu à l'accouchement !\n");
+                            } else {
+                                printf("Un poussin (%c) est née !\n", (distS(gen) ? 'M' : 'F'));
+                            }
                         }
-                        cout << "25 bébés poules sont nées !" << endl;
                     default:
                         break;
                 }
