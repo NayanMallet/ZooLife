@@ -55,7 +55,7 @@ void Aigle::show() {
                dateConverter(m_finDeReprod).c_str(),
                dateConverter(m_esperanceDeVie).c_str(),
                dateConverter(m_maturiteSexuelle).c_str(),
-               m_portee.c_str(),
+               (m_portee ? "Oui" : "Non"),
                dateConverter(m_gestation).c_str(),
                m_mortaliteInfantile
         );
@@ -120,4 +120,12 @@ FoodType Aigle::getFoodType() {
 
 float Aigle::getFoodQuantity() {
     return m_AlimentationJour;
+}
+
+bool Aigle::getPortee() {
+    return m_portee;
+}
+
+void Aigle::setPortee(bool portee) {
+    m_portee = portee;
 }

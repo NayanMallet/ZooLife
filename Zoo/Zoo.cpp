@@ -39,11 +39,43 @@ void Zoo::show() const {
     );
 }
 
+void Zoo::nextMonth() {
+    string month = m_months[m_month];
+    if (month == "JANVIER") {
+        // Maladie Annuelle
+        for (auto& habitat : m_enclos) {
+            habitat->MaladieAnnuelle();
+        }
+    }
+    cout << "----- " << month << " -----" << endl;
+    foodMonthlyUpdate(); // get food for the month
+    for (auto& habitat : m_enclos) {
+        if (habitat->getNbrOfAnimals() > habitat->getCapacite()) {
+            habitat->PerteSurpopulation();
+        }
+        switch (habitat->getTypeAnimal()) {
+            case AnimalType::TIGRE:
+            case AnimalType::AIGLE:
+                habitat->update(31, m_stockAliment[1]);
+                break;
+            case AnimalType::POULE:
+                habitat->update(31, m_stockAliment[0]);
+                break;
+        }
+    }
+    cout << "--------------------" << endl;
+    if (month == "DECMEMBRE") {
+        m_month = 0;
+    } else {
+        m_month++;
+    }
+    m_days+=31;
+}
 
 void Zoo::nextYear() {
     // update monthly
     for (auto& habitat : m_enclos) {
-        habitat->MaladieAnuelle();
+        habitat->MaladieAnnuelle();
     }
 
     for (auto& month : {"JANVIER", "FEVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECMEMBRE"}) {

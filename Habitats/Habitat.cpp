@@ -208,7 +208,7 @@ void Habitat::update(int days, Aliment *food) {
     }
 }
 
-void Habitat::MaladieAnuelle() {
+void Habitat::MaladieAnnuelle() {
     if (m_animaux.empty()) {
         return;
     }

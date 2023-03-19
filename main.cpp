@@ -76,11 +76,17 @@ void scenario() {
     zooLife->addHabitat(habitat3);
     zooLife->addHabitat(habitat4);
     zooLife->addHabitat(habitat5);
-    cout << "ZooLife Before Maxime: " << endl;
     zooLife->show();
-    zooLife->nextYear();
-    cout << "ZooLife After Maxime: " << endl;
-    zooLife->show();
+    string Rep;
+    while (Rep != "3") {
+        printf("Que souhaitez-vous faire ?\n\t1 - Voir mon Zoo\n\t2 - Passer au prochain mois\n\t3 - Exit\n");
+        getline(cin, Rep);
+        if (Rep == "1") {
+            zooLife->show();
+        } else if (Rep == "2") {
+            zooLife->nextMonth();
+        }
+    }
 }
 
 int main() {

@@ -32,7 +32,7 @@ public:
 
     void PerteSurpopulation();
 
-    void MaladieAnuelle();
+    void MaladieAnnuelle();
 
     void update(int days, Aliment *food);
 private:

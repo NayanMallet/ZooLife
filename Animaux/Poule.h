@@ -18,6 +18,8 @@ public:
     int getMaturingTime() override;
     FoodType getFoodType() override;
     float getFoodQuantity() override;
+    bool getPortee();
+    void setPortee(bool portee);
 
     void setMaturingTime(int days) override;
 
@@ -28,8 +30,8 @@ private:
     m_esperanceDeVie{365 * 15}; // 15 ans
     float m_AlimentationJour{0.15}; // en kg
     int m_maturiteSexuelle{30 * 6}; // 6 mois
-    string m_portee{"200 eufs par an"};
-    int m_gestation{42}; // 6 semaines
+    bool m_portee{false};
+    int m_gestation;
     float m_mortaliteInfantile{50};
 };
 
