@@ -26,6 +26,10 @@ public:
     void foodMonthlyUpdate();
     void graineNuisibleMonthly();
     void viandeAvarieMonthly();
+
+    Habitat* returnRandomHabitat();
+    IAnimal* returnRandomAnimal();
+
     void volSpecimenMonthly();
     void incendieMonthly();
 
