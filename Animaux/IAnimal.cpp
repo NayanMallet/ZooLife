@@ -94,3 +94,11 @@ void IAnimal::setMaladie(bool maladie) {
 
 }
 
+bool IAnimal::getDead() const {
+    return m_dead;
+}
+
+void IAnimal::setDead(bool dead) {
+    m_dead = dead;
+}
+

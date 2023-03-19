@@ -198,6 +198,10 @@ void Habitat::update(int days, Aliment *food) {
             return;
         }
         for (auto &animal: m_animaux) {
+            if (animal->getDead()) {
+                m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), animal), m_animaux.end());
+                continue;
+            }
             animal->update(food);
         }
     }
@@ -211,14 +215,31 @@ void Habitat::MaladieAnuelle() {
     AnimalType type = Habitat::getTypeAnimal();
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    static std::bernoulli_distribution dist(float((type == AnimalType::TIGRE) ? 0.3 : (type == AnimalType::AIGLE) ? 0.1 : 0.05));
+    static std::bernoulli_distribution dist_mort(0.1); // Probabilité que l'animal meure dès le début
+    static std::bernoulli_distribution dist_maladie((type == AnimalType::TIGRE) ? 0.3 : (type == AnimalType::AIGLE) ? 0.1 : 0.05); // Probabilité de contracter la maladie
 
-    if (!dist(gen)) {
-        printf("Pas de maladie anuelle !\n");
+    if (dist_mort(gen)) {
+        // Un animal est mort dès le début de l'année
+        m_animaux[rand() % m_animaux.size()]->setDead(true);
+        cout << "Un " << (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")) << " est mort dès le début de l'année !" << endl;
         return;
     }
 
+    if (!dist_maladie(gen)) {
+        // Pas de maladie annuelle
+        cout << "Pas de maladie annuelle dans l'habitat " << getName() << " !" << endl;
+        return;
+    }
+
+    // Durée de la maladies en fonctions du type d'animal
+    int  duree = (type == AnimalType::TIGRE) ? 15 : (type == AnimalType::AIGLE) ? 30 : 5;
+    // Calcul de la variation de durée
+    std::uniform_real_distribution<float> distVariation(-0.2, 0.2);
+    float variation = distVariation(gen);
+    duree = int(duree * (1.0 + variation));
+
     // Passe la maladie à un animal au hasard de l'habitat
-    m_animaux[rand() % m_animaux.size()]->setMaladie(int((type == AnimalType::TIGRE) ? 15 : (type == AnimalType::AIGLE) ? 30 : 5));
-    printf("Un %s est tombé malade pour une durée de %d jours !\n", (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")), (type == AnimalType::TIGRE) ? 15 : (type == AnimalType::AIGLE) ? 30 : 5);
+    m_animaux[rand() % m_animaux.size()]->setMaladie(duree);
+    printf("Un %s est tombé malade pour une durée de %d jours !\n", (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")), duree);
 }
+

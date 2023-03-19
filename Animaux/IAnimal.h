@@ -32,11 +32,13 @@ public:
     bool getReproduction() const;
     bool getFed() const;
     int getMaladie() const;
+    bool getDead() const;
 
     void setReproduction(bool reproduction);
     void setFed(bool fed);
     void setAge(int age);
     void setMaladie(bool maladie);
+    void setDead(bool dead);
 
 
 private:
@@ -48,6 +50,7 @@ private:
     bool m_fed{false};
     bool m_reproduction{false};
     int m_maladie{0};
+    bool m_dead{false};
 
 };
 

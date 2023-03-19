@@ -82,9 +82,10 @@ void scenario() {
     cout << "ZooLife After Maxime: " << endl;
     for (auto & m_enclo : zooLife->m_enclos) {
         for (auto & j : m_enclo->m_animaux) {
-            printf("Animal %s, malade: %s\n", j->getName().c_str() ,(j->getMaladie() ? "Oui" : "Non"));
+            printf("Animal %s, malade pour %d jours\n", j->getName().c_str() ,(j->getMaladie()));
         }
     }
+    zooLife->show();
 }
 
 int main() {
