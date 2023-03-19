@@ -56,10 +56,10 @@ void Zoo::nextMonth() {
         switch (habitat->getTypeAnimal()) {
             case AnimalType::TIGRE:
             case AnimalType::AIGLE:
-                habitat->update(31, m_stockAliment[1]);
+                habitat->update(month, m_stockAliment[1]);
                 break;
             case AnimalType::POULE:
-                habitat->update(31, m_stockAliment[0]);
+                habitat->update(month, m_stockAliment[0]);
                 break;
         }
     }
@@ -88,10 +88,10 @@ void Zoo::nextYear() {
             switch (habitat->getTypeAnimal()) {
                 case AnimalType::TIGRE:
                 case AnimalType::AIGLE:
-                    habitat->update(31, m_stockAliment[1]);
+                    habitat->update(month, m_stockAliment[1]);
                     break;
                 case AnimalType::POULE:
-                    habitat->update(31, m_stockAliment[0]);
+                    habitat->update(month, m_stockAliment[0]);
                     break;
             }
         }
@@ -306,6 +306,7 @@ void Zoo::graineNuisibleMonthly() {
     m_stockAliment[0]->subQuantite(float(m_stockAliment[0]->getQuantite() * 0.1));
     printf("Il y a eu des nuisibles sur les graines !\n");
 }
+
 
 void Zoo::volSpecimenMonthly() {
 

@@ -7,30 +7,57 @@ using namespace std;
 
 Poule::Poule(string name, int age): IAnimal(std::move(name), 'F', age, AnimalType::POULE){};
 
+
 void Poule::show() {
     printf("----- %s (%c) -----\n"
            "=> Age: %s\n"
-           "=> Alimentation: Graines, %.2fkg/j\n"
+           "=> Alimentation: Viande, %.2fkg/j\n"
            "=> Jours avant faim: %s\n"
-           "=> Fin de reproduction: %s\n"
+           "=> Reproduction: %s\n" // Reproduction
            "=> Esperance de vie: %s\n"
-           "=> Maturite sexuelle: %s\n"
-           "=> Ponte / portée: %s\n"
+           "=> Ponte: %s\n"
            "=> Gestation: %s\n"
            "=> Mortalité infantile: %.2f%%\n"
+           "=> Remarque: Fidele\n"
            "---------------------\n",
            getName().c_str(), getSexe(),
            dateConverter(getAge()).c_str(),
            m_AlimentationJour,
            dateConverter(m_joursAvantFaim).c_str(),
-           dateConverter(m_finDeReprod).c_str(),
+           (getReproduction() ? "Oui" : "Non"),
            dateConverter(m_esperanceDeVie).c_str(),
-           dateConverter(m_maturiteSexuelle).c_str(),
            (m_portee ? "Oui" : "Non"),
            dateConverter(m_gestation).c_str(),
            m_mortaliteInfantile
     );
 }
+
+
+//
+//void Poule::show() {
+//    printf("----- %s (%c) -----\n"
+//           "=> Age: %s\n"
+//           "=> Alimentation: Graines, %.2fkg/j\n"
+//           "=> Jours avant faim: %s\n"
+//           "=> Fin de reproduction: %s\n"
+//           "=> Esperance de vie: %s\n"
+//           "=> Maturite sexuelle: %s\n"
+//           "=> Ponte / portée: %s\n"
+//           "=> Gestation: %s\n"
+//           "=> Mortalité infantile: %.2f%%\n"
+//           "---------------------\n",
+//           getName().c_str(), getSexe(),
+//           dateConverter(getAge()).c_str(),
+//           m_AlimentationJour,
+//           dateConverter(m_joursAvantFaim).c_str(),
+//           dateConverter(m_finDeReprod).c_str(),
+//           dateConverter(m_esperanceDeVie).c_str(),
+//           dateConverter(m_maturiteSexuelle).c_str(),
+//           (m_portee ? "Oui" : "Non"),
+//           dateConverter(m_gestation).c_str(),
+//           m_mortaliteInfantile
+//    );
+//}
 
 void Poule::resetDaysBeforeFed() { m_joursAvantFaim = 1; }
 
@@ -67,10 +94,10 @@ void Poule::update(Aliment* food) {
     }
 
     // update de la reproduction
-    if ((m_maturiteSexuelle <= getAge() <= m_finDeReprod) && getMaladie() == 0 && getFed()) {
-        setReproduction(true);
-    } else {
+    if (getAge() <= m_maturiteSexuelle || getAge() >= m_finDeReprod || getMaladie() > 0) {
         setReproduction(false);
+    } else {
+        setReproduction(true);
     }
 
     //    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
@@ -95,4 +122,13 @@ bool Poule::getPortee() {
 
 void Poule::setPortee(bool portee) {
     m_portee = portee;
+}
+
+int Poule::getGestation() {
+    return m_gestation;
+}
+
+void Poule::setGestation(int gestation) {
+    m_gestation = gestation;
+
 }

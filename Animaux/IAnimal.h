@@ -22,6 +22,10 @@ public:
     virtual FoodType getFoodType() = 0;
     virtual float getFoodQuantity() = 0;
     virtual void setMaturingTime(int days) = 0;
+    virtual bool getPortee() = 0;
+    virtual void setPortee(bool portee) = 0;
+    virtual int getGestation() = 0;
+    virtual void setGestation(int gestation) = 0;
 
 
     string getName();
@@ -47,7 +51,7 @@ private:
     int m_age{}; // en jours
     AnimalType m_typeAnimal{};
     FoodType m_foodType{};
-    bool m_fed{false};
+    bool m_fed{false}; // getFed -> True = Animal a faim / False = Animal n'as pas faim
     bool m_reproduction{false};
     int m_maladie{0};
     bool m_dead{false};

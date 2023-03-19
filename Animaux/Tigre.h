@@ -19,8 +19,10 @@ public:
     int getMaturingTime() override;
     FoodType getFoodType() override;
     float getFoodQuantity() override;
-    bool getPortee();
-    void setPortee(bool portee);
+    bool getPortee() override;
+    void setPortee(bool portee) override;
+    int getGestation() override;
+    void setGestation(int gestation) override;
 
     void setMaturingTime(int days) override;
 
@@ -32,7 +34,7 @@ private:
     float m_AlimentationJour; // en kg
     int m_maturiteSexuelle;
     bool m_portee{false};
-    int m_gestation;
+    int m_gestation{0};
     float m_mortaliteInfantile;
 };
 

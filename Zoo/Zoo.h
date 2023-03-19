@@ -14,6 +14,7 @@ using namespace std;
 class Zoo {
 public:
     vector<Habitat*> m_enclos;
+    vector<Habitat*> m_enclosGestation;
 
     Zoo(string nom);
     ~Zoo();

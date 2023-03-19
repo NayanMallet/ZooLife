@@ -15,6 +15,10 @@ public:
     int getMaturingTime() override;
     FoodType getFoodType() override;
     float getFoodQuantity() override;
+    bool getPortee() override;
+    void setPortee(bool portee) override;
+    int getGestation() override;
+    void setGestation(int gestation) override;
 
     void setMaturingTime(int days) override;
 

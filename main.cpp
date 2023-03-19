@@ -90,7 +90,49 @@ void scenario() {
 }
 
 int main() {
-    scenario();
+    // Couples Tigres :)
+    auto *TigreM = new Tigre("Tigrou", 'M', 365*6);
+    auto *TigreF = new Tigre("Jeanne", 'F', 365*6);
+
+    // Couples Aigles :)
+    auto *AigleM = new Aigle("Jules", 'M', 365*4);
+    auto *AigleF = new Aigle("Leo", 'F', 365*4);
+
+    // Le Coq
+    auto *Coq1 = new Coq("Zizou", 31*6);
+
+    // Les Poules
+    auto *Poule1 = new Poule("Poule1", 31*6);
+
+
+    // Les Habitats
+    auto *hTigres = new Habitat("Couple de Tigre", AnimalType::TIGRE);
+    hTigres->addAnimal(TigreM);
+    hTigres->addAnimal(TigreF);
+    auto *hAigles = new Habitat("Couple d'Aigle", AnimalType::AIGLE);
+    hAigles->addAnimal(AigleM);
+    hAigles->addAnimal(AigleF);
+    auto *hPoules = new Habitat("KFC", AnimalType::POULE);
+    hPoules->addAnimal(Coq1);
+    hPoules->addAnimal(Poule1);
+
+    Zoo *zooLife = new Zoo("ZooLife");
+    zooLife->addHabitat(hTigres);
+    zooLife->addHabitat(hAigles);
+    zooLife->addHabitat(hPoules);
+
+    string Rep;
+
+    while (Rep != "3") {
+        printf("Que souhaitez-vous faire ?\n\t1 - Voir mes enclos\n\t2 - Passer au prochain mois\n\t3 - Exit\n");
+        getline(cin, Rep);
+        if (Rep == "1") {
+
+        } else if (Rep == "2") {
+            zooLife->nextMonth();
+        }
+    }
+
     return 0;
 }
 
