@@ -198,6 +198,7 @@ void Habitat::update(int days, Aliment *food) {
             return;
         }
         for (auto &animal: m_animaux) {
+            // Vérifier si l'animal est mort
             if (animal->getDead()) {
                 m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), animal), m_animaux.end());
                 continue;
