@@ -307,10 +307,60 @@ void Zoo::graineNuisibleMonthly() {
     printf("Il y a eu des nuisibles sur les graines !\n");
 }
 
-void Zoo::volSpecimenMonthly() {
+vector<IAnimal*> Habitat::getAnimals() const {
+    return m_animaux;
+}
 
+Habitat* Zoo::returnRandomHabitat() {
+    if (m_enclos.empty()) {
+        return nullptr;
+    }
+    // Seed the random engine
+    random_device rd;
+    mt19937 rng(rd());
+    uniform_int_distribution<int> uni(0, m_enclos.size() - 1);
+    // Return a random habitat
+    return m_enclos[uni(rng)];
+}
+
+IAnimal* Zoo::returnRandomAnimal() {
+    Habitat* habitat = returnRandomHabitat();
+    if (!habitat) {
+        return nullptr;
+    }
+    vector<IAnimal*> animals = habitat->getAnimals();
+    if (animals.empty()) {
+        return nullptr;
+    }
+    // Seed the random engine
+    random_device rd;
+    mt19937 rng(rd());
+    uniform_int_distribution<int> uni(0, animals.size() - 1);
+    // Return a random animal
+    return animals[uni(rng)];
+}
+
+void Zoo::volSpecimenMonthly() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::bernoulli_distribution dist(0.01);
+
+    if (!dist(gen)) {
+        printf("Pas de vol de spécimen !\n");
+        return;
+    }
+
+    return returnRandomHabitat()->removeAnimal(returnRandomAnimal());
 }
 
 void Zoo::incendieMonthly() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::bernoulli_distribution dist(0.01);
 
+    if(!dist(gen)){
+        printf("Pas d'incendie !\n");
+        return;
+    }
+    removeHabitat(returnRandomHabitat());
 }

@@ -35,6 +35,9 @@ public:
     void MaladieAnnuelle();
 
     void update(int days, Aliment *food);
+
+    vector<IAnimal *> getAnimals() const;
+
 private:
     string m_nom;
     int m_capacite;
