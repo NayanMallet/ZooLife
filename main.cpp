@@ -113,10 +113,11 @@ int test() {
 
     Zoo *zooLife = new Zoo("ZooLife");
     zooLife->addHabitat(hTigres);
+    Vendeur *vendeur = new Vendeur("Moha");
     string Rep;
 
-    while (Rep != "3") {
-        printf("Que souhaitez-vous faire ?\n\t1 - Voir mes enclos\n\t2 - Passer au prochain mois\n\t3 - Exit\n");
+    while (Rep != "4") {
+        printf("Que souhaitez-vous faire ?\n\t1 - Voir mes enclos\n\t2 - Passer au prochain mois\n\t3 - Parler au vendeur\n\t4 - Exit\n");
         getline(cin, Rep);
         if (Rep == "1") {
             cout << "----- Habitats -----" << endl;
@@ -126,6 +127,59 @@ int test() {
             cout << "-------------------" << endl;
         } else if (Rep == "2") {
             zooLife->nextMonth();
+        } else if (Rep == "3") {
+            cout << "----- " << vendeur->getName() << " -----" << endl;
+            string VendRep;
+            while (VendRep != "4") {
+                printf("Bonjour! Que souhaitez-vous faire ?\n\t1 - Acheter/Vendre un animal\n\t2 - Acheter/Vendre un habitat\n\t3 - Acheter/Vendre de la nourriture\n\t4 - Exit\n");
+                getline(cin, VendRep);
+                if (VendRep == "1") {
+                    string AnimalRep;
+                    while (AnimalRep != "3") {
+                        cout << "----- Animaux -----" << endl;
+                        printf("Que souhaitez-vous faire ?\n\t1 - Acheter un animal\n\t2 - Vendre un animal\n\t3 - Exit\n");
+                        getline(cin, AnimalRep);
+                        if (AnimalRep == "1") {
+                            cout << "Acheter un animal" << endl;
+                            vendeur->showAnimals();
+                        } else if (AnimalRep == "2") {
+                            cout << "Vendre un animal" << endl;
+                            for (auto& h : zooLife->m_enclos) {
+                                h->showAnimals();
+                            }
+                        }
+                    }
+                } else if (VendRep == "2") {
+                    string HabitatRep;
+                    while (HabitatRep != "3") {
+                        cout << "----- Habitats -----" << endl;
+                        printf("Que souhaitez-vous faire ?\n\t1 - Acheter un habitat\n\t2 - Vendre un habitat\n\t3 - Exit\n");
+                        getline(cin, HabitatRep);
+                        if (HabitatRep == "1") {
+                            cout << "Acheter un habitat" << endl;
+                            vendeur->showHabitats();
+                        } else if (HabitatRep == "2") {
+                            cout << "Vendre un habitat" << endl;
+                            for (auto& h : zooLife->m_enclos) {
+                                h->show();
+                            }
+                        }
+                    }
+                } else if (VendRep == "3") {
+                    string NourritureRep;
+                    while (NourritureRep != "3") {
+                        cout << "----- Nourriture -----" << endl;
+                        printf("Que souhaitez-vous faire ?\n\t1 - Acheter de la nourriture\n\t2 - Vendre de la nourriture\n\t3 - Exit\n");
+                        getline(cin, NourritureRep);
+                        if (NourritureRep == "1") {
+                            cout << "Acheter de la nourriture" << endl;
+                            vendeur->showAliments();
+                        } else if (NourritureRep == "2") {
+                            cout << "Vendre de la nourriture" << endl;
+                        }
+                    }
+                }
+            }
         }
     }
 

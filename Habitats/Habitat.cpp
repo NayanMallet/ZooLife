@@ -366,3 +366,7 @@ void Habitat::MaladieAnnuelle() {
     m_animaux[rand() % m_animaux.size()]->setMaladie(duree);
     printf("Un %s est tombé malade pour une durée de %d jours !\n", (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")), duree);
 }
+
+void Habitat::setName(const string &name) {
+    m_nom = name;
+}

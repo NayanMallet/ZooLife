@@ -102,3 +102,7 @@ void IAnimal::setDead(bool dead) {
     m_dead = dead;
 }
 
+void IAnimal::setNom(string nom) {
+    m_name = std::move(nom);
+}
+

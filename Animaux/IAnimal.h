@@ -45,6 +45,7 @@ public:
     void setAge(int age);
     void setMaladie(bool maladie);
     void setDead(bool dead);
+    void setNom(string nom);
 
 
 private:

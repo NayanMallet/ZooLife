@@ -19,6 +19,7 @@ public:
     string listAnimals() const;
 
     const string & getName() const;
+    void setName(const string &name);
     int getCapacite() const;
     int getNbrOfAnimals() const;
     AnimalType getTypeAnimal() const;
