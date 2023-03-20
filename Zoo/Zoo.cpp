@@ -310,7 +310,7 @@ void Zoo::graineNuisibleMonthly() {
     printf("Il y a eu des nuisibles sur les graines !\n");
 }
 
-
+// Verifie si il y a un vol de spécimen dans le zoo
 void Zoo::volSpecimenMonthly() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
@@ -328,6 +328,7 @@ void Zoo::volSpecimenMonthly() {
     animal->~IAnimal();
 }
 
+// Verifie si il y a un incendie dans le zoo
 void Zoo::incendieMonthly() {
     static std::random_device rd;
     static std::mt19937 gen(rd());

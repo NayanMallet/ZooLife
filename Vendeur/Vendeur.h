@@ -9,9 +9,15 @@ using namespace std;
 
 class Vendeur {
 public:
-    vector<IAnimal*> m_animaux;
-    vector<Habitat*> m_habitats;
-    vector<Aliment*> m_aliments;
+    vector<IAnimal*> m_animaux{
+
+    };
+    vector<Habitat*> m_habitats{
+
+    };
+    vector<Aliment*> m_aliments{
+
+    };
 
     Vendeur(string nom);
     ~Vendeur();
