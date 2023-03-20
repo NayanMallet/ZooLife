@@ -113,10 +113,13 @@ bool Tigre::fedAnimal(Aliment* food) {
     if (food->getFoodType() != FoodType::VIANDE) {
         return true;
     }
-    if (food->getQuantite() < m_AlimentationJour) {
+
+    float alim = (getGestation() > 0 ? m_AlimentationJour * 2 : m_AlimentationJour);
+
+    if (food->getQuantite() < alim) {
         return true;
     }
-    food->subQuantite(m_AlimentationJour);
+    food->subQuantite(alim);
     resetDaysBeforeFed();
     return false;
 }
