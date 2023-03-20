@@ -29,6 +29,7 @@ Habitat::Habitat(string nom, AnimalType typeAnimal) : m_nom(nom), m_typeAnimal(t
             m_prixAchat = 300;
             m_prixVente = 50;
             m_probaMaladie = 5;
+            break;
         default:
             break;
     }
@@ -214,6 +215,7 @@ void Habitat::update(string month, Aliment *food) {
                     cout << "Un tigre est enceinte pour 45 jours !" << endl << "Achetez un nouvel habitat pour accueillir la portee." << endl;
                 }
             }
+            break;
         case AnimalType::AIGLE:
             // 2 oeufs
             if (month != "MARS") {
@@ -227,6 +229,7 @@ void Habitat::update(string month, Aliment *food) {
                    cout << "Un aigle est enceinte pour 45 jours !" << endl << "Achetez un nouvel habitat pour accueillir la portee." << endl;
                }
            }
+            break;
         case AnimalType::POULE:
             // 25 œufs / 6 semaines (1ans = 8*6semaines)
             for (auto &animal: m_animaux) {
@@ -237,6 +240,7 @@ void Habitat::update(string month, Aliment *food) {
                     cout << "Une poule est enceinte pour 6 semaines !" << endl << "Achetez un nouvel habitat pour accueillir la portee." << endl;
                 }
             }
+            break;
         default:
             break;
     }
