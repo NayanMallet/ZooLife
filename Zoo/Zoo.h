@@ -27,12 +27,6 @@ public:
     void graineNuisibleMonthly();
     void viandeAvarieMonthly();
 
-    Habitat* returnRandomHabitat();
-    IAnimal* returnRandomAnimal();
-
-    void volSpecimenMonthly();
-    void incendieMonthly();
-
     const string & getName() const;
     int getNbrOfEnclos() const;
 
@@ -52,6 +46,9 @@ public:
 
     void sellHabitat(Habitat *habitat);
     void buyHabitat(string nom, AnimalType typeAnimal);
+
+    void volSpecimenMonthly();
+    void incendieMonthly();
 
 private:
     string m_name;

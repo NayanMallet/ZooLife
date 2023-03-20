@@ -102,18 +102,6 @@ int test() {
     auto *TigreF3 = new Tigre("Tigrou3", 'F', 365*6);
     auto *TigreM3 = new Tigre("Jeanne3", 'F', 365*6);
 
-
-//    // Couples Aigles :)
-//    auto *AigleM = new Aigle("Jules", 'M', 365*4);
-//    auto *AigleF = new Aigle("Leo", 'F', 365*4);
-//
-//    // Le Coq
-//    auto *Coq1 = new Coq("Zizou", 31*6);
-//
-//    // Les Poules
-//    auto *Poule1 = new Poule("Poule1", 31*6);
-
-
     // Les Habitats
     auto *hTigres = new Habitat("Couple de Tigre", AnimalType::TIGRE);
     hTigres->addAnimal(TigreM);
@@ -123,18 +111,8 @@ int test() {
     hTigres->addAnimal(TigreF3);
     hTigres->addAnimal(TigreM3);
 
-//    auto *hAigles = new Habitat("Couple d'Aigle", AnimalType::AIGLE);
-//    hAigles->addAnimal(AigleM);
-//    hAigles->addAnimal(AigleF);
-//    auto *hPoules = new Habitat("KFC", AnimalType::POULE);
-//    hPoules->addAnimal(Coq1);
-//    hPoules->addAnimal(Poule1);
-
     Zoo *zooLife = new Zoo("ZooLife");
     zooLife->addHabitat(hTigres);
-//    zooLife->addHabitat(hAigles);
-//    zooLife->addHabitat(hPoules);
-
     string Rep;
 
     while (Rep != "3") {

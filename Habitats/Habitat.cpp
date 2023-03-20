@@ -200,6 +200,7 @@ void Habitat::PerteSurpopulation() {
     }
 }
 
+// Update de l'habitat
 void Habitat::update(string month, Aliment *food) {
     // update Portee
     AnimalType type = Habitat::getTypeAnimal();
@@ -329,6 +330,7 @@ void Habitat::update(string month, Aliment *food) {
     }
 }
 
+// Maladie annuelle ⭐️
 void Habitat::MaladieAnnuelle() {
     if (m_animaux.empty()) {
         return;

@@ -41,14 +41,17 @@ void Zoo::show() const {
 
 void Zoo::nextMonth() {
     string month = m_months[m_month];
-    if (month == "JANVIER") {
+    if (month == "DECMEMBRE") {
         // Maladie Annuelle
         for (auto& habitat : m_enclos) {
             habitat->MaladieAnnuelle();
         }
+        // taxes
     }
     cout << "----- " << month << " -----" << endl;
     foodMonthlyUpdate(); // get food for the month
+    volSpecimenMonthly(); // vol de spécimen
+    incendieMonthly(); // incendie
     for (auto& habitat : m_enclos) {
         if (habitat->getNbrOfAnimals() > habitat->getCapacite()) {
             habitat->PerteSurpopulation();
@@ -309,9 +312,34 @@ void Zoo::graineNuisibleMonthly() {
 
 
 void Zoo::volSpecimenMonthly() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::bernoulli_distribution dist(0.01);
 
+    if (!dist(gen)) {
+        printf("Pas de vol de spécimen !\n");
+        return;
+    }
+
+    auto *habitat = m_enclos[rand() % m_enclos.size()];
+    auto *animal = habitat->m_animaux[rand() % habitat->m_animaux.size()];
+    printf("Il y a eu un vol de spécimen sur un %s dans l'habitat '%s' !\n", animal->getName().c_str(), habitat->getName().c_str());
+    habitat->removeAnimal(animal);
+    animal->~IAnimal();
 }
 
 void Zoo::incendieMonthly() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::bernoulli_distribution dist(0.01);
 
+    if(!dist(gen)){
+        printf("Pas d'incendie !\n");
+        return;
+    }
+
+    auto *habitat = m_enclos[rand() % m_enclos.size()];
+    printf("Il y a eu un incendie sur un l'habitat '%s' !\n", habitat->getName().c_str());
+    removeHabitat(habitat);
+    habitat->~Habitat();
 }
