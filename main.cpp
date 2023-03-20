@@ -127,7 +127,13 @@ int main() {
         printf("Que souhaitez-vous faire ?\n\t1 - Voir mes enclos\n\t2 - Passer au prochain mois\n\t3 - Exit\n");
         getline(cin, Rep);
         if (Rep == "1") {
-
+            cout << "----- Animaux -----" << endl;
+            for (auto &habitat : zooLife->m_enclos) {
+                for (auto &animal : habitat->m_animaux) {
+                    animal->show();
+                }
+            }
+            cout << "-------------------" << endl;
         } else if (Rep == "2") {
             zooLife->nextMonth();
         }

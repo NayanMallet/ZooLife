@@ -34,8 +34,6 @@ public:
 
     void MaladieAnnuelle();
 
-    void foetus(IAnimal* animal);
-
     void update(string month, Aliment *food);
 private:
     string m_nom;

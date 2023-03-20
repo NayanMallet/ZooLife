@@ -3,6 +3,10 @@
 #include <algorithm>
 #include <random>
 #include "../Functions/functions.h"
+#include "../Animaux/Tigre.h"
+#include "../Animaux/Aigle.h"
+#include "../Animaux/Poule.h"
+#include "../Animaux/Coq.h"
 
 using namespace std;
 
@@ -254,6 +258,7 @@ void Habitat::update(string month, Aliment *food) {
                 animal->setGestation(animal->getGestation() - 1);
             } else if (animal->getGestation() == 0 && animal->getPortee()) {
                 // Naissance
+                cout << "----- Naissances -----" << endl;
                 animal->setPortee(false);
                 static std::random_device rd;
                 static std::mt19937 gen(rd());
@@ -267,31 +272,46 @@ void Habitat::update(string month, Aliment *food) {
                             if (distT(gen)) {
                                 printf("Un bébé tigre n'as pas survécu à l'accouchement !\n");
                             } else {
-//                                addAnimal(new Tigre("Bébé tigre", (distS(gen) ? 'M' : 'F'), 0));
-                                printf("Un bébé tigre (%c) est née !\n", (distS(gen) ? 'M' : 'F'));
+                                char genre = distS(gen) ? 'M' : 'F';
+                                m_animaux.push_back(new Tigre("Bébé tigre", genre, 0));
+//                                addAnimal(new Tigre("Bébé tigre", genre, 0));
+                                printf("Un bébé tigre (%c) est née !\n", genre);
                             }
                         }
+                        break;
                     case AnimalType::AIGLE:
                         // 2 oeufs
                         for (int j = 1; j <= 2; j++) {
                             if (distAP(gen)) {
                                 printf("Un bébé aigle n'as pas survécu à l'accouchement !\n");
                             } else {
-                                printf("Un bébé aigle (%c) est née !\n", (distS(gen) ? 'M' : 'F'));
+                                char genre = distS(gen) ? 'M' : 'F';
+                                addAnimal(new Aigle("Bébé aigle", genre, 0));
+                                printf("Un bébé aigle (%c) est née !\n", genre);
                             }
                         }
+                        break;
                     case AnimalType::POULE:
                         // 25 oeufs
                         for (int j = 1; j <= 25; j++) {
                             if (distAP(gen)) {
                                 printf("Un poussin n'as pas survécu à l'accouchement !\n");
                             } else {
-                                printf("Un poussin (%c) est née !\n", (distS(gen) ? 'M' : 'F'));
+                                char genre = distS(gen) ? 'M' : 'F';
+                                if (genre == 'M') {
+                                    addAnimal(new Coq("Bébé coq", 0));
+                                    printf("Un poussin (M) est née !\n");
+                                } else {
+                                    addAnimal(new Poule("Bébé poule", 0));
+                                    printf("Un poussin (F) est née !\n");
+                                }
                             }
                         }
+                        break;
                     default:
                         break;
                 }
+                cout << "----------------------" << endl;
             }
         }
     }
@@ -331,31 +351,4 @@ void Habitat::MaladieAnnuelle() {
     // Passe la maladie à un animal au hasard de l'habitat
     m_animaux[rand() % m_animaux.size()]->setMaladie(duree);
     printf("Un %s est tombé malade pour une durée de %d jours !\n", (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")), duree);
-}
-
-void Habitat::foetus(IAnimal *animal) {
-    if (m_animaux.empty()) {
-        return;
-    }
-
-    // Stocker le type d'animal dans une variable locale pour éviter de l'appeler plusieurs fois
-    AnimalType type = Habitat::getTypeAnimal();
-    switch (type) {
-        case AnimalType::TIGRE:
-            // TODO: Ponte Tigre
-        case AnimalType::AIGLE:
-            if (m_animaux.size() > 2) {
-                return;
-            }
-            break;
-        case AnimalType::POULE:
-            if (m_animaux.size() > 4) {
-                return;
-            }
-            break;
-        default:
-            return;
-
-    }
-
 }
