@@ -17,11 +17,13 @@ Habitat::Habitat(string nom, AnimalType typeAnimal) : m_nom(nom), m_typeAnimal(t
             m_prixAchat = 2000;
             m_prixVente = 500;
             m_probaMaladie = 20;
+            break;
         case AnimalType::AIGLE:
             m_capacite = 4;
             m_prixAchat = 2000;
             m_prixVente = 500;
             m_probaMaladie = 10;
+            break;
         case AnimalType::POULE:
             m_capacite = 10;
             m_prixAchat = 300;
@@ -253,6 +255,13 @@ void Habitat::update(string month, Aliment *food) {
 
             animal->update(food);
 
+            // update de la reproduction
+            if (animal->getAge() <= animal->getMaturingTime() || animal->getAge() >= animal->getEndMaturingTime() || animal->getMaladie() > 0 || getNbrOfAnimals() > m_capacite) {
+                animal->setReproduction(false);
+            } else {
+                animal->setReproduction(true);
+            }
+
             // Update Gestation
             if (animal->getGestation() > 0) {
                 animal->setGestation(animal->getGestation() - 1);
@@ -273,8 +282,7 @@ void Habitat::update(string month, Aliment *food) {
                                 printf("Un bébé tigre n'as pas survécu à l'accouchement !\n");
                             } else {
                                 char genre = distS(gen) ? 'M' : 'F';
-                                m_animaux.push_back(new Tigre("Bébé tigre", genre, 0));
-//                                addAnimal(new Tigre("Bébé tigre", genre, 0));
+                                addAnimal(new Tigre("Bébé tigre", genre, 0));
                                 printf("Un bébé tigre (%c) est née !\n", genre);
                             }
                         }

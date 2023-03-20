@@ -17,6 +17,7 @@ public:
     void resetDaysBeforeFed() override;
     void update(Aliment* food) override;
     int getMaturingTime() override;
+    int getEndMaturingTime() override;
     FoodType getFoodType() override;
     float getFoodQuantity() override;
     bool getPortee() override;

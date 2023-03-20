@@ -140,13 +140,6 @@ void Aigle::update(Aliment* food) {
         setFed(fedAnimal(food));
     }
 
-    // update de la reproduction
-    if (getAge() <= m_maturiteSexuelle || getAge() >= m_finDeReprod || getMaladie() > 0) {
-        setReproduction(false);
-    } else {
-        setReproduction(true);
-    }
-
     //    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
     if (getAge() == m_esperanceDeVie) {
         cout << getName() << " est mort !" << endl;
@@ -177,4 +170,8 @@ int Aigle::getGestation() {
 
 void Aigle::setGestation(int gestation) {
     m_gestation = gestation;
+}
+
+int Aigle::getEndMaturingTime() {
+    return m_finDeReprod;
 }

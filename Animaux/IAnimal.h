@@ -19,6 +19,8 @@ public:
     virtual void resetDaysBeforeFed() = 0;
     virtual void update(Aliment* food) = 0;
     virtual int getMaturingTime() = 0;
+    virtual int getEndMaturingTime() = 0;
+
     virtual FoodType getFoodType() = 0;
     virtual float getFoodQuantity() = 0;
     virtual void setMaturingTime(int days) = 0;

@@ -141,13 +141,6 @@ void Tigre::update(Aliment* food) {
         setFed(fedAnimal(food));
     }
 
-    // update de la reproduction
-    if (getAge() <= m_maturiteSexuelle || getAge() >= m_finDeReprod || getMaladie() > 0) {
-        setReproduction(false);
-    } else {
-        setReproduction(true);
-    }
-
 //    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
     if (getAge() == m_esperanceDeVie) {
         cout << getName() << " est mort !" << endl;
@@ -179,4 +172,8 @@ int Tigre::getGestation() {
 void Tigre::setGestation(int gestation) {
     m_gestation = gestation;
 
+}
+
+int Tigre::getEndMaturingTime() {
+    return m_finDeReprod;
 }
