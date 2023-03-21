@@ -201,50 +201,72 @@ void Habitat::PerteSurpopulation() {
 }
 
 // Update de l'habitat
-void Habitat::update(string month, Aliment *food) {
+void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
     // update Portee
     AnimalType type = Habitat::getTypeAnimal();
-    switch (type) {
-        case AnimalType::TIGRE:
-            // 3 individus tout les 620 jours = 20 mois
-            for (auto &animal: m_animaux) {
-                if (animal->getSexe() == 'F' && animal->getReproduction()) {
-                    animal->setPortee(true);
-                    animal->setReproduction(false);
-                    animal->setGestation(93); // 3 mois
-                    animal->setMaturingTime(animal->getAge() + 93 + 620); // ne peut plus se reproduire avant 20 mois
-                    cout << "Un tigre est enceinte pour 45 jours !" << endl << "Achetez un nouvel habitat pour accueillir la portee." << endl;
-                }
-            }
+    bool hasMale = false;
+    for (auto& animal : m_animaux) {
+        if (animal->getSexe() == 'M' && animal->getReproduction()) {
+            hasMale = true;
             break;
-        case AnimalType::AIGLE:
-            // 2 oeufs
-            if (month != "MARS") {
-                break;
-            }
-           for (auto &animal: m_animaux) {
-               if (animal->getSexe() == 'F' && animal->getReproduction()) {
-                   animal->setPortee(true);
-                   animal->setReproduction(false);
-                   animal->setGestation(45); // 45 jours
-                   cout << "Un aigle est enceinte pour 45 jours !" << endl << "Achetez un nouvel habitat pour accueillir la portee." << endl;
-               }
-           }
-            break;
-        case AnimalType::POULE:
-            // 25 œufs / 6 semaines (1ans = 8*6semaines)
-            for (auto &animal: m_animaux) {
-                if (animal->getSexe() == 'F' && animal->getReproduction()) {
-                    animal->setPortee(true);
-                    animal->setReproduction(false);
-                    animal->setGestation(42); // 6 semaines
-                    cout << "Une poule est enceinte pour 6 semaines !" << endl << "Achetez un nouvel habitat pour accueillir la portee." << endl;
-                }
-            }
-            break;
-        default:
-            break;
+        }
     }
+
+    if (hasMale) {
+        switch (type) {
+            case AnimalType::TIGRE:
+                // 3 individus tout les 620 jours = 20 mois
+                for (auto& animal : m_animaux) {
+                    if (animal->getSexe() == 'F' && animal->getReproduction()) {
+                        animal->setPortee(true);
+                        animal->setReproduction(false);
+                        animal->setGestation(93); // 3 mois
+                        animal->setMaturingTime(animal->getAge() + 93 + 620); // ne peut plus se reproduire avant 20 mois
+                        auto mere = animal;
+                        removeAnimal(mere);
+                        habitat->addAnimal(mere);
+                        cout << "Un tigre est enceinte pour 45 jours !" << endl
+                             << "Il est placé en gestation pour accueillir la portee." << endl;
+                    }
+                }
+                break;
+            case AnimalType::AIGLE:
+                // 2 oeufs
+                if (month == "MARS") {
+                    for (auto& animal : m_animaux) {
+                        if (animal->getSexe() == 'F' && animal->getReproduction()) {
+                            animal->setPortee(true);
+                            animal->setReproduction(false);
+                            animal->setGestation(45); // 45 jours
+                            auto mere = animal;
+                            removeAnimal(mere);
+                            habitat->addAnimal(mere);
+                            cout << "Un aigle est enceinte pour 45 jours !" << endl
+                                << "Il est placé en gestation pour accueillir la portee." << endl;
+                        }
+                    }
+                }
+                break;
+            case AnimalType::POULE:
+                // 25 œufs / 6 semaines (1ans = 8*6semaines)
+                for (auto& animal : m_animaux) {
+                    if (animal->getSexe() == 'F' && animal->getReproduction()) {
+                        animal->setPortee(true);
+                        animal->setReproduction(false);
+                        animal->setGestation(42); // 6 semaines
+                        auto mere = animal;
+                        removeAnimal(mere);
+                        habitat->addAnimal(mere);
+                        cout << "Une poule est enceinte pour 6 semaines !" << endl
+                             << "Il est placé en gestation pour accueillir la portee." << endl;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
 
     for (int i = 0; i < 31; i++) {
         // Vérifier si l'habitat est vide
@@ -267,6 +289,17 @@ void Habitat::update(string month, Aliment *food) {
                 animal->setReproduction(true);
             }
 
+        }
+
+        for (auto &animal : habitat->m_animaux) {
+            // Vérifier si l'animal est mort
+            if (animal->getDead()) {
+                m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), animal), m_animaux.end());
+                continue;
+            }
+
+            animal->update(food);
+
             // Update Gestation
             if (animal->getGestation() > 0) {
                 animal->setGestation(animal->getGestation() - 1);
@@ -287,7 +320,7 @@ void Habitat::update(string month, Aliment *food) {
                                 printf("Un bébé tigre n'as pas survécu à l'accouchement !\n");
                             } else {
                                 char genre = distS(gen) ? 'M' : 'F';
-                                addAnimal(new Tigre("Bébé tigre", genre, 0));
+                                habitat->addAnimal(new Tigre("Bébé tigre", genre, 0));
                                 printf("Un bébé tigre (%c) est née !\n", genre);
                             }
                         }
@@ -299,7 +332,7 @@ void Habitat::update(string month, Aliment *food) {
                                 printf("Un bébé aigle n'as pas survécu à l'accouchement !\n");
                             } else {
                                 char genre = distS(gen) ? 'M' : 'F';
-                                addAnimal(new Aigle("Bébé aigle", genre, 0));
+                                habitat->addAnimal(new Aigle("Bébé aigle", genre, 0));
                                 printf("Un bébé aigle (%c) est née !\n", genre);
                             }
                         }
@@ -312,10 +345,10 @@ void Habitat::update(string month, Aliment *food) {
                             } else {
                                 char genre = distS(gen) ? 'M' : 'F';
                                 if (genre == 'M') {
-                                    addAnimal(new Coq("Bébé coq", 0));
+                                    habitat->addAnimal(new Coq("Bébé coq", 0));
                                     printf("Un poussin (M) est née !\n");
                                 } else {
-                                    addAnimal(new Poule("Bébé poule", 0));
+                                    habitat->addAnimal(new Poule("Bébé poule", 0));
                                     printf("Un poussin (F) est née !\n");
                                 }
                             }
@@ -329,6 +362,7 @@ void Habitat::update(string month, Aliment *food) {
         }
     }
 }
+
 
 // Maladie annuelle ⭐️
 void Habitat::MaladieAnnuelle() {

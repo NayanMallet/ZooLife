@@ -35,7 +35,7 @@ public:
 
     void MaladieAnnuelle();
 
-    void update(string month, Aliment *food);
+    void update(const string& month, Aliment *food, Habitat *habitat);
 private:
     string m_nom;
     int m_capacite;

@@ -14,7 +14,15 @@ using namespace std;
 class Zoo {
 public:
     vector<Habitat*> m_enclos;
-    vector<Habitat*> m_enclosGestation;
+    vector<Habitat*> m_enclosGestation{
+        new Habitat("Gestation Tigres", AnimalType::TIGRE),
+        new Habitat("Gestation Aigles", AnimalType::AIGLE),
+        new Habitat("Gestation Poules", AnimalType::POULE)
+    };
+    vector<Aliment*> m_stockAliment{
+        new Graines("Graines"),
+        new Viande("Viande")
+    };
 
     Zoo(string nom);
     ~Zoo();
@@ -50,13 +58,16 @@ public:
     void volSpecimenMonthly();
     void incendieMonthly();
 
+    void changeAnimalOfEnclos(Habitat *habitat, Habitat *newHabitat, IAnimal *animal);
+
 private:
     string m_name;
     int m_days{0};
     Budget *m_budget{ new Budget(80000)};
-    vector<Aliment*> m_stockAliment{ new Graines("Graines"), new Viande("Viande")};
     const vector<string> m_months{"JANVIER", "FEVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECMEMBRE"};
     int m_month = {0};
+
+    bool verifHabitatGestation(Habitat *habitat);
 };
 
 

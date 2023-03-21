@@ -97,19 +97,11 @@ int test() {
     // Couples Tigres :)
     auto *TigreM = new Tigre("Tigrou", 'M', 365*6);
     auto *TigreF = new Tigre("Jeanne", 'F', 365*6);
-    auto *TigreM1 = new Tigre("Jeanne2", 'F', 365*6);
-    auto *TigreF1 = new Tigre("Tigrou2", 'F', 365*6);
-    auto *TigreF3 = new Tigre("Tigrou3", 'F', 365*6);
-    auto *TigreM3 = new Tigre("Jeanne3", 'F', 365*6);
 
     // Les Habitats
     auto *hTigres = new Habitat("Couple de Tigre", AnimalType::TIGRE);
     hTigres->addAnimal(TigreM);
     hTigres->addAnimal(TigreF);
-    hTigres->addAnimal(TigreF1);
-    hTigres->addAnimal(TigreM1);
-    hTigres->addAnimal(TigreF3);
-    hTigres->addAnimal(TigreM3);
 
     Zoo *zooLife = new Zoo("ZooLife");
     zooLife->addHabitat(hTigres);
@@ -121,9 +113,7 @@ int test() {
         getline(cin, Rep);
         if (Rep == "1") {
             cout << "----- Habitats -----" << endl;
-            for (auto& h : zooLife->m_enclos) {
-                h->show();
-            }
+            zooLife->showHabitats();
             cout << "-------------------" << endl;
         } else if (Rep == "2") {
             zooLife->nextMonth();

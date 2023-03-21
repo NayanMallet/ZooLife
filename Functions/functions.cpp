@@ -63,3 +63,7 @@ string animalTypeToString(AnimalType type) {
             return "Inconnu";
     }
 }
+
+bool stringContains(string str, string search) {
+    return str.find(search) != string::npos;
+}
