@@ -3,7 +3,6 @@
 #include <string>
 
 using namespace std;
-//#include "../Zoo/Zoo.h"
 
 class Budget {
 public:
@@ -13,9 +12,6 @@ public:
     float getBudget();
     void addBudget(float budget);
     void removeBudget(float budget);
-    int Variation(double visitors, float percentage_range);
-//    void subventionAnnual(Zoo zooLife);
-//    void visiteurMonthly(Zoo zooLife, string month);
 
 private:
     float m_budget;

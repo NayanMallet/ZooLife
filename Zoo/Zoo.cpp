@@ -42,17 +42,17 @@ void Zoo::show() const {
 // Action prochain tour ⭐️
 void Zoo::nextMonth() {
     string month = m_months[m_month];
-    if (month == "DECMEMBRE") {
-        // Maladie Annuelle
+    if (month == "JANVIER") {
         for (auto& habitat : m_enclos) {
             habitat->MaladieAnnuelle();
         }
-        // taxes
+        subventionAnnual();
     }
     cout << "----- " << month << " -----" << endl;
     foodMonthlyUpdate(); // get food for the month
     volSpecimenMonthly(); // vol de spécimen
     incendieMonthly(); // incendie
+    visiteurMonthly(month); // visiteurs
     for (auto& habitat : m_enclos) {
         if (habitat->getNbrOfAnimals() > habitat->getCapacite()) {
             habitat->PerteSurpopulation();
@@ -110,33 +110,8 @@ void Zoo::nextMonth() {
 }
 
 void Zoo::nextYear() {
-    // update monthly
-    for (auto& habitat : m_enclos) {
-        habitat->MaladieAnnuelle();
-    }
-
-    for (auto& month : {"JANVIER", "FEVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECMEMBRE"}) {
-        cout << "----- " << month << " -----" << endl;
-        foodMonthlyUpdate(); // get food for the month
-        volSpecimenMonthly(); // vol de spécimen
-        incendieMonthly(); // incendie
-        for (auto& habitat : m_enclos) {
-            if (habitat->getNbrOfAnimals() > habitat->getCapacite()) {
-                habitat->PerteSurpopulation();
-            }
-            switch (habitat->getTypeAnimal()) {
-                case AnimalType::TIGRE:
-                    habitat->update(month, m_stockAliment[1], m_enclosGestation[0]);
-                    break;
-                case AnimalType::AIGLE:
-                    habitat->update(month, m_stockAliment[1], m_enclosGestation[1]);
-                    break;
-                case AnimalType::POULE:
-                    habitat->update(month, m_stockAliment[0], m_enclosGestation[2]);
-                    break;
-            }
-        }
-        cout << "--------------------" << endl;
+    for (int i = 0; i < 12; i++) {
+        nextMonth();
     }
 }
 
@@ -395,6 +370,61 @@ void Zoo::incendieMonthly() {
     removeHabitat(habitat);
     habitat->~Habitat();
 }
+
+// Subvention annuelle du zoo ⭐️
+void Zoo::subventionAnnual() {
+    float sum = 0;
+    for (auto &enclos : m_enclos) {
+        AnimalType type = enclos->getTypeAnimal();
+        for (auto &animal : enclos->m_animaux) {
+            float EnclosSum = (type == AnimalType::TIGRE) ? 43800.0f : (type == AnimalType::AIGLE) ? 2190.0f : 0.0f;
+            m_budget->addBudget(EnclosSum);
+            sum += EnclosSum;
+        }
+    }
+    printf("Pour l'année, le zoo %s a reçu une subvention de %.2f$ !\n", getName().c_str(), sum);
+}
+
+void Zoo::visiteurMonthly(string month) {
+    float money = 0;
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> distVariation(-0.2, 0.2);
+    // Saison haute
+    if (month == "MAI" || month == "JUILLET" || month == "AOUT" || month == "SEPTEMBRE") {
+        for (auto &enclos: m_enclos) {
+            // Enclos vide
+            if (enclos->m_animaux.empty()) {
+                continue;
+            }
+            AnimalType type = enclos->getTypeAnimal();
+            for (auto &animal: enclos->m_animaux) {
+                float variation = distVariation(gen);
+                float visitors = (((type == AnimalType::TIGRE) ? 30.0f : (type == AnimalType::AIGLE) ? 15.0f : 0.0f) * (1.0f + variation));
+                float sumVisitors = (((visitors / 2) * 17) + ((visitors / 2) * 13));
+                m_budget->addBudget(sumVisitors);
+                money += sumVisitors;
+            }
+        }
+    } else {
+        for (auto &enclos: m_enclos) {
+            // Enclos vide
+            if (enclos->m_animaux.empty()) {
+                continue;
+            }
+            AnimalType type = enclos->getTypeAnimal();
+            for (auto &animal: enclos->m_animaux) {
+                float variation = distVariation(gen);
+                float visitors = (((type == AnimalType::TIGRE) ? 5.0f : (type == AnimalType::AIGLE) ? 7.0f : 0.5f) * (1.0f + variation));
+                float sumVisitors = (((visitors / 2) * 17) + ((visitors / 2) * 13));
+                m_budget->addBudget(sumVisitors);
+                money += sumVisitors;
+            }
+        }
+    }
+    printf("+ %.2f$ grâce aux visiteurs !\n", money);
+}
+
 
 // Change l'animal d'un habitat à un autre
 void Zoo::changeAnimalOfEnclos(Habitat *habitat, Habitat *newHabitat, IAnimal *animal) {

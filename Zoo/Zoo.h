@@ -57,8 +57,12 @@ public:
 
     void volSpecimenMonthly();
     void incendieMonthly();
+    void subventionAnnual();
+    void visiteurMonthly(string month);
 
     void changeAnimalOfEnclos(Habitat *habitat, Habitat *newHabitat, IAnimal *animal);
+
+
 
 private:
     string m_name;
