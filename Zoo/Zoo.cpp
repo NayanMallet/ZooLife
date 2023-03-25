@@ -39,6 +39,22 @@ void Zoo::show() const {
     );
 }
 
+void Zoo::showResume() const {
+    printf("--- %s ---\n"
+           "=> Age: %s\n"
+           "=> Stock: Graines: %.2fkg - Viande: %.2fkg\n"
+           "=> Budget: %.2f$\n"
+           "=> Nombre d'Enclos: %i\n"
+           "-------------\n",
+           m_name.c_str(),
+           dateConverter(m_days).c_str(),
+           m_stockAliment[0]->getQuantite(),
+           m_stockAliment[1]->getQuantite(),
+           m_budget->getBudget(),
+           getNbrOfEnclos()
+    );
+}
+
 // Action prochain tour ⭐️
 void Zoo::nextMonth() {
     string month = m_months[m_month];
@@ -119,10 +135,9 @@ void Zoo::nextYear() {
 // Afficher le nom du Zoo ⭐️
 void Zoo::showHabitats() const {
     printf(
-            "---- %s -----\n"
+            "---- Enclos ----\n"
             "%s"
-            "------------------\n",
-            m_name.c_str(),
+            "----------------\n",
             listHabitats().c_str()
     );
 }
@@ -444,4 +459,12 @@ void Zoo::changeAnimalOfEnclos(Habitat *habitat, Habitat *newHabitat, IAnimal *a
     newHabitat->addAnimal(animal);
     printf("Vous avez change l'animal %s de l'habitat %s a l'habitat %s\n", animal->getName().c_str(), habitat->getName().c_str(),
            newHabitat->getName().c_str());
+}
+
+float Zoo::getBudget() const {
+    return m_budget->getBudget();
+}
+
+void Zoo::removeBudget(float budget) {
+    m_budget->removeBudget(budget);
 }

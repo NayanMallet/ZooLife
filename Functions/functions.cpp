@@ -67,3 +67,15 @@ string animalTypeToString(AnimalType type) {
 bool stringContains(string str, string search) {
     return str.find(search) != string::npos;
 }
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+void clearScreen() {
+#ifdef _WIN32
+    std::system("cls");
+#else
+    std::system("clear");
+#endif
+}

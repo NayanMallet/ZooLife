@@ -200,7 +200,7 @@ void Habitat::PerteSurpopulation() {
     }
 }
 
-// Update de l'habitat
+// Update de l'habitat ⭐️
 void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
     // update Portee
     AnimalType type = Habitat::getTypeAnimal();

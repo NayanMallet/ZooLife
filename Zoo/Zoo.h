@@ -28,6 +28,7 @@ public:
     ~Zoo();
 
     void show() const;
+    void showResume() const;
     void showHabitats() const;
     string listHabitats() const;
 
@@ -44,6 +45,9 @@ public:
     // TODO : Passing to the next year func
     void nextYear();
     void nextMonth();
+
+    float getBudget() const;
+    void removeBudget(float budget);
 
     void sellAnimal(Habitat *habitat, IAnimal *animal);
     void buyAnimal(Habitat *habitat, IAnimal *animal);

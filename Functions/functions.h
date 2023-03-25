@@ -8,4 +8,5 @@ string dateConverter(int jours);
 
 string animalTypeToString(AnimalType type);
 
+void clearScreen();
 #endif //ZOOLIFE_FUNCTIONS_H

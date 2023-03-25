@@ -10,28 +10,117 @@
 #include "Zoo/Zoo.h"
 #include "Vendeur/Vendeur.h"
 #include "Budget/Budget.h"
+#include "Functions/functions.h"
 
 #include <vector>
 
 using namespace std;
 
+void etapePause() {
+    printf("Appuyez sur Entree pour continuer...");
+    cin.get();
+    cout << endl;
+}
+
+bool isNumber(string input) {
+    for (char c : input) {
+        if (!isdigit(c)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int chooseEnclosFromZoo(Zoo *zooLife) {
+    cout << "Choisis un enclos :" << endl;
+    for (int i = 0; i < zooLife->m_enclos.size(); i++) {
+        cout << "[" << i << "] " << zooLife->m_enclos[i]->getName()<< endl;
+    }
+    cout << endl << "<- Sortir (tapez 'exit')" << endl << "Numero de l'enclos que vous souhaitez voir : ";
+    string rep1;
+    getline(cin, rep1);
+    int choix = -1;
+    while (true) {
+        if (rep1 == "exit") {
+            clearScreen();
+            return -1;
+        }
+
+        if (rep1 == "" || !isNumber(rep1)) {
+            cout << "Numero de l'enclos que vous souhaitez voir : ";
+            getline(cin, rep1);
+            continue;
+        } else {
+            choix = stoi(rep1);
+            if (choix >= 0 && choix < zooLife->m_enclos.size()) {
+                break;
+            }
+        }
+        cout << "Numero de l'enclos que vous souhaitez voir : ";
+        getline(cin, rep1);
+    }
+    clearScreen();
+    return choix;
+}
+
+int chooseAnimalFromEnclos(Habitat *habitat) {
+    cout << "Choisis un animal :" << endl;
+    for (int i = 0; i < habitat->m_animaux.size(); i++) {
+        cout << "[" << i << "] " << habitat->m_animaux[i]->getName()<< endl;
+    }
+    cout << endl << "<- Sortir (tapez 'exit')" << endl << "Numero de l'animal que vous souhaitez voir : ";
+    string rep1;
+    getline(cin, rep1);
+    int choix = -1;
+    while (true) {
+        if (rep1 == "exit") {
+            clearScreen();
+            return -1;
+        }
+
+        if (rep1 == "" || !isNumber(rep1)) {
+            cout << "Numero de l'animal que vous souhaitez voir : ";
+            getline(cin, rep1);
+            continue;
+        } else {
+            choix = stoi(rep1);
+            if (choix >= 0 && choix < habitat->m_animaux.size()) {
+                break;
+            }
+        }
+        cout << "Numero de l'animal que vous souhaitez voir : ";
+        getline(cin, rep1);
+    }
+    clearScreen();
+    return choix;
+}
+
 void scenario() {
     // Mettez en place un scénario type : 2 couples de tigre, 2 couples d’aigle, 1 coq, 10 poules sur 10 ans
-
+    cout << "----- ZooLife -----" << endl;
+    printf("\tBienvenue dans le simulateur de Zoo !\n\tGérez votre zoo en achetant et vendant des animaux, de la nourriture et des habitats.\n\tLes visiteurs génèrent de l'argent, mais attention à ne pas surcharger vos enclos ou vos animaux peuvent tomber malades et mourir.\n\tLe jeu dure 10 ans, soyez prudent avec votre argent et gérez votre zoo au mieux de vos capacités.\n\tBonne chance !\n");
+    printf("\nCommencez par donner un nom à votre zoo : ");
+    string nomZoo;
+    getline(cin, nomZoo);
+    auto *zooLife = new Zoo(nomZoo);
+    printf("\nBienvenue dans votre zoo %s !\nVoici vos stats : \n", nomZoo.c_str());
+    zooLife->show();
+    etapePause();
+    printf("\nVous avez 10 ans pour gérer votre zoo, bonne chance !\n");
     // Couples Tigres :)
-    auto *TigreM1 = new Tigre("Tigrou", 'M', 0);
-    auto *TigreM2 = new Tigre("Marck", 'M', 0);
-    auto *TigreF1 = new Tigre("Jeanne", 'F', 0);
-    auto *TigreF2 = new Tigre ("Elsa", 'F', 0);
+    auto *TigreM1 = new Tigre("TigreM1", 'M', 0);
+    auto *TigreM2 = new Tigre("TigreM2", 'M', 0);
+    auto *TigreF1 = new Tigre("TigreF1", 'F', 0);
+    auto *TigreF2 = new Tigre("TigreF2", 'F', 0);
 
     // Couples Aigles :)
-    auto *AigleM1 = new Aigle("Marckou", 'M', 0);
-    auto *AigleM2 = new Aigle("Dalyll", 'M', 0);
-    auto *AigleF1 = new Aigle("Leo", 'F', 0);
-    auto *AigleF2 = new Aigle("Haagen", 'F', 0);
+    auto *AigleM1 = new Aigle("AigleM1", 'M', 0);
+    auto *AigleM2 = new Aigle("AigleM2", 'M', 0);
+    auto *AigleF1 = new Aigle("AigleF1", 'F', 0);
+    auto *AigleF2 = new Aigle("AigleF2", 'F', 0);
 
     // Le Coq
-    auto *Zizou = new Coq("Zizou", 0);
+    auto *Coq1 = new Coq("Coq1", 0);
 
     // Les Poules
     auto *Poule1 = new Poule("Poule1", 0);
@@ -59,7 +148,7 @@ void scenario() {
     habitat4->addAnimal(AigleM2);
     habitat4->addAnimal(AigleF2);
     auto *habitat5 = new Habitat("KFC", AnimalType::POULE);
-    habitat5->addAnimal(Zizou);
+    habitat5->addAnimal(Coq1);
     habitat5->addAnimal(Poule1);
     habitat5->addAnimal(Poule2);
     habitat5->addAnimal(Poule3);
@@ -71,73 +160,221 @@ void scenario() {
     habitat5->addAnimal(Poule9);
     habitat5->addAnimal(Poule10);
 
-    Zoo *zooLife = new Zoo("ZooLife");
     zooLife->addHabitat(habitat);
     zooLife->addHabitat(habitat2);
     zooLife->addHabitat(habitat3);
     zooLife->addHabitat(habitat4);
     zooLife->addHabitat(habitat5);
-    zooLife->show();
-    /*string Rep;
-    while (Rep != "3") {
-        printf("Que souhaitez-vous faire ?\n\t1 - Voir mes enclos\n\t2 - Passer au prochain mois\n\t3 - Exit\n");
-        getline(cin, Rep);
-        if (Rep == "1") {
-            cout << "------ Enclos ------" << endl;
-            for (auto& h : zooLife->m_enclos) {
-                h->show();
-            }
-            cout << "--------------------" << endl;
-        } else if (Rep == "2") {
-            zooLife->nextMonth();
-        }
-    }*/
-}
+    auto *vendeur = new Vendeur("Vendeur");
 
-int test() {
-    // Couples Tigres :)
-    auto *TigreM = new Tigre("Tigrou", 'M', 365*6);
-    auto *TigreF = new Tigre("Jeanne", 'F', 365*6);
-
-    // Les Habitats
-    auto *hTigres = new Habitat("Couple de Tigre", AnimalType::TIGRE);
-    hTigres->addAnimal(TigreM);
-    hTigres->addAnimal(TigreF);
-
-    Zoo *zooLife = new Zoo("ZooLife");
-    zooLife->addHabitat(hTigres);
-    Vendeur *vendeur = new Vendeur("Moha");
     string Rep;
-
-    while (Rep != "4") {
-        cout<<"--------- Simulateur de ZOO ---------" << endl;
-        printf("Que souhaitez-vous faire ?\n\t1 - Voir mes enclos\n\t2 - Passer au prochain mois\n\t3 - Parler au vendeur\n\t4 - Exit\n");
+    while (Rep != "exit") {
+        clearScreen();
+        zooLife->showResume();
+        printf("Que souhaitez-vous faire ?\n\t[1] Voir mon Zoo\n\t[2] Aller au vendeur\n\t[3] Passer au prochain mois\n\n\t-> Stop (tapez 'exit')\n");
         getline(cin, Rep);
-        if (Rep == "1") {
-            cout << "----- Enclos -----" << endl;
-            zooLife->showHabitats();
-            cout << endl;
+        if (Rep == "1")
+        {
+            zooLife->show();
+            etapePause();
+            string RepEnclos;
+            while (RepEnclos != "1" && RepEnclos != "2") {
+                printf("Voulez-vous voir un enclos en particulier ? [1] Oui - [2] Non\n");
+                getline(cin, RepEnclos);
+            }
+            if (RepEnclos == "2") {
+                continue;
+            }
+
+            int chooseEnclos = chooseEnclosFromZoo(zooLife);
+            if (chooseEnclos == -1) {
+                continue;
+            }
+            zooLife->m_enclos[chooseEnclos]->show();
+            etapePause();
+
+            string RepAnimal;
+            while (RepAnimal != "1" && RepAnimal != "2") {
+                printf("Voulez-vous voir un animal en particulier ? [1] Oui - [2] Non\n");
+                getline(cin, RepAnimal);
+            }
+            if (RepAnimal == "2") {
+                continue;
+            }
+            int chooseAnimal = chooseAnimalFromEnclos(zooLife->m_enclos[chooseEnclos]);
+            if (chooseAnimal == -1) {
+                continue;
+            }
+            zooLife->m_enclos[chooseEnclos]->m_animaux[chooseAnimal]->show();
+            etapePause();
+
+            string RepAction;
+            while (RepAction != "1" && RepAction != "2") {
+                printf("Voulez-vous faire une action sur cet animal ? [1] Oui - [2] Non\n");
+                getline(cin, RepAction);
+            }
+            if (RepAction == "2") {
+                continue;
+            }
+            string RepAction2;
+            while (RepAction2 != "4") {
+                printf("Que voulez-vous faire ?\n\t[1] Renommer l'animal\n\t[2] Soigner l'animal\n\t[3] Changer d'enclos\n\t[4] Exit\n");
+                getline(cin, RepAction2);
+
+                if (RepAction2 == "1") {
+                    string newName;
+                    printf("Entrez le nouveau nom de l'animal : ");
+                    getline(cin, newName);
+                    zooLife->m_enclos[chooseEnclos]->m_animaux[chooseAnimal]->setNom(newName);
+                    printf("Le nom de l'animal a bien été changé !\n");
+                    etapePause();
+                } else if (RepAction2 == "2") {
+                    int Maladie = zooLife->m_enclos[chooseEnclos]->m_animaux[chooseAnimal]->getMaladie();
+                    if (Maladie == 0) {
+                        printf("L'animal n'est pas malade !\n");
+                        etapePause();
+                        continue;
+                    }
+                    int Cout = Maladie * 1000;
+                    if (zooLife->getBudget() < Cout) {
+                        printf("Vous n'avez pas assez d'argent pour soigner l'animal !\n");
+                        etapePause();
+                        continue;
+                    }
+
+                    string RepSoigner;
+                    while (RepSoigner != "1" && RepSoigner != "2") {
+                        printf("L'animal est malade ! Il vous en coutera %d$ pour le soigner.\nVoulez-vous le soigner ? [1] Oui - [2] Non\n", Cout);
+                        getline(cin, RepSoigner);
+                    }
+                    if (RepSoigner == "2") {
+                        continue;
+                    }
+
+                    zooLife->m_enclos[chooseEnclos]->m_animaux[chooseAnimal]->setMaladie(0);
+                    zooLife->removeBudget(Cout);
+                    printf("L'animal a bien été soigné !\n");
+                    etapePause();
+
+                } else if (RepAction2 == "3") {
+                    cout << "Choisissez l'enclos dans lequel vous voulez mettre l'animal." << endl;
+                    for (int i = 0; i < zooLife->m_enclos.size(); i++) {
+                        if (zooLife->m_enclos[i]->getTypeAnimal() == zooLife->m_enclos[chooseEnclos]->m_animaux[chooseAnimal]->getTypeAnimal()) {
+                            printf("[%d] %s\n", i, zooLife->m_enclos[i]->getName().c_str());
+                        }
+                    }
+                    cout << endl << "<- Exit (tapez 'exit')" << endl;
+
+                    int chooseEnclos2;
+                    cin >> chooseEnclos2;
+                    cin.ignore();
+
+                    while (true) {
+                        printf("Choisissez un enclos : ");
+                        getline(cin, RepAction2);
+                        if (chooseEnclos2 < 0 || chooseEnclos2 >= zooLife->m_enclos.size()) {
+                            printf("Choix invalide !\n");
+                            continue;
+                        }
+                        if (zooLife->m_enclos[chooseEnclos2]->getTypeAnimal() != zooLife->m_enclos[chooseEnclos]->m_animaux[chooseAnimal]->getTypeAnimal()) {
+                            printf("L'enclos choisi n'est pas compatible avec l'animal !\n");
+                            continue;
+                        }
+                        break;
+                    }
+
+                    zooLife->changeAnimalOfEnclos(zooLife->m_enclos[chooseEnclos], zooLife->m_enclos[chooseEnclos2], zooLife->m_enclos[chooseEnclos]->m_animaux[chooseAnimal]);
+                    printf("L'animal a bien été changé d'enclos !\n");
+                    etapePause();
+                    continue;
+                } else if (RepAction2 == "4") {
+                    continue;
+                }
+            }
         } else if (Rep == "2") {
-            zooLife->nextMonth();
-        } else if (Rep == "3") {
             cout << "----- " << vendeur->getName() << " -----" << endl;
             string VendRep;
             while (VendRep != "4") {
-                printf("Bonjour! Que souhaitez-vous faire ?\n\t1 - Acheter/Vendre un animal\n\t2 - Acheter/Vendre un habitat\n\t3 - Acheter/Vendre de la nourriture\n\t4 - Exit\n");
+                printf("Bonjour! Que souhaitez-vous faire ?\n\t-> Acheter/Vendre un animal (1)\n\t-> Acheter/Vendre un habitat (2)\n\t-> Acheter/Vendre de la nourriture (3)\n\t-> Sortir (4)\n");
                 getline(cin, VendRep);
                 if (VendRep == "1") {
                     string AnimalRep;
                     while (AnimalRep != "3") {
                         cout << "----- Animaux -----" << endl;
-                        printf("Que souhaitez-vous faire ?\n\t1 - Acheter un animal\n\t2 - Vendre un animal\n\t3 - Exit\n");
+                        printf("Que souhaitez-vous faire ?\n\t- Acheter un animal (1)\n\t- Vendre un animal (2)\n\t- Exit (3)\n");
                         getline(cin, AnimalRep);
                         if (AnimalRep == "1") {
-                            cout << "Acheter un animal" << endl;
-                            vendeur->showAnimals();
+                            cout << "--- Acheter un animal ---" << endl;
+                            for (int i = 0; i < vendeur->m_animaux.size(); i++) {
+                                printf("- %s (%i): %.2f$\n", vendeur->m_animaux[i]->getName().c_str(), i,
+                                       vendeur->m_animaux[i]->getPrix('A'));
+                            }
+                            printf("Entrer le numero de l'animal que vous voulez acheter ou Entree pour revenir en arriere: \n");
+                            string v1;
+                            getline(cin, v1);
+                            while (stoi(v1) >= vendeur->m_animaux.size() || stoi(v1) < 0) {
+                                printf("Entrer le numero de l'animal que vous voulez acheter ou Entree pour revenir en arriere: \n");
+                                getline(cin, v1);
+                            }
+                            if (!v1.empty()) {
+                                if (zooLife->getBudget() < vendeur->m_animaux[stoi(v1)]->getPrix('A')) {
+                                    cout << "Vous n'avez pas assez d'argent pour acheter cet animal!" << endl;
+                                } else {
+                                    printf("Choisissez un enclos pour l'animal: \n");
+                                    for (int i = 0; i < zooLife->m_enclos.size(); i++) {
+                                        printf("- Enclos %s (%i)\n", zooLife->m_enclos[i]->getName().c_str(), i);
+                                    }
+                                    printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
+                                    string v2;
+                                    getline(cin, v2);
+                                    while (stoi(v2) >= zooLife->m_enclos.size() || stoi(v2) < 0) {
+                                        printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
+                                        getline(cin, v2);
+                                    }
+                                    if (!v2.empty()) {
+                                        if (stoi(v2) < zooLife->m_enclos.size() && stoi(v2) >= 0) {
+                                            zooLife->buyAnimal(zooLife->m_enclos[stoi(v2)],
+                                                               vendeur->m_animaux[stoi(v1)]);
+                                            vendeur->m_animaux.erase(vendeur->m_animaux.begin() + stoi(v1));
+                                            cout << "Animal achete!" << endl;
+                                        }
+                                    }
+                                }
+                            }
                         } else if (AnimalRep == "2") {
-                            cout << "Vendre un animal" << endl;
-                            for (auto& h : zooLife->m_enclos) {
-                                h->showAnimals();
+                            cout << "--- Vendre un animal ---" << endl;
+                            printf("Choisissez un enclos: \n");
+                            for (int i = 0; i < zooLife->m_enclos.size(); i++) {
+                                printf("- Enclos %s (%i)\n", zooLife->m_enclos[i]->getName().c_str(), i);
+                            }
+                            printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
+                            string v2;
+                            getline(cin, v2);
+                            while (stoi(v2) >= zooLife->m_enclos.size() || stoi(v2) < 0) {
+                                printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
+                                getline(cin, v2);
+                            }
+                            if (!v2.empty()) {
+                                for (int j = 0; j < zooLife->m_enclos[stoi(v2)]->m_animaux.size(); j++) {
+                                    printf("- %s (%i): %.2f$\n",
+                                           zooLife->m_enclos[stoi(v2)]->m_animaux[j]->getName().c_str(), j,
+                                           zooLife->m_enclos[stoi(v2)]->m_animaux[j]->getPrix('V'));
+                                }
+                                printf("Entrer le numero de l'animal que vous voulez vendre ou Entree pour revenir en arriere: \n");
+                                string v3;
+                                getline(cin, v3);
+                                while (stoi(v3) >= zooLife->m_enclos[stoi(v2)]->m_animaux.size() || stoi(v3) < 0) {
+                                    printf("Entrer le numero de l'animal que vous voulez vendre ou Entree pour revenir en arriere: \n");
+                                    getline(cin, v3);
+                                }
+                                if (!v3.empty()) {
+                                    zooLife->sellAnimal(zooLife->m_enclos[stoi(v2)],
+                                                        zooLife->m_enclos[stoi(v2)]->m_animaux[stoi(v3)]);
+                                    vendeur->m_animaux.push_back(zooLife->m_enclos[stoi(v2)]->m_animaux[stoi(v3)]);
+                                    zooLife->m_enclos[stoi(v2)]->m_animaux.erase(
+                                            zooLife->m_enclos[stoi(v2)]->m_animaux.begin() + stoi(v3));
+                                    cout << "Animal vendu!" << endl;
+                                }
                             }
                         }
                     }
@@ -152,7 +389,7 @@ int test() {
                             vendeur->showHabitats();
                         } else if (HabitatRep == "2") {
                             cout << "Vendre un habitat" << endl;
-                            for (auto& h : zooLife->m_enclos) {
+                            for (auto &h: zooLife->m_enclos) {
                                 h->show();
                             }
                         }
@@ -172,14 +409,253 @@ int test() {
                     }
                 }
             }
+        } else if (Rep == "3") {
+            zooLife->nextMonth();
+            etapePause();
+        } else {
+            printf("'%s' n'est pas une option valide.\n", Rep.c_str());
         }
     }
-
-    return 0;
 }
 
+//
+//
+//
+//
+//            if (a < zooLife->m_enclos[e]->m_animaux.size() && a >= 0) {
+//                zooLife->m_enclos[e]->m_animaux[a]->show();
+//                printf("Appuyez sur Entree pour continuer...");
+//                cin.get();
+//                cout << endl;
+//                printf("Souhaitez-vous interagir avec cet animal ? (O/N)\n");
+//                string an1;
+//                getline(cin, an1);
+//                if (an1 == "O" || an1 == "o") {
+//                    string an2;
+//                    while (an2 != "4") {
+//                        printf("Que souhaitez-vous faire ?\n\t-> Renommer l'animal (1)\n\t-> Le changer d'enclos (2)\n\t-> Le soigner (3)\n\t-> Sortir (4)\n");
+//                        getline(cin, an2);
+//                        if (an2 == "1") {
+//                            printf("Entrer le nouveau nom de l'animal: \n");
+//                            string an3;
+//                            getline(cin, an3);
+//                            zooLife->m_enclos[e]->m_animaux[a]->setNom(an3);
+//                            printf("Le nom de l'animal a ete change en %s\n",
+//                                   zooLife->m_enclos[e]->m_animaux[a]->getName().c_str());
+//                            printf("Appuyez sur Entree pour continuer...");
+//                            cin.get();
+//                            cout << endl;
+//                        } else if (an2 == "2") {
+//                            printf("---- Enclos ----\n");
+//                            for (int i = 0; i < zooLife->m_enclos.size(); i++) {
+//                                printf("- Enclos %s (%i)\n", zooLife->m_enclos[i]->getName().c_str(), i);
+//                            }
+//                            printf("Entrer le numero de l'enclos ou vous voulez le mettre: \n");
+//                            string an3;
+//                            getline(cin, an3);
+//                            while (stoi(an3) >= zooLife->m_enclos.size() || stoi(an3) < 0) {
+//                                printf("Entrer le numero de l'enclos ou vous voulez le mettre: \n");
+//                                getline(cin, an3);
+//                            }
+//                            if (!an3.empty()) {
+//                                int an4 = stoi(an3);
+//                                if (an4 < zooLife->m_enclos.size() && an4 >= 0) {
+//                                    zooLife->m_enclos[an4]->addAnimal(zooLife->m_enclos[e]->m_animaux[a]);
+//                                    zooLife->m_enclos[e]->m_animaux.erase(
+//                                            zooLife->m_enclos[e]->m_animaux.begin() + a);
+//                                }
+//                            }
+//                            printf("Appuyez sur Entree pour continuer...");
+//                            cin.get();
+//                            cout << endl;
+//                        } else if (an2 == "3") {
+//                            if (zooLife->m_enclos[e]->m_animaux[a]->getMaladie() > 0) {
+//                                if (zooLife->getBudget() >
+//                                    float(zooLife->m_enclos[e]->m_animaux[a]->getMaladie()) * 1000) {
+//                                    printf("Soigner l'animal pour %i$ ? (O/N)\n",
+//                                           zooLife->m_enclos[e]->m_animaux[a]->getMaladie() * 1000);
+//                                    string s1;
+//                                    getline(cin, s1);
+//                                    if (s1 == "O" || s1 == "o") {
+//                                        zooLife->removeBudget(
+//                                                float(zooLife->m_enclos[e]->m_animaux[a]->getMaladie()) *
+//                                                1000);
+//                                        zooLife->m_enclos[e]->m_animaux[a]->setMaladie(0);
+//                                        printf("L'animal a ete soigne !\n");
+//                                        printf("Appuyez sur Entree pour continuer...");
+//                                        cin.get();
+//                                        cout << endl;
+//                                    } else {
+//                                        printf("L'animal n'a pas ete soigne !\n");
+//                                        printf("Appuyez sur Entree pour continuer...");
+//                                        cin.get();
+//                                        cout << endl;
+//                                    }
+//                                } else {
+//                                    printf("Vous n'avez pas assez d'argent pour soigner l'animal !\n");
+//                                    printf("Appuyez sur Entree pour continuer...");
+//                                    cin.get();
+//                                    cout << endl;
+//                                }
+//                            } else {
+//                                printf("L'animal n'est pas malade !\n");
+//                                printf("Appuyez sur Entree pour continuer...");
+//                                cin.get();
+//                                cout << endl;
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    printf("Appuyez sur Entree pour continuer...");
+//                    cin.get();
+//                    cout << endl;
+//                }
+//            }
+//        }
+//    } else {
+//}
+
+//void showMyZoo(Zoo *zooLife) {
+//    zooLife->show();
+//    etapePause();
+//    printf("---- Enclos ----\n");
+//    for (int i = 0; i < zooLife->m_enclos.size(); i++) {
+//        printf("- Enclos %s (%i)\n", zooLife->m_enclos[i]->getName().c_str(), i);
+//    }
+//    printf("Numero de l'enclos que vous voulez voir ('Entree' pour sortir): \n");
+//    string rep1;
+//    getline(cin, rep1);
+//    if (rep1.empty() || rep1 == " ") {
+//        return;
+//    }
+//    int numEnclos = stoi(rep1);
+//    if (numEnclos >= zooLife->m_enclos.size() || numEnclos < 0) {
+//        printf("'%i' n'est pas un numero d'enclos valide.\n", numEnclos);
+//        return;
+//    }
+//    while (numEnclos >= zooLife->m_enclos.size() || numEnclos < 0 || numEnclos) {
+//        printf("Entrer le numero de l'enclos que vous voulez voir ou Entree pour revenir en arriere: \n");
+//        getline(cin, rep1);
+//    }
+//
+//        int e = stoi(rep1);
+//        if (e < zooLife->m_enclos.size() && e >= 0) {
+//            zooLife->m_enclos[e]->show();
+//            printf("Appuyez sur Entree pour continuer...");
+//            cin.get();
+//            for (int i = 0; i < zooLife->m_enclos[e]->m_animaux.size(); i++) {
+//                printf("- %s (%i)\n", zooLife->m_enclos[e]->m_animaux[i]->getName().c_str(), i);
+//            }
+//            printf("Entrer le numero de l'animal que vous voulez voir ou Entree pour revenir en arriere: \n");
+//            string a1;
+//            getline(cin, a1);
+//            if (!a1.empty()) {
+//                while (stoi(a1) >= zooLife->m_enclos[e]->m_animaux.size() || stoi(a1) < 0) {
+//                    printf("Entrer le numero de l'animal que vous voulez voir ou Entree pour revenir en arriere: \n");
+//                    getline(cin, a1);
+//                }
+//                int a = stoi(a1);
+//                if (a < zooLife->m_enclos[e]->m_animaux.size() && a >= 0) {
+//                    zooLife->m_enclos[e]->m_animaux[a]->show();
+//                    printf("Appuyez sur Entree pour continuer...");
+//                    cin.get();
+//                    cout << endl;
+//                    printf("Souhaitez-vous interagir avec cet animal ? (O/N)\n");
+//                    string an1;
+//                    getline(cin, an1);
+//                    if (an1 == "O" || an1 == "o") {
+//                        string an2;
+//                        while (an2 != "4") {
+//                            printf("Que souhaitez-vous faire ?\n\t-> Renommer l'animal (1)\n\t-> Le changer d'enclos (2)\n\t-> Le soigner (3)\n\t-> Sortir (4)\n");
+//                            getline(cin, an2);
+//                            if (an2 == "1") {
+//                                printf("Entrer le nouveau nom de l'animal: \n");
+//                                string an3;
+//                                getline(cin, an3);
+//                                zooLife->m_enclos[e]->m_animaux[a]->setNom(an3);
+//                                printf("Le nom de l'animal a ete change en %s\n",
+//                                       zooLife->m_enclos[e]->m_animaux[a]->getName().c_str());
+//                                printf("Appuyez sur Entree pour continuer...");
+//                                cin.get();
+//                                cout << endl;
+//                            } else if (an2 == "2") {
+//                                printf("---- Enclos ----\n");
+//                                for (int i = 0; i < zooLife->m_enclos.size(); i++) {
+//                                    printf("- Enclos %s (%i)\n", zooLife->m_enclos[i]->getName().c_str(), i);
+//                                }
+//                                printf("Entrer le numero de l'enclos ou vous voulez le mettre: \n");
+//                                string an3;
+//                                getline(cin, an3);
+//                                while (stoi(an3) >= zooLife->m_enclos.size() || stoi(an3) < 0) {
+//                                    printf("Entrer le numero de l'enclos ou vous voulez le mettre: \n");
+//                                    getline(cin, an3);
+//                                }
+//                                if (!an3.empty()) {
+//                                    int an4 = stoi(an3);
+//                                    if (an4 < zooLife->m_enclos.size() && an4 >= 0) {
+//                                        zooLife->m_enclos[an4]->addAnimal(zooLife->m_enclos[e]->m_animaux[a]);
+//                                        zooLife->m_enclos[e]->m_animaux.erase(
+//                                                zooLife->m_enclos[e]->m_animaux.begin() + a);
+//                                    }
+//                                }
+//                                printf("Appuyez sur Entree pour continuer...");
+//                                cin.get();
+//                                cout << endl;
+//                            } else if (an2 == "3") {
+//                                if (zooLife->m_enclos[e]->m_animaux[a]->getMaladie() > 0) {
+//                                    if (zooLife->getBudget() >
+//                                        float(zooLife->m_enclos[e]->m_animaux[a]->getMaladie()) * 1000) {
+//                                        printf("Soigner l'animal pour %i$ ? (O/N)\n",
+//                                               zooLife->m_enclos[e]->m_animaux[a]->getMaladie() * 1000);
+//                                        string s1;
+//                                        getline(cin, s1);
+//                                        if (s1 == "O" || s1 == "o") {
+//                                            zooLife->removeBudget(
+//                                                    float(zooLife->m_enclos[e]->m_animaux[a]->getMaladie()) *
+//                                                    1000);
+//                                            zooLife->m_enclos[e]->m_animaux[a]->setMaladie(0);
+//                                            printf("L'animal a ete soigne !\n");
+//                                            printf("Appuyez sur Entree pour continuer...");
+//                                            cin.get();
+//                                            cout << endl;
+//                                        } else {
+//                                            printf("L'animal n'a pas ete soigne !\n");
+//                                            printf("Appuyez sur Entree pour continuer...");
+//                                            cin.get();
+//                                            cout << endl;
+//                                        }
+//                                    } else {
+//                                        printf("Vous n'avez pas assez d'argent pour soigner l'animal !\n");
+//                                        printf("Appuyez sur Entree pour continuer...");
+//                                        cin.get();
+//                                        cout << endl;
+//                                    }
+//                                } else {
+//                                    printf("L'animal n'est pas malade !\n");
+//                                    printf("Appuyez sur Entree pour continuer...");
+//                                    cin.get();
+//                                    cout << endl;
+//                                }
+//                            }
+//                        }
+//                    } else {
+//                        printf("Appuyez sur Entree pour continuer...");
+//                        cin.get();
+//                        cout << endl;
+//                    }
+//                }
+//            }
+//        } else {
+//            printf("Erreur: Numero d'enclos invalide !\n");
+//        }
+//    }
+
+
+
+
+
 int main() {
-    test();
+    scenario();
     return 0;
 }
 

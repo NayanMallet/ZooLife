@@ -89,7 +89,7 @@ void IAnimal::setAge(int age) {
     m_age = age;
 }
 
-void IAnimal::setMaladie(bool maladie) {
+void IAnimal::setMaladie(int maladie) {
     m_maladie = maladie;
 
 }

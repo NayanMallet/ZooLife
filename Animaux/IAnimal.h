@@ -43,7 +43,7 @@ public:
     void setReproduction(bool reproduction);
     void setFed(bool fed);
     void setAge(int age);
-    void setMaladie(bool maladie);
+    void setMaladie(int maladie);
     void setDead(bool dead);
     void setNom(string nom);
 
