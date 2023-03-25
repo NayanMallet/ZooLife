@@ -63,13 +63,12 @@ public:
     void changeAnimalOfEnclos(Habitat *habitat, Habitat *newHabitat, IAnimal *animal);
 
 
-
 private:
     string m_name;
     int m_days{0};
-    Budget *m_budget{ new Budget(80000)};
     const vector<string> m_months{"JANVIER", "FEVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECMEMBRE"};
     int m_month = {0};
+    Budget *m_budget{ new Budget(80000)};
 
     bool verifHabitatGestation(Habitat *habitat);
 };

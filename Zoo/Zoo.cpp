@@ -20,7 +20,7 @@ Zoo::~Zoo() {
 }
 
 void Zoo::show() const {
-    printf("----- Zoo %s -----\n"
+    printf("----- %s -----\n"
            "=> Age: %s\n"
            "=> Stock Aliment:\n"
            "   -> Graines: %.2fkg\n"
@@ -48,7 +48,7 @@ void Zoo::nextMonth() {
         }
         subventionAnnual();
     }
-    cout << "----- " << month << " -----" << endl;
+    cout << "----- " << month << " ----" << endl;
     foodMonthlyUpdate(); // get food for the month
     volSpecimenMonthly(); // vol de spécimen
     incendieMonthly(); // incendie
@@ -75,15 +75,15 @@ void Zoo::nextMonth() {
        for (auto& animal : habitat->m_animaux) {
            string name = animal->getName();
            if (!animal->getPortee() && animal->getAge() >= 6 * 31) {
-               bool isBebe = name.find("Bébé") != string::npos;
+               bool isBebe = name.find("Bebe") != string::npos;
                if (isBebe) {
-                   cout << "Le " << animal->getName() << " a grandit et peut aller dans le Zoo !" << endl << "Donnez un nom au bébé: ";
+                   cout << "Le " << animal->getName() << " a grandit et peut aller dans le Zoo !" << endl << "Donnez un nom au bebe: ";
                    string bebeName;
                    getline(cin, bebeName);
                    animal->setNom(bebeName);
-                   cout << endl << "Où voulez-vous le placer ?" << endl;
+                   cout << endl << "Ou voulez-vous le placer ?" << endl;
                } else {
-                   cout << "La mère " << animal->getName() << " peut revenir dans le Zoo !" << endl << "Où voulez-vous la placer ?" << endl;
+                   cout << "La mere " << animal->getName() << " peut revenir dans le Zoo !" << endl << "Ou voulez-vous la placer ?" << endl;
                }
                string choice;
                for (int i = 0; i < m_enclos.size(); i++) {
@@ -93,14 +93,14 @@ void Zoo::nextMonth() {
                }
                getline(cin, choice);
                while (stoi(choice) >= m_enclos.size() || m_enclos[stoi(choice)]->getTypeAnimal() != type) {
-                   cout << "Choix invalide, veuillez réessayer: ";
+                   cout << "Choix invalide, veuillez reessayer: ";
                    getline(cin, choice);
                }
                changeAnimalOfEnclos(habitat, m_enclos[stoi(choice)], animal);
            }
        }
     }
-    cout << "--------------------" << endl;
+    cout << "-------------------" << endl;
     if (month == "DECMEMBRE") {
         m_month = 0;
     } else {
@@ -119,9 +119,9 @@ void Zoo::nextYear() {
 // Afficher le nom du Zoo ⭐️
 void Zoo::showHabitats() const {
     printf(
-            "----- Zoo %s -----\n"
+            "---- %s -----\n"
             "%s"
-            "---------------------------\n",
+            "------------------\n",
             m_name.c_str(),
             listHabitats().c_str()
     );
@@ -210,13 +210,13 @@ void Zoo::sellAliment(FoodType alimentType, float quantite) {
         }
     }
     if (alimentIndex == -1) {
-        printf("L'aliment demandé n'est pas disponible dans le Zoo !\n");
+        printf("L'aliment demande n'est pas disponible dans le Zoo !\n");
         return;
     }
 
     Aliment* aliment = m_stockAliment[alimentIndex];
     if (aliment->getQuantite() < quantite) {
-        printf("Il n'y a pas assez d'aliment dans le Zoo !\n");
+        printf("Il n'y a pas assez d'aliments dans le Zoo !\n");
         return;
     }
 
@@ -234,7 +234,7 @@ void Zoo::buyAliment(FoodType alimentType, float quantite) {
         }
     }
     if (alimentIndex == -1) {
-        printf("L'aliment demandé n'est pas disponible dans le Zoo !\n");
+        printf("L'aliment demande n'est pas disponible dans le Zoo !\n");
         return;
     }
 
@@ -272,7 +272,7 @@ void Zoo::buyHabitat(string nom, AnimalType typeAnimal) {
         habitatNames.insert(habitat->getName());
     }
     if (habitatNames.find(nom) != habitatNames.end()) {
-        printf("L'habitat est déjà dans le Zoo !\n");
+        printf("L'habitat est deja dans le Zoo !\n");
         return;
     }
 
@@ -290,7 +290,7 @@ void Zoo::buyHabitat(string nom, AnimalType typeAnimal) {
     // Ajouter l'habitat au zoo
     addHabitat(habitat);
     m_budget->removeBudget(prixTotal);
-    printf("Vous avez acheté l'habitat %s pour %.2f$\n", nom.c_str(), prixTotal);
+    printf("Vous avez achete l'habitat %s pour %.2f$\n", nom.c_str(), prixTotal);
 }
 
 void Zoo::foodMonthlyUpdate() {
@@ -310,7 +310,7 @@ void Zoo::viandeAvarieMonthly() {
     static std::bernoulli_distribution dist(0.1);
 
     if (!dist(gen)) {
-        cout << "Pas de viande avariée !" << endl;
+        cout << "Pas de viande avariee !" << endl;
         return;
     }
 
@@ -340,14 +340,14 @@ void Zoo::volSpecimenMonthly() {
     static std::bernoulli_distribution dist(0.01);
 
     if (!dist(gen)) {
-        printf("Pas de vol de spécimen !\n");
+        printf("Pas de vol de specimen !\n");
         return;
     }
 
     auto habitatIndex = std::uniform_int_distribution<>(0, m_enclos.size() - 1)(gen);
     auto *habitat = m_enclos[habitatIndex];
     auto *animal = habitat->m_animaux[std::uniform_int_distribution<>(0, habitat->m_animaux.size() - 1)(gen)];
-    printf("Il y a eu un vol de spécimen sur un %s dans l'habitat '%s' !\n", animal->getName().c_str(), habitat->getName().c_str());
+    printf("Il y a eu un vol de specimen sur un %s dans l'habitat '%s' !\n", animal->getName().c_str(), habitat->getName().c_str());
     habitat->removeAnimal(animal);
     animal->~IAnimal();
 }
@@ -382,7 +382,7 @@ void Zoo::subventionAnnual() {
             sum += EnclosSum;
         }
     }
-    printf("Pour l'année, le zoo %s a reçu une subvention de %.2f$ !\n", getName().c_str(), sum);
+    printf("Cette annee, %s a recu une subvention de %.2f$ !\n", getName().c_str(), sum);
 }
 
 void Zoo::visiteurMonthly(string month) {
@@ -422,7 +422,7 @@ void Zoo::visiteurMonthly(string month) {
             }
         }
     }
-    printf("+ %.2f$ grâce aux visiteurs !\n", money);
+    printf("+ %.2f$ grace aux visiteurs !\n", money);
 }
 
 
@@ -437,11 +437,11 @@ void Zoo::changeAnimalOfEnclos(Habitat *habitat, Habitat *newHabitat, IAnimal *a
         return;
     }
     if (habitat->getTypeAnimal() != newHabitat->getTypeAnimal()) {
-        printf("Les habitats ne sont pas du même type !\n");
+        printf("Les habitats ne sont pas du meme type !\n");
         return;
     }
     habitat->removeAnimal(animal);
     newHabitat->addAnimal(animal);
-    printf("Vous avez changé l'animal %s de l'habitat %s à l'habitat %s\n", animal->getName().c_str(), habitat->getName().c_str(),
+    printf("Vous avez change l'animal %s de l'habitat %s a l'habitat %s\n", animal->getName().c_str(), habitat->getName().c_str(),
            newHabitat->getName().c_str());
 }

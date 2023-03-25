@@ -4,7 +4,7 @@
 IAnimal::IAnimal(string name, char sexe, int age, AnimalType typeAnimal)
         : m_name(name), m_sexe(sexe), m_age(age), m_typeAnimal(typeAnimal) {
     if (sexe != 'M' && sexe != 'F') {
-        throw invalid_argument("Le sexe doit être M ou F");
+        throw invalid_argument("Le sexe doit etre M ou F");
     }
     if (age < 0) {
         throw invalid_argument("L'age doit etre positif");

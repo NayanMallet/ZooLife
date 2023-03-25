@@ -8,7 +8,7 @@
 Coq::Coq(string name, int age): IAnimal(std::move(name), 'M', age, AnimalType::POULE){};
 
 void Coq::show() {
-    printf("----- %s (%c) -----\n"
+    printf("-------- %s --------\n"
            "=> Age: %s\n"
            "=> Alimentation: Viande, %.2fkg/j\n"
            "=> Jours avant faim: %s\n"
@@ -16,7 +16,7 @@ void Coq::show() {
            "=> Esperance de vie: %s\n"
            "=> Remarque: Fidele\n"
            "---------------------\n",
-           getName().c_str(), getSexe(),
+           getName().c_str(),
            dateConverter(getAge()).c_str(),
            m_AlimentationJour,
            dateConverter(m_joursAvantFaim).c_str(),

@@ -45,16 +45,16 @@ Habitat::~Habitat() {
 
 // Afficher les informations de l'habitat ⭐️
 void Habitat::show() const {
-    printf("----- Habitat %s (%s) -----\n"
-           "=> Capacité: %d\n"
-           "=> Prix d'achat: %i€\n"
-           "=> Prix de vente: %i€\n"
-           "=> Perte liée à la surpopulation (50%% de chance): %s\n"
-           "=> Probabilité d'être malade: %.2f%%\n"
+    printf("----- %s -----\n"
+           "=> Capacite: %d\n"
+           "=> Prix d'achat: %i$\n"
+           "=> Prix de vente: %i$\n"
+           "=> Perte liee a la surpopulation (50%% de chance): %s\n"
+           "=> Probabilite d'etre malade: %.2f%%\n"
            "=> Animaux: %zu/%d\n"
            "Liste des animaux:\n%s"
-           "---------------------------\n",
-           m_nom.c_str(), animalTypeToString(m_typeAnimal).c_str(),
+           "------------------------------\n",
+           m_nom.c_str(),
            m_capacite,
            m_prixAchat, m_prixVente,
            m_perteSurPop ? "Oui" : "Non",
@@ -78,7 +78,7 @@ void Habitat::showAnimals() const {
     printf(
             "----- Habitat %s (%s) -----\n"
             "%s"
-            "---------------------------\n",
+            "------------------------------\n",
             m_nom.c_str(), animalTypeToString(m_typeAnimal).c_str(),
             listAnimals().c_str()
     );
@@ -94,13 +94,13 @@ AnimalType Habitat::getTypeAnimal() const { return m_typeAnimal; }
 void Habitat::addAnimal(IAnimal* animal) {
     // Vérifier si l'animal est du mauvais type
     if (animal->getTypeAnimal() != m_typeAnimal) {
-        printf("Impossible d'ajouter l'animal à l'habitat !\n");
+        printf("Impossible d'ajouter l'animal a l'habitat !\n");
         return;
     }
 
     // Vérifier si la capacité est atteinte
     if (m_animaux.size() >= m_capacite) {
-        printf("Capacité dépassée, des risques de surpopulation sont présents !\n");
+        printf("Capacite depassee, des risques de surpopulation sont presents !\n");
         m_perteSurPop = true;
     }
 
@@ -226,7 +226,7 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                         removeAnimal(mere);
                         habitat->addAnimal(mere);
                         cout << "Un tigre est enceinte pour 45 jours !" << endl
-                             << "Il est placé en gestation pour accueillir la portee." << endl;
+                             << "Il est place en gestation pour accueillir la portee." << endl;
                     }
                 }
                 break;
@@ -242,7 +242,7 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                             removeAnimal(mere);
                             habitat->addAnimal(mere);
                             cout << "Un aigle est enceinte pour 45 jours !" << endl
-                                << "Il est placé en gestation pour accueillir la portee." << endl;
+                                << "Il est place en gestation pour accueillir la portee." << endl;
                         }
                     }
                 }
@@ -258,7 +258,7 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                         removeAnimal(mere);
                         habitat->addAnimal(mere);
                         cout << "Une poule est enceinte pour 6 semaines !" << endl
-                             << "Il est placé en gestation pour accueillir la portee." << endl;
+                             << "Il est place en gestation pour accueillir la portee." << endl;
                     }
                 }
                 break;
@@ -317,11 +317,11 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                         // 3 individus
                         for (int j = 1; j <= 3; j++) {
                             if (distT(gen)) {
-                                printf("Un bébé tigre n'as pas survécu à l'accouchement !\n");
+                                printf("Un bebe tigre n'as pas survecu a l'accouchement !\n");
                             } else {
                                 char genre = distS(gen) ? 'M' : 'F';
-                                habitat->addAnimal(new Tigre("Bébé tigre", genre, 0));
-                                printf("Un bébé tigre (%c) est née !\n", genre);
+                                habitat->addAnimal(new Tigre("Bebe tigre", genre, 0));
+                                printf("Un bebe tigre (%c) est nee !\n", genre);
                             }
                         }
                         break;
@@ -329,11 +329,11 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                         // 2 oeufs
                         for (int j = 1; j <= 2; j++) {
                             if (distAP(gen)) {
-                                printf("Un bébé aigle n'as pas survécu à l'accouchement !\n");
+                                printf("Un bebe aigle n'as pas survecu a l'accouchement !\n");
                             } else {
                                 char genre = distS(gen) ? 'M' : 'F';
-                                habitat->addAnimal(new Aigle("Bébé aigle", genre, 0));
-                                printf("Un bébé aigle (%c) est née !\n", genre);
+                                habitat->addAnimal(new Aigle("Bebe aigle", genre, 0));
+                                printf("Un bebe aigle (%c) est nee !\n", genre);
                             }
                         }
                         break;
@@ -341,15 +341,15 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                         // 25 oeufs
                         for (int j = 1; j <= 25; j++) {
                             if (distAP(gen)) {
-                                printf("Un poussin n'as pas survécu à l'accouchement !\n");
+                                printf("Un poussin n'as pas survecu a l'accouchement !\n");
                             } else {
                                 char genre = distS(gen) ? 'M' : 'F';
                                 if (genre == 'M') {
-                                    habitat->addAnimal(new Coq("Bébé coq", 0));
-                                    printf("Un poussin (M) est née !\n");
+                                    habitat->addAnimal(new Coq("Bebe coq", 0));
+                                    printf("Un poussin (M) est nee !\n");
                                 } else {
-                                    habitat->addAnimal(new Poule("Bébé poule", 0));
-                                    printf("Un poussin (F) est née !\n");
+                                    habitat->addAnimal(new Poule("Bebe poule", 0));
+                                    printf("Un poussin (F) est nee !\n");
                                 }
                             }
                         }
@@ -398,7 +398,7 @@ void Habitat::MaladieAnnuelle() {
 
     // Passe la maladie à un animal au hasard de l'habitat
     m_animaux[rand() % m_animaux.size()]->setMaladie(duree);
-    printf("Un %s est tombé malade pour une durée de %d jours !\n", (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")), duree);
+    printf("Un %s est tombe malade pour une duree de %d jours !\n", (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")), duree);
 }
 
 void Habitat::setName(const string &name) {

@@ -9,7 +9,7 @@ Aliment::Aliment(string nom, float prixKg, FoodType foodType): m_nom(nom), m_pri
 
 void Aliment::show() {
     // TODO: ADD FOODTYPE
-    printf("----- %s ------\n=> Prix: %.2f€/kg\n=> Quantite: %.2fkg\n\n", m_nom.c_str(), m_prixKg, m_quantite);
+    printf("----- %s ------\n=> Prix: %.2f$/kg\n=> Quantite: %.2fkg\n\n", m_nom.c_str(), m_prixKg, m_quantite);
 }
 
 string Aliment::getNom() { return m_nom; }

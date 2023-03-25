@@ -9,6 +9,7 @@
 #include "Functions/functions.h"
 #include "Zoo/Zoo.h"
 #include "Vendeur/Vendeur.h"
+#include "Budget/Budget.h"
 
 #include <vector>
 
@@ -77,20 +78,20 @@ void scenario() {
     zooLife->addHabitat(habitat4);
     zooLife->addHabitat(habitat5);
     zooLife->show();
-    string Rep;
+    /*string Rep;
     while (Rep != "3") {
         printf("Que souhaitez-vous faire ?\n\t1 - Voir mes enclos\n\t2 - Passer au prochain mois\n\t3 - Exit\n");
         getline(cin, Rep);
         if (Rep == "1") {
-            cout << "----- Habitats -----" << endl;
+            cout << "------ Enclos ------" << endl;
             for (auto& h : zooLife->m_enclos) {
                 h->show();
             }
-            cout << "-------------------" << endl;
+            cout << "--------------------" << endl;
         } else if (Rep == "2") {
             zooLife->nextMonth();
         }
-    }
+    }*/
 }
 
 int test() {
@@ -109,12 +110,13 @@ int test() {
     string Rep;
 
     while (Rep != "4") {
+        cout<<"--------- Simulateur de ZOO ---------" << endl;
         printf("Que souhaitez-vous faire ?\n\t1 - Voir mes enclos\n\t2 - Passer au prochain mois\n\t3 - Parler au vendeur\n\t4 - Exit\n");
         getline(cin, Rep);
         if (Rep == "1") {
-            cout << "----- Habitats -----" << endl;
+            cout << "----- Enclos -----" << endl;
             zooLife->showHabitats();
-            cout << "-------------------" << endl;
+            cout << endl;
         } else if (Rep == "2") {
             zooLife->nextMonth();
         } else if (Rep == "3") {

@@ -18,14 +18,14 @@ using namespace std;
 class Vendeur {
 public:
     vector<IAnimal*> m_animaux{
-            new Tigre("Tigre(F) 6 mois", 'F', 31*6), // 6 mois
-            new Tigre("Tigre(M) 6 mois", 'M', 365*4), // 4 ans
-            new Tigre("Tigre(M) 6 mois", 'M', 365*14), // 14 ans
-            new Poule("Poule 6 mois", 31*6), // 6 mois
-            new Coq("Coq 6 mois", 31*6), // 6 mois
-            new Aigle("Aigle(F) 6 mois", 'F', 31*6), // 6 mois
-            new Aigle("Aigle(M) 6 mois", 'M', 365*4), // 4 ans
-            new Aigle("Aigle(M) 6 mois", 'M', 365*14), // 14 ans
+            new Tigre("Tigre(F)", 'F', 31*6), // 6 mois
+            new Tigre("Tigre(M)", 'M', 365*4), // 4 ans
+            new Tigre("Tigre(M)", 'M', 365*14), // 14 ans
+            new Poule("Poule", 31*6), // 6 mois
+            new Coq("Coq", 31*6), // 6 mois
+            new Aigle("Aigle(F)", 'F', 31*6), // 6 mois
+            new Aigle("Aigle(M)", 'M', 365*4), // 4 ans
+            new Aigle("Aigle(M)", 'M', 365*14), // 14 ans
     };
 
     vector<Habitat*> m_habitats{

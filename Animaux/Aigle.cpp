@@ -16,7 +16,7 @@ Aigle::Aigle(string name, char sexe, int age): IAnimal(std::move(name), sexe, ag
 
 void Aigle::show() {
     if (getSexe() == 'M') {
-        printf("----- %s (%c) -----\n"
+        printf("----- %s ------\n"
                "=> Age: %s\n"
                "=> Alimentation: Viande, %.2fkg/j\n"
                "=> Jours avant faim: %s\n"
@@ -24,7 +24,7 @@ void Aigle::show() {
                "=> Esperance de vie: %s\n"
                "=> Remarque: Fidele\n"
                "---------------------\n",
-               getName().c_str(), getSexe(),
+               getName().c_str(),
                dateConverter(getAge()).c_str(),
                m_AlimentationJour,
                dateConverter(m_joursAvantFaim).c_str(),
@@ -32,7 +32,7 @@ void Aigle::show() {
                dateConverter(m_esperanceDeVie).c_str()
         );
     } else if (getSexe() == 'F') {
-        printf("----- %s (%c) -----\n"
+        printf("----- %s ------\n"
                "=> Age: %s\n"
                "=> Alimentation: Viande, %.2fkg/j\n"
                "=> Jours avant faim: %s\n"
@@ -40,10 +40,10 @@ void Aigle::show() {
                "=> Esperance de vie: %s\n"
                "=> Ponte: %s\n"
                "=> Gestation: %s\n"
-               "=> Mortalité infantile: %.2f%%\n"
+               "=> Mortalite infantile: %.2f%%\n"
                "=> Remarque: Fidele\n"
                "---------------------\n",
-               getName().c_str(), getSexe(),
+               getName().c_str(),
                dateConverter(getAge()).c_str(),
                m_AlimentationJour,
                dateConverter(m_joursAvantFaim).c_str(),
