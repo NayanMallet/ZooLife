@@ -98,15 +98,15 @@ int chooseAnimalFromEnclos(Habitat *habitat) {
 void scenario() {
     // Mettez en place un scénario type : 2 couples de tigre, 2 couples d’aigle, 1 coq, 10 poules sur 10 ans
     cout << "----- ZooLife -----" << endl;
-    printf("\tBienvenue dans le simulateur de Zoo !\n\tGérez votre zoo en achetant et vendant des animaux, de la nourriture et des habitats.\n\tLes visiteurs génèrent de l'argent, mais attention à ne pas surcharger vos enclos ou vos animaux peuvent tomber malades et mourir.\n\tLe jeu dure 10 ans, soyez prudent avec votre argent et gérez votre zoo au mieux de vos capacités.\n\tBonne chance !\n");
-    printf("\nCommencez par donner un nom à votre zoo : ");
+    printf("\tBienvenue dans le simulateur de Zoo !\n\tGerez votre zoo en achetant et vendant des animaux, de la nourriture et des habitats.\n\tLes visiteurs generent de l'argent, mais attention a ne pas surcharger vos enclos ou vos animaux peuvent tomber malades et mourir.\n\tLe jeu dure 10 ans, soyez prudent avec votre argent et gerez votre zoo au mieux de vos capacites.\n\tBonne chance !\n");
+    printf("\nCommencez par donner un nom a votre zoo : ");
     string nomZoo;
     getline(cin, nomZoo);
     auto *zooLife = new Zoo(nomZoo);
     printf("\nBienvenue dans votre zoo %s !\nVoici vos stats : \n", nomZoo.c_str());
     zooLife->show();
     etapePause();
-    printf("\nVous avez 10 ans pour gérer votre zoo, bonne chance !\n");
+    printf("\nVous avez 10 ans pour gerer votre zoo, bonne chance !\n");
     // Couples Tigres :)
     auto *TigreM1 = new Tigre("TigreM1", 'M', 0);
     auto *TigreM2 = new Tigre("TigreM2", 'M', 0);
@@ -136,8 +136,8 @@ void scenario() {
 
     // Les Habitats
     auto *habitat = new Habitat("Couple de Tigre 1", AnimalType::TIGRE);
-    habitat->addAnimal(TigreM1);
-    habitat->addAnimal(TigreF1);
+    /*habitat->addAnimal(TigreM1);
+    habitat->addAnimal(TigreF1);*/
     auto *habitat2 = new Habitat("Couple de Tigre 2", AnimalType::TIGRE);
     habitat2->addAnimal(TigreM2);
     habitat2->addAnimal(TigreF2);
@@ -155,10 +155,10 @@ void scenario() {
     habitat5->addAnimal(Poule4);
     habitat5->addAnimal(Poule5);
     habitat5->addAnimal(Poule6);
-    habitat5->addAnimal(Poule7);
+    /*habitat5->addAnimal(Poule7);
     habitat5->addAnimal(Poule8);
     habitat5->addAnimal(Poule9);
-    habitat5->addAnimal(Poule10);
+    habitat5->addAnimal(Poule10);*/
 
     zooLife->addHabitat(habitat);
     zooLife->addHabitat(habitat2);
@@ -312,7 +312,7 @@ void scenario() {
                             printf("Entrer le numero de l'animal que vous voulez acheter ou Entree pour revenir en arriere: \n");
                             string v1;
                             getline(cin, v1);
-                            while (stoi(v1) >= vendeur->m_animaux.size() || stoi(v1) < 0) {
+                            while (v1.empty() || stoi(v1) >= vendeur->m_animaux.size() || stoi(v1) < 0) {
                                 printf("Entrer le numero de l'animal que vous voulez acheter ou Entree pour revenir en arriere: \n");
                                 getline(cin, v1);
                             }
@@ -335,8 +335,21 @@ void scenario() {
                                         if (stoi(v2) < zooLife->m_enclos.size() && stoi(v2) >= 0) {
                                             zooLife->buyAnimal(zooLife->m_enclos[stoi(v2)],
                                                                vendeur->m_animaux[stoi(v1)]);
-                                            vendeur->m_animaux.erase(vendeur->m_animaux.begin() + stoi(v1));
-                                            cout << "Animal achete!" << endl;
+                                            if (zooLife->getBudget() < vendeur->m_animaux[stoi(v1)]->getPrix('A')) {
+                                                cout << "Vous n'avez pas assez d'argent pour acheter cet animal!" << endl;
+                                                continue;
+                                            } else if (zooLife->m_enclos[stoi(v2)]->getTypeAnimal() !=
+                                                       vendeur->m_animaux[stoi(v1)]->getTypeAnimal()) {
+                                                cout << "Enclos incompatible!" << endl;
+                                                continue;
+                                            } else if (zooLife->m_enclos[stoi(v2)]->m_animaux.size() >=
+                                                       zooLife->m_enclos[stoi(v2)]->getCapacite()) {
+                                                cout << "Enclos plein!" << endl;
+                                                continue;
+                                            } else {
+                                                vendeur->m_animaux.erase(vendeur->m_animaux.begin() + stoi(v1));
+                                                cout << "Animal achete!" << endl;
+                                            }
                                         }
                                     }
                                 }
@@ -348,32 +361,32 @@ void scenario() {
                                 printf("- Enclos %s (%i)\n", zooLife->m_enclos[i]->getName().c_str(), i);
                             }
                             printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
-                            string v2;
-                            getline(cin, v2);
-                            while (stoi(v2) >= zooLife->m_enclos.size() || stoi(v2) < 0) {
+                            string numEnclos;
+                            getline(cin, numEnclos);
+                            while (stoi(numEnclos) >= zooLife->m_enclos.size() || stoi(numEnclos) < 0) {
                                 printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
-                                getline(cin, v2);
+                                getline(cin, numEnclos);
                             }
-                            if (!v2.empty()) {
-                                for (int j = 0; j < zooLife->m_enclos[stoi(v2)]->m_animaux.size(); j++) {
+                            if (!numEnclos.empty()) {
+                                for (int j = 0; j < zooLife->m_enclos[stoi(numEnclos)]->m_animaux.size(); j++) {
                                     printf("- %s (%i): %.2f$\n",
-                                           zooLife->m_enclos[stoi(v2)]->m_animaux[j]->getName().c_str(), j,
-                                           zooLife->m_enclos[stoi(v2)]->m_animaux[j]->getPrix('V'));
+                                           zooLife->m_enclos[stoi(numEnclos)]->m_animaux[j]->getName().c_str(), j,
+                                           zooLife->m_enclos[stoi(numEnclos)]->m_animaux[j]->getPrix('V'));
                                 }
                                 printf("Entrer le numero de l'animal que vous voulez vendre ou Entree pour revenir en arriere: \n");
-                                string v3;
-                                getline(cin, v3);
-                                while (stoi(v3) >= zooLife->m_enclos[stoi(v2)]->m_animaux.size() || stoi(v3) < 0) {
+                                string numAnimal;
+                                getline(cin, numAnimal);
+                                while (stoi(numAnimal) >= zooLife->m_enclos[stoi(numEnclos)]->m_animaux.size() || stoi(numAnimal) < 0) {
                                     printf("Entrer le numero de l'animal que vous voulez vendre ou Entree pour revenir en arriere: \n");
-                                    getline(cin, v3);
                                 }
-                                if (!v3.empty()) {
-                                    zooLife->sellAnimal(zooLife->m_enclos[stoi(v2)],
-                                                        zooLife->m_enclos[stoi(v2)]->m_animaux[stoi(v3)]);
-                                    vendeur->m_animaux.push_back(zooLife->m_enclos[stoi(v2)]->m_animaux[stoi(v3)]);
-                                    zooLife->m_enclos[stoi(v2)]->m_animaux.erase(
-                                            zooLife->m_enclos[stoi(v2)]->m_animaux.begin() + stoi(v3));
-                                    cout << "Animal vendu!" << endl;
+                                if (!numAnimal.empty()) {
+                                    zooLife->sellAnimal(zooLife->m_enclos[stoi(numEnclos)],
+                                                        zooLife->m_enclos[stoi(numEnclos)]->m_animaux[stoi(numAnimal)]);
+                                    vendeur->m_animaux.push_back(zooLife->m_enclos[stoi(numEnclos)]->m_animaux[stoi(numAnimal)]);
+                                    // print nom de l'animal vendu pour Prix de vente
+                                    printf("%s vendu pour %.2f$\n",
+                                           zooLife->m_enclos[stoi(numEnclos)]->m_animaux[stoi(numAnimal)]->getName().c_str(),
+                                           zooLife->m_enclos[stoi(numEnclos)]->m_animaux[stoi(numAnimal)]->getPrix('V'));
                                 }
                             }
                         }
@@ -386,11 +399,56 @@ void scenario() {
                         getline(cin, HabitatRep);
                         if (HabitatRep == "1") {
                             cout << "Acheter un habitat" << endl;
-                            vendeur->showHabitats();
+                            for (int i = 0; i < vendeur->m_habitats.size(); i++) {
+                                printf("- Enclos %s (%i): %.2f$\n", vendeur->m_habitats[i]->getName().c_str(), i,
+                                       vendeur->m_habitats[i]->getPrix('A'));
+                            }
+                            printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
+                            string numEnclos;
+                            getline(cin, numEnclos);
+                            while (stoi(numEnclos) >= vendeur->m_habitats.size() || stoi(numEnclos) < 0) {
+                                printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
+                                getline(cin, numEnclos);
+                            }
+                            if (!numEnclos.empty()) {
+                                if (zooLife->getBudget() < vendeur->m_habitats[stoi(numEnclos)]->getPrix('A')) {
+                                    cout << "Vous n'avez pas assez d'argent pour acheter cet enclos!" << endl;
+                                    continue;
+                                } else {
+                                    zooLife->buyHabitat(vendeur->m_habitats[stoi(numEnclos)]->getName(), vendeur->m_habitats[stoi(numEnclos)]->getTypeAnimal());
+                                    vendeur->m_habitats.erase(vendeur->m_habitats.begin() + stoi(numEnclos));
+                                    printf("Enclos %s achete pour %.2f$",
+                                           vendeur->m_habitats[stoi(numEnclos)]->getName().c_str(),
+                                           vendeur->m_habitats[stoi(numEnclos)]->getPrix('A'));
+                                }
+                            } else {
+                                continue;
+                            }
+
                         } else if (HabitatRep == "2") {
                             cout << "Vendre un habitat" << endl;
-                            for (auto &h: zooLife->m_enclos) {
-                                h->show();
+                            for (int i = 0; i < zooLife->m_enclos.size(); i++) {
+                                printf("- Enclos %s (%i)\n", zooLife->m_enclos[i]->getName().c_str(), i);
+                            }
+                            printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
+                            string numEnclos;
+                            getline(cin, numEnclos);
+                            while (stoi(numEnclos) >= zooLife->m_enclos.size() || stoi(numEnclos) < 0) {
+                                printf("Entrer le numero de l'enclos ou Entree pour revenir en arriere: \n");
+                                getline(cin, numEnclos);
+                            }
+                            if (!numEnclos.empty()) {
+                                if (zooLife->m_enclos[stoi(numEnclos)]->m_animaux.size() > 0) {
+                                    cout << "Vous ne pouvez pas vendre un enclos avec des animaux dedans!" << endl;
+                                    continue;
+                                } else {
+                                    printf("%s vendu pour %.2f$\n", zooLife->m_enclos[stoi(numEnclos)]->getName().c_str(),
+                                           zooLife->m_enclos[stoi(numEnclos)]->getPrix('V'));
+                                    zooLife->sellHabitat(zooLife->m_enclos[stoi(numEnclos)]);
+                                    vendeur->m_habitats.push_back(zooLife->m_enclos[stoi(numEnclos)]);
+                                }
+                            } else {
+                                continue;
                             }
                         }
                     }
@@ -402,9 +460,67 @@ void scenario() {
                         getline(cin, NourritureRep);
                         if (NourritureRep == "1") {
                             cout << "Acheter de la nourriture" << endl;
-                            vendeur->showAliments();
+                            for (int i = 0; i < vendeur->m_aliments.size(); i++) {
+                                printf("- %s (%i): %.2f$/Kg\n", vendeur->m_aliments[i]->getNom().c_str(), i,
+                                       vendeur->m_aliments[i]->getPrixKg());
+                            }
+                            printf("Entrer le numero de l'aliment ou Entree pour revenir en arriere: \n");
+                            string numAliment;
+                            getline(cin, numAliment);
+                            while (stoi(numAliment) >= vendeur->m_aliments.size() || stoi(numAliment) < 0) {
+                                printf("Entrer le numero de l'aliment ou Entree pour revenir en arriere: \n");
+                                getline(cin, numAliment);
+                            }
+                            if (!numAliment.empty()) {
+                                printf("Combien de kg voulez-vous acheter ?\n");
+                                string kg;
+                                getline(cin, kg);
+                                while (stoi(kg) < 0) {
+                                    printf("Combien de kg voulez-vous acheter ?\n");
+                                    getline(cin, kg);
+                                }
+                                if (zooLife->getBudget() < vendeur->m_aliments[stoi(numAliment)]->getPrixKg() * stoi(kg)) {
+                                    cout << "Vous n'avez pas assez d'argent pour acheter cet aliment!" << endl;
+                                    continue;
+                                } else {
+                                    zooLife->buyAliment(vendeur->m_aliments[stoi(numAliment)]->getFoodType(), stoi(kg));
+                                    printf("%s achete pour %.2f$\n", vendeur->m_aliments[stoi(numAliment)]->getNom().c_str(),
+                                           vendeur->m_aliments[stoi(numAliment)]->getPrixKg() * stoi(kg));
+                                }
+                            } else {
+                                continue;
+                            }
                         } else if (NourritureRep == "2") {
                             cout << "Vendre de la nourriture" << endl;
+                            for (int i = 0; i < zooLife->m_stockAliment.size(); i++) {
+                                printf("-[%i] %s (%.2f/Kg): %.2f$/Kg\n", i, zooLife->m_stockAliment[i]->getNom().c_str(), zooLife->m_stockAliment[i]->getQuantite(), zooLife->m_stockAliment[i]->getPrixKg());
+                            }
+                            printf("Entrer le numero de l'aliment ou Entree pour revenir en arriere: \n");
+                            string numAliment;
+                            getline(cin, numAliment);
+                            while (stoi(numAliment) >= zooLife->m_stockAliment.size() || stoi(numAliment) < 0) {
+                                printf("Entrer le numero de l'aliment ou Entree pour revenir en arriere: \n");
+                                getline(cin, numAliment);
+                            }
+                            if (!numAliment.empty()) {
+                                printf("Combien de kg voulez-vous vendre ?\n");
+                                string kg;
+                                getline(cin, kg);
+                                while (stoi(kg) < 0) {
+                                    printf("Combien de kg voulez-vous vendre ?\n");
+                                    getline(cin, kg);
+                                }
+                                if (zooLife->m_stockAliment[stoi(numAliment)]->getQuantite() < stoi(kg)) {
+                                    cout << "Vous n'avez pas assez de nourriture pour vendre cet aliment!" << endl;
+                                    continue;
+                                } else {
+                                    zooLife->sellAliment(zooLife->m_stockAliment[stoi(numAliment)]->getFoodType(), stoi(kg));
+                                    printf("%s vendu pour %.2f$\n", zooLife->m_stockAliment[stoi(numAliment)]->getNom().c_str(),
+                                           zooLife->m_stockAliment[stoi(numAliment)]->getPrixKg() * stoi(kg));
+                                }
+                            } else {
+                                continue;
+                            }
                         }
                     }
                 }
