@@ -101,18 +101,24 @@ void Zoo::nextMonth() {
                } else {
                    cout << "La mere " << animal->getName() << " peut revenir dans le Zoo !" << endl << "Ou voulez-vous la placer ?" << endl;
                }
-               string choice;
                for (int i = 0; i < m_enclos.size(); i++) {
                    if (m_enclos[i]->getTypeAnimal() == type) {
                        cout << i << " - " << m_enclos[i]->getName() << endl;
                    }
                }
-               getline(cin, choice);
-               while (stoi(choice) >= m_enclos.size() || m_enclos[stoi(choice)]->getTypeAnimal() != type) {
-                   cout << "Choix invalide, veuillez reessayer: ";
-                   getline(cin, choice);
+
+               int choice;
+               while (true) {
+                   cin >> choice;
+                   if ((choice >= 0 && choice < m_enclos.size()) && m_enclos[choice]->getTypeAnimal() == type) {
+                       break;
+                   } else {
+
+                   }
+
                }
-               changeAnimalOfEnclos(habitat, m_enclos[stoi(choice)], animal);
+
+               changeAnimalOfEnclos(habitat, m_enclos[choice], animal);
            }
        }
     }

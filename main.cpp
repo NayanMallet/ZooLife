@@ -132,9 +132,9 @@ int chooseAnimalFromEnclos(Habitat *habitat) {
 int chooseAnimalFromBS(vector<IAnimal*> inventaire, char type) {
     cout << "Choisis un animal :" << endl;
     for (int i = 0; i < inventaire.size(); i++) {
-        cout << "[" << i << "] " << inventaire[i]->getName() << " -> " << inventaire[i]->getPrix(type)  << "$" << endl;
+        cout << "[" << i << "] " << inventaire[i]->getName() << "(" << dateConverter(inventaire[i]->getAge()).c_str() << ")" <<  " -> " << inventaire[i]->getPrix(type)  << "$" << endl;
     }
-    cout << endl << "<- Sortir (tapez 'exit')" << endl << "Numero de l'animal que vous souhaitez " << (type == 'A' ? "acheter" : "vendre") << ": ";
+    cout << endl << "<- Sortir (tapez 'exit')" << endl << "Numero de l'animal que vous souhaitez " << (type == 'A' ? "acheter" : "vendre") << ": \n";
     string rep1;
     getline(cin, rep1);
     int choix = -1;
@@ -239,31 +239,31 @@ void scenario() {
     etapePause();
     printf("\nVous avez 10 ans pour gerer votre zoo, bonne chance !\n");
     // Couples Tigres :)
-    auto *TigreM1 = new Tigre("TigreM1", 'M', 4*365);
-    auto *TigreM2 = new Tigre("TigreM2", 'M', 4*365);
-    auto *TigreF1 = new Tigre("TigreF1", 'F', 4*365);
-    auto *TigreF2 = new Tigre("TigreF2", 'F', 4*365);
+    auto *TigreM1 = new Tigre("TigreM1", 'M', 6*31);
+    auto *TigreM2 = new Tigre("TigreM2", 'M', 6*31);
+    auto *TigreF1 = new Tigre("TigreF1", 'F', 6*31);
+    auto *TigreF2 = new Tigre("TigreF2", 'F', 6*31);
 
     // Couples Aigles :)
-    auto *AigleM1 = new Aigle("AigleM1", 'M', 4*365);
-    auto *AigleM2 = new Aigle("AigleM2", 'M', 4*365);
-    auto *AigleF1 = new Aigle("AigleF1", 'F', 4*365);
-    auto *AigleF2 = new Aigle("AigleF2", 'F', 4*365);
+    auto *AigleM1 = new Aigle("AigleM1", 'M', 6*31);
+    auto *AigleM2 = new Aigle("AigleM2", 'M', 6*31);
+    auto *AigleF1 = new Aigle("AigleF1", 'F', 6*31);
+    auto *AigleF2 = new Aigle("AigleF2", 'F', 6*31);
 
     // Le Coq
     auto *Coq1 = new Coq("Coq1", 6*31);
 
     // Les Poules
     auto *Poule1 = new Poule("Poule1", 6*31);
-    auto *Poule2 = new Poule("Poule2", 0);
+    auto *Poule2 = new Poule("Poule2", 6*31);
     auto *Poule3 = new Poule("Poule3", 6*31);
-    auto *Poule4 = new Poule("Poule4", 0);
-    auto *Poule5 = new Poule("Poule5", 0);
-    auto *Poule6 = new Poule("Poule6", 0);
-    auto *Poule7 = new Poule("Poule7", 0);
-    auto *Poule8 = new Poule("Poule8", 0);
-    auto *Poule9 = new Poule("Poule9", 0);
-    auto *Poule10 = new Poule("Poule10", 0);
+    auto *Poule4 = new Poule("Poule4", 6*31);
+    auto *Poule5 = new Poule("Poule5", 6*31);
+    auto *Poule6 = new Poule("Poule6", 6*31);
+    auto *Poule7 = new Poule("Poule7", 6*31);
+    auto *Poule8 = new Poule("Poule8", 6*31);
+//    auto *Poule9 = new Poule("Poule9", 6*31);
+    auto *Poule10 = new Poule("Poule10", 6*31);
 
     // Les Habitats
     auto *habitat = new Habitat("Couple de Tigre 1", AnimalType::TIGRE);
@@ -288,7 +288,7 @@ void scenario() {
     habitat5->addAnimal(Poule6);
     habitat5->addAnimal(Poule7);
     habitat5->addAnimal(Poule8);
-    habitat5->addAnimal(Poule9);
+//    habitat5->addAnimal(Poule9);
     habitat5->addAnimal(Poule10);
 
     zooLife->addHabitat(habitat);
@@ -600,10 +600,101 @@ void scenario() {
 
 
 
-
-
 int main() {
+//    auto *zooLife = new Zoo("ZooLife");
+//    zooLife->show();
+//    // Couples Tigres :)
+//    auto *TigreM1 = new Tigre("TigreM1", 'M', 6*365);
+//    auto *TigreM2 = new Tigre("TigreM2", 'M', 6*365);
+//    auto *TigreF1 = new Tigre("TigreF1", 'F', 4*365);
+//    auto *TigreF2 = new Tigre("TigreF2", 'F', 4*365);
+////
+////    // Couples Aigles :)
+////    auto *AigleM1 = new Aigle("AigleM1", 'M', 6*31);
+////    auto *AigleM2 = new Aigle("AigleM2", 'M', 6*31);
+////    auto *AigleF1 = new Aigle("AigleF1", 'F', 6*31);
+////    auto *AigleF2 = new Aigle("AigleF2", 'F', 6*31);
+////
+////    // Le Coq
+////    auto *Coq1 = new Coq("Coq1", 6*31);
+////
+////    // Les Poules
+////    auto *Poule1 = new Poule("Poule1", 6*31);
+////    auto *Poule2 = new Poule("Poule2", 6*31);
+////    auto *Poule3 = new Poule("Poule3", 6*31);
+////    auto *Poule4 = new Poule("Poule4", 6*31);
+////    auto *Poule5 = new Poule("Poule5", 6*31);
+////    auto *Poule6 = new Poule("Poule6", 6*31);
+////    auto *Poule7 = new Poule("Poule7", 6*31);
+////    auto *Poule8 = new Poule("Poule8", 6*31);
+////    auto *Poule9 = new Poule("Poule9", 6*31);
+//
+//    // Les Habitats
+//    auto *habitat = new Habitat("Couple de Tigre 1", AnimalType::TIGRE);
+//    habitat->addAnimal(TigreM1);
+//    habitat->addAnimal(TigreF1);
+////    auto *habitat2 = new Habitat("Couple de Tigre 2", AnimalType::TIGRE);
+////    habitat2->addAnimal(TigreM2);
+////    habitat2->addAnimal(TigreF2);
+////    auto *habitat3 = new Habitat("Couple Aigle 1", AnimalType::AIGLE);
+////    habitat3->addAnimal(AigleM1);
+////    habitat3->addAnimal(AigleF1);
+////    auto *habitat4 = new Habitat("Couple Aigle 2", AnimalType::AIGLE);
+////    habitat4->addAnimal(AigleM2);
+////    habitat4->addAnimal(AigleF2);
+////    auto *habitat5 = new Habitat("KFC", AnimalType::POULE);
+////    habitat5->addAnimal(Coq1);
+////    habitat5->addAnimal(Poule1);
+////    habitat5->addAnimal(Poule2);
+////    habitat5->addAnimal(Poule3);
+////    habitat5->addAnimal(Poule4);
+////    habitat5->addAnimal(Poule5);
+////    habitat5->addAnimal(Poule6);
+////    habitat5->addAnimal(Poule7);
+////    habitat5->addAnimal(Poule8);
+////    habitat5->addAnimal(Poule9);
+//
+//    zooLife->addHabitat(habitat);
+//    zooLife->addHabitat(habitat2);
+////    zooLife->addHabitat(habitat3);
+////    zooLife->addHabitat(habitat4);
+////    zooLife->addHabitat(habitat5);
+//
+//    zooLife->m_stockAliment[0]->addQuantite(10000000);
+//    zooLife->m_stockAliment[1]->addQuantite(10000000);
+//
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+//    zooLife->nextMonth();
+
+
+//    string choix;
+//    while (choix != "exit") {
+//        cout << "choix: ";
+//        getline(cin, choix);
+//        if (choix == "n") {
+//            zooLife->nextMonth();
+//        } else if (choix == "s") {
+//            zooLife->show();
+//        } else if (choix == "s0") {
+//            zooLife->m_enclos[0]->m_animaux[0]->show();
+//            zooLife->m_enclos[0]->m_animaux[1]->show();
+//            zooLife->m_enclos[0]->m_animaux[2]->show();
+//            zooLife->m_enclos[0]->m_animaux[3]->show();
+//        }
+//    }
+
     scenario();
+
     return 0;
 }
 

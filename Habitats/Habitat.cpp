@@ -251,20 +251,14 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                 // 25 œufs / 6 semaines (1ans = 8*6semaines)
                 for (auto& animal : m_animaux) {
                     if (animal->getSexe() == 'F' && animal->getReproduction()) {
-                        static std::random_device rd;
-                        static std::mt19937 gen(rd());
-                        int m = int(0.5);
-                        static std::bernoulli_distribution distS(m);
-                        if (distS(gen)) {
-                            animal->setPortee(true);
-                            animal->setReproduction(false);
-                            animal->setGestation(42); // 6 semaines
-                            auto mere = animal;
-                            removeAnimal(mere);
-                            habitat->addAnimal(mere);
-                            cout << "Une poule est enceinte pour 6 semaines !" << endl
-                                 << "Il est place en gestation pour accueillir la portee." << endl;
-                        }
+                        animal->setPortee(true);
+                        animal->setReproduction(false);
+                        animal->setGestation(42); // 6 semaines
+                        auto mere = animal;
+                        removeAnimal(mere);
+                        habitat->addAnimal(mere);
+                        cout << "Une poule est enceinte pour 6 semaines !" << endl
+                             << "Il est place en gestation pour accueillir la portee." << endl;
                     }
                 }
                 break;
@@ -301,73 +295,80 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
 
         }
 
-        for (auto &animal : habitat->m_animaux) {
-            // Vérifier si l'animal est mort
-            if (animal->getDead()) {
-                m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), animal), m_animaux.end());
-                continue;
-            }
+        if (!habitat->m_animaux.empty()) {
+            for (auto &animal : habitat->m_animaux) {
+                // Vérifier si l'animal est mort
+                if (animal->getDead()) {
+                    m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), animal), m_animaux.end());
+                    continue;
+                }
 
-            animal->update(food);
+                animal->update(food);
 
-            // Update Gestation
-            if (animal->getGestation() > 0) {
-                animal->setGestation(animal->getGestation() - 1);
-            } else if (animal->getGestation() == 0 && animal->getPortee()) {
-                // Naissance
-                cout << "----- Naissances -----" << endl;
-                animal->setPortee(false);
-                static std::random_device rd;
-                static std::mt19937 gen(rd());
-                static std::bernoulli_distribution distS(0.5);
-                static std::bernoulli_distribution distT(0.33);
-                static std::bernoulli_distribution distAP(0.5);
-                switch (type) {
-                    case AnimalType::TIGRE:
-                        // 3 individus
-                        for (int j = 1; j <= 3; j++) {
-                            if (distT(gen)) {
-                                printf("Un bebe tigre n'as pas survecu a l'accouchement !\n");
-                            } else {
-                                char genre = distS(gen) ? 'M' : 'F';
-                                habitat->addAnimal(new Tigre("Bebe tigre", genre, 0));
-                                printf("Un bebe tigre (%c) est nee !\n", genre);
-                            }
-                        }
-                        break;
-                    case AnimalType::AIGLE:
-                        // 2 oeufs
-                        for (int j = 1; j <= 2; j++) {
-                            if (distAP(gen)) {
-                                printf("Un bebe aigle n'as pas survecu a l'accouchement !\n");
-                            } else {
-                                char genre = distS(gen) ? 'M' : 'F';
-                                habitat->addAnimal(new Aigle("Bebe aigle", genre, 0));
-                                printf("Un bebe aigle (%c) est nee !\n", genre);
-                            }
-                        }
-                        break;
-                    case AnimalType::POULE:
-                        // 25 oeufs
-                        for (int j = 1; j <= 25; j++) {
-                            if (distAP(gen)) {
-                                printf("Un poussin n'as pas survecu a l'accouchement !\n");
-                            } else {
-                                char genre = distS(gen) ? 'M' : 'F';
-                                if (genre == 'M') {
-                                    habitat->addAnimal(new Coq("Bebe coq", 0));
-                                    printf("Un poussin (M) est nee !\n");
+                // Update Gestation
+                if (animal->getGestation() > 0) {
+                    animal->setGestation(animal->getGestation() - 1);
+                } else if (animal->getGestation() == 0 && animal->getPortee()) {
+                    // Naissance
+                    cout << "----- Naissances -----" << endl;
+                    animal->setPortee(false);
+                    static std::random_device rd;
+                    static std::mt19937 gen(rd());
+                    static std::bernoulli_distribution distS(0.5);
+                    static std::bernoulli_distribution distT(0.33);
+                    static std::bernoulli_distribution distAP(0.5);
+                    switch (type) {
+                        case AnimalType::TIGRE:
+                            // 3 individus
+                            for (int j = 1; j <= 3; j++) {
+                                if (distT(gen)) {
+                                    printf("Un bebe tigre n'as pas survecu a l'accouchement !\n");
                                 } else {
-                                    habitat->addAnimal(new Poule("Bebe poule", 0));
-                                    printf("Un poussin (F) est nee !\n");
+                                    char genre = distS(gen) ? 'M' : 'F';
+
+                                    habitat->m_animaux.push_back(new Tigre("Bebe tigre", genre, 0));
+//                                habitat->addAnimal(new Tigre("Bebe tigre", genre, 0));
+                                    printf("Un bebe tigre (%c) est nee !\n", genre);
                                 }
                             }
-                        }
-                        break;
-                    default:
-                        break;
+                            break;
+                        case AnimalType::AIGLE:
+                            // 2 oeufs
+                            for (int j = 1; j <= 2; j++) {
+                                if (distAP(gen)) {
+                                    printf("Un bebe aigle n'as pas survecu a l'accouchement !\n");
+                                } else {
+                                    char genre = distS(gen) ? 'M' : 'F';
+                                    habitat->m_animaux.push_back(new Aigle("Bebe aigle", genre, 0));
+//                                habitat->addAnimal(new Aigle("Bebe aigle", genre, 0));
+                                    printf("Un bebe aigle (%c) est nee !\n", genre);
+                                }
+                            }
+                            break;
+                        case AnimalType::POULE:
+                            // 25 oeufs
+                            for (int j = 1; j <= 25; j++) {
+                                if (distAP(gen)) {
+                                    printf("Un poussin n'as pas survecu a l'accouchement !\n");
+                                } else {
+                                    char genre = distS(gen) ? 'M' : 'F';
+                                    if (genre == 'M') {
+                                        habitat->m_animaux.push_back(new Coq("Bebe coq", 0));
+//                                    habitat->addAnimal(new Coq("Bebe coq", 0));
+                                        printf("Un poussin (M) est nee !\n");
+                                    } else {
+                                        habitat->m_animaux.push_back(new Poule("Bebe poule", 0));
+//                                    habitat->addAnimal(new Poule("Bebe poule", 0));
+                                        printf("Un poussin (F) est nee !\n");
+                                    }
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    cout << "----------------------" << endl;
                 }
-                cout << "----------------------" << endl;
             }
         }
     }
