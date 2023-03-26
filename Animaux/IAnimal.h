@@ -54,7 +54,7 @@ private:
     int m_age{}; // en jours
     AnimalType m_typeAnimal{};
     FoodType m_foodType{};
-    bool m_fed{false}; // getFed -> True = Animal a faim / False = Animal n'as pas faim
+    bool m_fed{true}; // getFed -> True = Animal a faim / False = Animal n'as pas faim
     bool m_reproduction{false};
     int m_maladie{0};
     bool m_dead{false};

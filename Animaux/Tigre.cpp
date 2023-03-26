@@ -21,7 +21,7 @@ void Tigre::show() {
         printf("----- %s -----\n"
                "=> Age: %s\n"
                "=> Alimentation: Viande, %.2fkg/j\n"
-               "=> Jours avant faim: %s\n"
+               "=> Faim: %s\n"
                "=> Reproduction: %s\n" // Reproduction
                "%s"
                "=> Esperance de vie: %s\n"
@@ -30,7 +30,7 @@ void Tigre::show() {
                getName().c_str(),
                dateConverter(getAge()).c_str(),
                m_AlimentationJour,
-               dateConverter(m_joursAvantFaim).c_str(),
+               (getFed() ? "Oui" : "Non"),
                (getReproduction() ? "Oui" : "Non"),
                (getMaladie() > 0 ? "=> Maladie: Oui\n" : ""),
                dateConverter(m_esperanceDeVie).c_str()
@@ -39,7 +39,7 @@ void Tigre::show() {
         printf("----- %s -----\n"
                "=> Age: %s\n"
                "=> Alimentation: Viande, %.2fkg/j\n"
-               "=> Jours avant faim: %s\n"
+               "=> Faim: %s\n"
                "=> Reproduction: %s\n" // Reproduction
                "%s"
                "=> Esperance de vie: %s\n"
@@ -51,7 +51,7 @@ void Tigre::show() {
                getName().c_str(),
                dateConverter(getAge()).c_str(),
                m_AlimentationJour,
-               dateConverter(m_joursAvantFaim).c_str(),
+               (getFed() ? "Oui" : "Non"),
                (getReproduction() ? "Oui" : "Non"),
                (getMaladie() > 0 ? "=> Maladie: Oui\n" : ""),
                dateConverter(m_esperanceDeVie).c_str(),
@@ -63,52 +63,6 @@ void Tigre::show() {
         printf("Aigle '%s'=> Error !", getName().c_str());
     }
 }
-
-//void Tigre::show() {
-//    if (getSexe() == 'M') {
-//        printf("----- %s (%c) -----\n"
-//               "=> Age: %s\n"
-//               "=> Alimentation: Viande, %.2fkg/j\n"
-//               "=> Jours avant faim: %s\n"
-//               "=> Fin de reproduction: %s\n"
-//               "=> Esperance de vie: %s\n"
-//               "=> Maturité sexuelle: %s\n"
-//               "---------------------\n",
-//               getName().c_str(), getSexe(),
-//               dateConverter(getAge()).c_str(),
-//               m_AlimentationJour,
-//               dateConverter(m_joursAvantFaim).c_str(),
-//               dateConverter(m_finDeReprod).c_str(),
-//               dateConverter(m_esperanceDeVie).c_str(),
-//               dateConverter(m_maturiteSexuelle).c_str()
-//        );
-//    } else if (getSexe() == 'F') {
-//        printf("----- %s (%c) -----\n"
-//               "=> Age: %s\n"
-//               "=> Alimentation: Viande, %.2fkg/j\n"
-//               "=> Jours avant faim: %s\n"
-//               "=> Fin de reproduction: %s\n"
-//               "=> Esperance de vie: %s\n"
-//               "=> Maturité sexuelle: %s\n"
-//               "=> Ponte / portée: %s\n"
-//               "=> Gestation: %s\n"
-//               "=> Mortalité infantile: %.2f%%\n"
-//               "---------------------\n",
-//               getName().c_str(), getSexe(),
-//               dateConverter(getAge()).c_str(),
-//               m_AlimentationJour,
-//               dateConverter(m_joursAvantFaim).c_str(),
-//               dateConverter(m_finDeReprod).c_str(),
-//               dateConverter(m_esperanceDeVie).c_str(),
-//               dateConverter(m_maturiteSexuelle).c_str(),
-//               (m_portee ? "Oui" : "Non"),
-//               dateConverter(m_gestation).c_str(),
-//               m_mortaliteInfantile
-//        );
-//    } else {
-//        printf("Tigre '%s'=> Error !", getName().c_str());
-//    }
-//}
 
 void Tigre::resetDaysBeforeFed() { m_joursAvantFaim = 2; }
 
@@ -145,13 +99,12 @@ void Tigre::update(Aliment* food) {
 
     // update de la faim
     if (m_joursAvantFaim == 0) {
-        setFed(fedAnimal(food));
+        bool result = fedAnimal(food);
+        setFed(result);
     }
 
-//    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
-    if (getAge() == m_esperanceDeVie) {
-        cout << getName() << " est mort !" << endl;
-        Tigre::~Tigre();
+    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
+        setDead(true);
         return;
     }
 }
@@ -183,4 +136,8 @@ void Tigre::setGestation(int gestation) {
 
 int Tigre::getEndMaturingTime() {
     return m_finDeReprod;
+}
+
+Tigre::~Tigre() {
+    setDead(true);
 }

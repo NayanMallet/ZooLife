@@ -11,7 +11,7 @@ void Coq::show() {
     printf("-------- %s --------\n"
            "=> Age: %s\n"
            "=> Alimentation: Viande, %.2fkg/j\n"
-           "=> Jours avant faim: %s\n"
+           "=> Faim: %s\n"
            "=> Reproduction: %s\n" // Reproduction
            "%s"
            "=> Esperance de vie: %s\n"
@@ -20,31 +20,12 @@ void Coq::show() {
            getName().c_str(),
            dateConverter(getAge()).c_str(),
            m_AlimentationJour,
-           dateConverter(m_joursAvantFaim).c_str(),
+           (getFed() ? "Oui" : "Non"),
            (getReproduction() ? "Oui" : "Non"),
            (getMaladie() > 0 ? "=> Maladie: Oui\n" : ""),
            dateConverter(m_esperanceDeVie).c_str()
     );
 }
-
-//void Coq::show() {
-//    printf("----- %s (%c) -----\n"
-//           "=> Age: %s\n"
-//           "=> Alimentation: Graines, %.2fkg/j\n"
-//           "=> Jours avant faim: %s\n"
-//           "=> Fin de reproduction: %s\n"
-//           "=> Esperance de vie: %s\n"
-//           "=> Maturite sexuelle: %s\n"
-//           "---------------------\n",
-//           getName().c_str(), getSexe(),
-//           dateConverter(getAge()).c_str(),
-//           m_AlimentationJour,
-//           dateConverter(m_joursAvantFaim).c_str(),
-//           dateConverter(m_finDeReprod).c_str(),
-//           dateConverter(m_esperanceDeVie).c_str(),
-//           dateConverter(m_maturiteSexuelle).c_str()
-//    );
-//}
 
 void Coq::resetDaysBeforeFed() { m_joursAvantFaim = 2; }
 
@@ -77,13 +58,12 @@ void Coq::update(Aliment* food) {
 
     // update de la faim
     if (m_joursAvantFaim == 0) {
-        setFed(fedAnimal(food));
+        bool result = fedAnimal(food);
+        setFed(result);
     }
 
-    //    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
-    if (getAge() == m_esperanceDeVie) {
-        cout << getName() << " est mort !" << endl;
-        Coq::~Coq();
+    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
+        setDead(true);
         return;
     }
 }
@@ -114,6 +94,10 @@ void Coq::setPortee(bool portee) {
 
 int Coq::getEndMaturingTime() {
     return m_finDeReprod;
+}
+
+Coq::~Coq() {
+    setDead(true);
 }
 
 

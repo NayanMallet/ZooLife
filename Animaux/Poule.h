@@ -9,7 +9,7 @@ using namespace  std;
 class Poule : public IAnimal {
 public:
     Poule(string name, int age);
-    ~Poule() override = default;
+    ~Poule() override;
 
     void show() override;
     bool fedAnimal(Aliment* food) override;

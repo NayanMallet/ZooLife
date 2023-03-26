@@ -19,7 +19,7 @@ void Aigle::show() {
         printf("----- %s ------\n"
                "=> Age: %s\n"
                "=> Alimentation: Viande, %.2fkg/j\n"
-               "=> Jours avant faim: %s\n"
+               "=> Faim: %s\n"
                "=> Reproduction: %s\n"  // Reproduction
                "%s"
                "=> Esperance de vie: %s\n"
@@ -28,7 +28,7 @@ void Aigle::show() {
                getName().c_str(),
                dateConverter(getAge()).c_str(),
                m_AlimentationJour,
-               dateConverter(m_joursAvantFaim).c_str(),
+               (getFed() ? "Oui" : "Non"),
                (getReproduction() ? "Oui" : "Non"),
                (getMaladie() > 0 ? "=> Maladie: Oui\n" : ""),
                dateConverter(m_esperanceDeVie).c_str()
@@ -37,7 +37,7 @@ void Aigle::show() {
         printf("----- %s ------\n"
                "=> Age: %s\n"
                "=> Alimentation: Viande, %.2fkg/j\n"
-               "=> Jours avant faim: %s\n"
+               "=> Faim: %s\n"
                "=> Reproduction: %s\n" // Reproduction
                "%s"
                "=> Esperance de vie: %s\n"
@@ -49,7 +49,7 @@ void Aigle::show() {
                getName().c_str(),
                dateConverter(getAge()).c_str(),
                m_AlimentationJour,
-               dateConverter(m_joursAvantFaim).c_str(),
+               (getFed() ? "Oui" : "Non"),
                (getReproduction() ? "Oui" : "Non"),
                (getMaladie() > 0 ? "=> Maladie: Oui\n" : ""),
                dateConverter(m_esperanceDeVie).c_str(),
@@ -61,53 +61,6 @@ void Aigle::show() {
         printf("Aigle '%s'=> Error !", getName().c_str());
     }
 }
-//void Aigle::show() {
-//    if (getSexe() == 'M') {
-//        printf("----- %s (%c) -----\n"
-//               "=> Age: %s\n"
-//               "=> Alimentation: Viande, %.2fkg/j\n"
-//               "=> Jours avant faim: %s\n"
-//               "=> Fin de reproduction: %s\n"
-//               "=> Esperance de vie: %s\n"
-//               "=> Maturite sexuelle: %s\n"
-//               "=> Remarque: Fidele\n"
-//               "---------------------\n",
-//               getName().c_str(), getSexe(),
-//               dateConverter(getAge()).c_str(),
-//               m_AlimentationJour,
-//               dateConverter(m_joursAvantFaim).c_str(),
-//               dateConverter(m_finDeReprod).c_str(),
-//               dateConverter(m_esperanceDeVie).c_str(),
-//               dateConverter(m_maturiteSexuelle).c_str()
-//        );
-//    } else if (getSexe() == 'F') {
-//        printf("----- %s (%c) -----\n"
-//               "=> Age: %s\n"
-//               "=> Alimentation: Viande, %.2fkg/j\n"
-//               "=> Jours avant faim: %s\n"
-//               "=> Fin de reproduction: %s\n"
-//               "=> Esperance de vie: %s\n"
-//               "=> Maturite sexuelle: %s\n"
-//               "=> Ponte / portee: %s\n"
-//               "=> Gestation: %s\n"
-//               "=> Mortalité infantile: %.2f%%\n"
-//               "=> Remarque: Fidele\n"
-//               "---------------------\n",
-//               getName().c_str(), getSexe(),
-//               dateConverter(getAge()).c_str(),
-//               m_AlimentationJour,
-//               dateConverter(m_joursAvantFaim).c_str(),
-//               dateConverter(m_finDeReprod).c_str(),
-//               dateConverter(m_esperanceDeVie).c_str(),
-//               dateConverter(m_maturiteSexuelle).c_str(),
-//               (m_portee ? "Oui" : "Non"),
-//               dateConverter(m_gestation).c_str(),
-//               m_mortaliteInfantile
-//        );
-//    } else {
-//        printf("Aigle '%s'=> Error !", getName().c_str());
-//    }
-//}
 
 void Aigle::resetDaysBeforeFed() { m_joursAvantFaim = 10; }
 
@@ -143,13 +96,12 @@ void Aigle::update(Aliment* food) {
 
     // update de la faim
     if (m_joursAvantFaim == 0) {
-        setFed(fedAnimal(food));
+        bool result = fedAnimal(food);
+        setFed(result);
     }
 
-    //    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
-    if (getAge() == m_esperanceDeVie) {
-        cout << getName() << " est mort !" << endl;
-        Aigle::~Aigle();
+    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
+        setDead(true);
         return;
     }
 }
@@ -180,4 +132,8 @@ void Aigle::setGestation(int gestation) {
 
 int Aigle::getEndMaturingTime() {
     return m_finDeReprod;
+}
+
+Aigle::~Aigle() {
+    setDead(true);
 }

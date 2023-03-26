@@ -12,7 +12,7 @@ void Poule::show() {
     printf("------- %s -------\n"
            "=> Age: %s\n"
            "=> Alimentation: Viande, %.2fkg/j\n"
-           "=> Jours avant faim: %s\n"
+           "=> Faim: %s\n"
            "=> Reproduction: %s\n" // Reproduction
            "%s"
            "=> Esperance de vie: %s\n"
@@ -24,7 +24,7 @@ void Poule::show() {
            getName().c_str(),
            dateConverter(getAge()).c_str(),
            m_AlimentationJour,
-           dateConverter(m_joursAvantFaim).c_str(),
+           (getFed() ? "Oui" : "Non"),
            (getReproduction() ? "Oui" : "Non"),
            (getMaladie() > 0 ? "=> Maladie: Oui\n" : ""),
            dateConverter(m_esperanceDeVie).c_str(),
@@ -94,13 +94,12 @@ void Poule::update(Aliment* food) {
 
     // update de la faim
     if (m_joursAvantFaim == 0) {
-        setFed(fedAnimal(food));
+        bool result = fedAnimal(food);
+        setFed(result);
     }
 
-    //    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
-    if (getAge() == m_esperanceDeVie) {
-        cout << getName() << " est mort !" << endl;
-        Poule::~Poule();
+    if (getAge() == m_esperanceDeVie || m_joursAvantFaim < 0) {
+        setDead(true);
         return;
     }
 }
@@ -132,4 +131,8 @@ void Poule::setGestation(int gestation) {
 
 int Poule::getEndMaturingTime() {
     return m_finDeReprod;
+}
+
+Poule::~Poule() {
+    setDead(true);
 }

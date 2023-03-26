@@ -311,12 +311,7 @@ void Zoo::buyHabitat(string nom, AnimalType typeAnimal) {
 void Zoo::foodMonthlyUpdate() {
     viandeAvarieMonthly();
     graineNuisibleMonthly();
-    for (const auto &habitat: m_enclos) {
-        for (const auto &animal: habitat->m_animaux) {
-            buyAliment(animal->getFoodType(), animal->getFoodQuantity());
-            }
-        }
-    }
+}
 
 // Verifie s'il y a une avarie sur la viande ⭐️
 void Zoo::viandeAvarieMonthly() {

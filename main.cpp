@@ -298,6 +298,9 @@ void scenario() {
     zooLife->addHabitat(habitat5);
     auto *vendeur = new Vendeur("Vendeur");
 
+    zooLife->m_stockAliment[0]->addQuantite(10000000);
+    zooLife->m_stockAliment[1]->addQuantite(10000000);
+
     string Rep;
     while (Rep != "exit") {
         clearScreen();

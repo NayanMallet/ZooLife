@@ -289,9 +289,13 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
             animal->update(food);
 
             // update de la reproduction
-            if (animal->getAge() <= animal->getMaturingTime() || animal->getAge() >= animal->getEndMaturingTime() || animal->getMaladie() > 0 || getNbrOfAnimals() > m_capacite) {
+            if (animal->getAge() <= animal->getMaturingTime() || animal->getAge() >= animal->getEndMaturingTime() || animal->getMaladie() > 0 || getNbrOfAnimals() > m_capacite ) {
                 animal->setReproduction(false);
             } else {
+                if (animal->getFed()) {
+                    cout << animal->getName() << " ne peut pas se reproduire car il a faim !" << endl;
+                    return;
+                }
                 animal->setReproduction(true);
             }
 

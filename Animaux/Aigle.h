@@ -10,7 +10,7 @@ using namespace  std;
 class Aigle : public IAnimal {
 public:
     Aigle(string name, char sexe, int age);
-    ~Aigle() override = default;
+    ~Aigle() override;
 
     void show() override;
     bool fedAnimal(Aliment* food) override;
