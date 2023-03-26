@@ -68,7 +68,7 @@ void Habitat::show() const {
 string Habitat::listAnimals() const {
     string result;
     for (const auto& animal : m_animaux) {
-        result += (animal ? "-> " + (*animal).getName() + " (" + dateConverter((*animal).getAge()) + ")\n" : "-> Vide\n");
+        result += (animal ? "-> " + (*animal).getName() + " (" + dateConverter((*animal).getAge()) + ")" + (animal->getMaladie() > 0 ? "Malade" : "") + "\n" : "-> Vide\n");
     }
     return result;
 }
@@ -251,14 +251,20 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                 // 25 œufs / 6 semaines (1ans = 8*6semaines)
                 for (auto& animal : m_animaux) {
                     if (animal->getSexe() == 'F' && animal->getReproduction()) {
-                        animal->setPortee(true);
-                        animal->setReproduction(false);
-                        animal->setGestation(42); // 6 semaines
-                        auto mere = animal;
-                        removeAnimal(mere);
-                        habitat->addAnimal(mere);
-                        cout << "Une poule est enceinte pour 6 semaines !" << endl
-                             << "Il est place en gestation pour accueillir la portee." << endl;
+                        static std::random_device rd;
+                        static std::mt19937 gen(rd());
+                        int m = int(0.5);
+                        static std::bernoulli_distribution distS(m);
+                        if (distS(gen)) {
+                            animal->setPortee(true);
+                            animal->setReproduction(false);
+                            animal->setGestation(42); // 6 semaines
+                            auto mere = animal;
+                            removeAnimal(mere);
+                            habitat->addAnimal(mere);
+                            cout << "Une poule est enceinte pour 6 semaines !" << endl
+                                 << "Il est place en gestation pour accueillir la portee." << endl;
+                        }
                     }
                 }
                 break;
@@ -375,11 +381,11 @@ void Habitat::MaladieAnnuelle() {
     static std::mt19937 gen(rd());
     static std::bernoulli_distribution dist_mort(0.1); // Probabilité que l'animal meure dès le début
     static std::bernoulli_distribution dist_maladie((type == AnimalType::TIGRE) ? 0.3 : (type == AnimalType::AIGLE) ? 0.1 : 0.05); // Probabilité de contracter la maladie
-
+    int choixAnimal = rand() % m_animaux.size();
     if (dist_mort(gen)) {
         // Un animal est mort dès le début de l'année
-        m_animaux[rand() % m_animaux.size()]->setDead(true);
-        cout << "Un " << (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")) << " est mort dès le début de l'année !" << endl;
+        cout << m_animaux[choixAnimal]->getName() << " de l'habitat " << getName() << " est mort dès le début de l'année !" << endl;
+        m_animaux[choixAnimal]->setDead(true);
         return;
     }
 
@@ -397,8 +403,8 @@ void Habitat::MaladieAnnuelle() {
     duree = int(duree * (1.0 + variation));
 
     // Passe la maladie à un animal au hasard de l'habitat
-    m_animaux[rand() % m_animaux.size()]->setMaladie(duree);
-    printf("Un %s est tombe malade pour une duree de %d jours !\n", (type == AnimalType::TIGRE ? "tigre" : (type == AnimalType::AIGLE ? "aigle" : "poule")), duree);
+    cout << m_animaux[choixAnimal]->getName() << " de l'habitat " << getName() << " est tombé malade pour une durée de " << duree << " jours !" << endl;
+    m_animaux[choixAnimal]->setMaladie(duree);
 }
 
 void Habitat::setName(const string &name) {

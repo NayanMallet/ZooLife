@@ -195,13 +195,13 @@ void Zoo::buyAnimal(Habitat* habitat, IAnimal* animal) {
     }
 
     // Vérifier s'il y a de la place et que l'animal est du bon type
-    if (habitat->getCapacite() > habitat->getNbrOfAnimals() && habitat->getTypeAnimal() == animal->getTypeAnimal()) {
+    if (habitat->getTypeAnimal() == animal->getTypeAnimal()) {
         // Soustraire le prix de l'animal au budget
         m_budget->removeBudget(animal->getPrix('A'));
         // Ajouter l'animal dans l'habitat
         habitat->addAnimal(animal);
     } else {
-        printf("L'habitat est plein ou n'est pas du bon type !\n");
+        printf("L'habitat n'est pas du bon type !\n");
     }
 }
 

@@ -21,6 +21,7 @@ void Aigle::show() {
                "=> Alimentation: Viande, %.2fkg/j\n"
                "=> Jours avant faim: %s\n"
                "=> Reproduction: %s\n"  // Reproduction
+               "%s"
                "=> Esperance de vie: %s\n"
                "=> Remarque: Fidele\n"
                "---------------------\n",
@@ -29,6 +30,7 @@ void Aigle::show() {
                m_AlimentationJour,
                dateConverter(m_joursAvantFaim).c_str(),
                (getReproduction() ? "Oui" : "Non"),
+               (getMaladie() > 0 ? "=> Maladie: Oui\n" : ""),
                dateConverter(m_esperanceDeVie).c_str()
         );
     } else if (getSexe() == 'F') {
@@ -37,6 +39,7 @@ void Aigle::show() {
                "=> Alimentation: Viande, %.2fkg/j\n"
                "=> Jours avant faim: %s\n"
                "=> Reproduction: %s\n" // Reproduction
+               "%s"
                "=> Esperance de vie: %s\n"
                "=> Ponte: %s\n"
                "=> Gestation: %s\n"
@@ -48,6 +51,7 @@ void Aigle::show() {
                m_AlimentationJour,
                dateConverter(m_joursAvantFaim).c_str(),
                (getReproduction() ? "Oui" : "Non"),
+               (getMaladie() > 0 ? "=> Maladie: Oui\n" : ""),
                dateConverter(m_esperanceDeVie).c_str(),
                (m_portee ? "Oui" : "Non"),
                dateConverter(m_gestation).c_str(),
