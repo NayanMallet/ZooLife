@@ -225,6 +225,7 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                         auto mere = animal;
                         removeAnimal(mere);
                         habitat->addAnimal(mere);
+//                        habitat->addAnimal(mere);
                         cout << "Un tigre est enceinte pour 45 jours !" << endl
                              << "Il est place en gestation pour accueillir la portee." << endl;
                     }
@@ -270,33 +271,8 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
 
     for (int i = 0; i < 31; i++) {
         // Vérifier si l'habitat est vide
-        if (m_animaux.empty()) {
-            return;
-        }
-        for (auto &animal: m_animaux) {
-            // Vérifier si l'animal est mort
-            if (animal->getDead()) {
-                m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), animal), m_animaux.end());
-                continue;
-            }
-
-            animal->update(food);
-
-            // update de la reproduction
-            if (animal->getAge() <= animal->getMaturingTime() || animal->getAge() >= animal->getEndMaturingTime() || animal->getMaladie() > 0 || getNbrOfAnimals() > m_capacite ) {
-                animal->setReproduction(false);
-            } else {
-                if (animal->getFed()) {
-                    cout << animal->getName() << " ne peut pas se reproduire car il a faim !" << endl;
-                    return;
-                }
-                animal->setReproduction(true);
-            }
-
-        }
-
-        if (!habitat->m_animaux.empty()) {
-            for (auto &animal : habitat->m_animaux) {
+        if (!m_animaux.empty()) {
+            for (auto &animal: m_animaux) {
                 // Vérifier si l'animal est mort
                 if (animal->getDead()) {
                     m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), animal), m_animaux.end());
@@ -305,13 +281,39 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
 
                 animal->update(food);
 
+                // update de la reproduction
+                if (animal->getAge() <= animal->getMaturingTime() || animal->getAge() >= animal->getEndMaturingTime() || animal->getMaladie() > 0 || getNbrOfAnimals() > m_capacite ) {
+                    animal->setReproduction(false);
+                } else {
+                    if (animal->getFed()) {
+                        cout << animal->getName() << " ne peut pas se reproduire car il a faim !" << endl;
+                        return;
+                    }
+                    animal->setReproduction(true);
+                }
+
+            }
+        }
+
+        if (!habitat->m_animaux.empty()) {
+//            for (auto &gesation : habitat->m_animaux) {
+            for (int i = habitat->m_animaux.size() - 1; i >= 0; i--) {
+                auto &gesation = habitat->m_animaux[i];
+                // Vérifier si l'animal est mort
+                if (gesation->getDead()) {
+                    m_animaux.erase(std::remove(m_animaux.begin(), m_animaux.end(), gesation), m_animaux.end());
+                    continue;
+                }
+
+                gesation->update(food);
+
                 // Update Gestation
-                if (animal->getGestation() > 0) {
-                    animal->setGestation(animal->getGestation() - 1);
-                } else if (animal->getGestation() == 0 && animal->getPortee()) {
+                if (gesation->getGestation() > 0) {
+                    gesation->setGestation(gesation->getGestation() - 1);
+                } else if (gesation->getGestation() == 0 && gesation->getPortee()) {
                     // Naissance
                     cout << "----- Naissances -----" << endl;
-                    animal->setPortee(false);
+                    gesation->setPortee(false);
                     static std::random_device rd;
                     static std::mt19937 gen(rd());
                     static std::bernoulli_distribution distS(0.5);
@@ -327,7 +329,6 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                                     char genre = distS(gen) ? 'M' : 'F';
 
                                     habitat->m_animaux.push_back(new Tigre("Bebe tigre", genre, 0));
-//                                habitat->addAnimal(new Tigre("Bebe tigre", genre, 0));
                                     printf("Un bebe tigre (%c) est nee !\n", genre);
                                 }
                             }
@@ -340,7 +341,6 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                                 } else {
                                     char genre = distS(gen) ? 'M' : 'F';
                                     habitat->m_animaux.push_back(new Aigle("Bebe aigle", genre, 0));
-//                                habitat->addAnimal(new Aigle("Bebe aigle", genre, 0));
                                     printf("Un bebe aigle (%c) est nee !\n", genre);
                                 }
                             }
@@ -354,11 +354,9 @@ void Habitat::update(const string& month, Aliment *food, Habitat *habitat) {
                                     char genre = distS(gen) ? 'M' : 'F';
                                     if (genre == 'M') {
                                         habitat->m_animaux.push_back(new Coq("Bebe coq", 0));
-//                                    habitat->addAnimal(new Coq("Bebe coq", 0));
                                         printf("Un poussin (M) est nee !\n");
                                     } else {
                                         habitat->m_animaux.push_back(new Poule("Bebe poule", 0));
-//                                    habitat->addAnimal(new Poule("Bebe poule", 0));
                                         printf("Un poussin (F) est nee !\n");
                                     }
                                 }

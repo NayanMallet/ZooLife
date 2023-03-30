@@ -88,39 +88,114 @@ void Zoo::nextMonth() {
 
     for (auto& habitat : m_enclosGestation) {
         AnimalType type = habitat->getTypeAnimal();
-       for (auto& animal : habitat->m_animaux) {
-           string name = animal->getName();
-           if (!animal->getPortee() && animal->getAge() >= 6 * 31) {
-               bool isBebe = name.find("Bebe") != string::npos;
-               if (isBebe) {
-                   cout << "Le " << animal->getName() << " a grandit et peut aller dans le Zoo !" << endl << "Donnez un nom au bebe: ";
-                   string bebeName;
-                   getline(cin, bebeName);
-                   animal->setNom(bebeName);
-                   cout << endl << "Ou voulez-vous le placer ?" << endl;
-               } else {
-                   cout << "La mere " << animal->getName() << " peut revenir dans le Zoo !" << endl << "Ou voulez-vous la placer ?" << endl;
-               }
-               for (int i = 0; i < m_enclos.size(); i++) {
-                   if (m_enclos[i]->getTypeAnimal() == type) {
-                       cout << i << " - " << m_enclos[i]->getName() << endl;
-                   }
-               }
+        if (type != AnimalType::POULE) {
+            for (auto &animal: habitat->m_animaux) {
+                string name = animal->getName();
+                if (!animal->getPortee() && animal->getAge() >= 6 * 31) {
+                    bool isBebe = name.find("Bebe") != string::npos;
+                    if (isBebe) {
+                        cout << "Le " << animal->getName() << " a grandit et peut aller dans le Zoo !" << endl
+                             << "Donnez un nom au bebe: ";
+                        string bebeName;
+                        getline(cin, bebeName);
+                        animal->setNom(bebeName);
+                        cout << endl << "Ou voulez-vous le placer ?" << endl;
+                    } else {
+                        cout << "La mere " << animal->getName() << " peut revenir dans le Zoo !" << endl
+                             << "Ou voulez-vous la placer ?" << endl;
+                    }
+                    for (int i = 0; i < m_enclos.size(); i++) {
+                        if (m_enclos[i]->getTypeAnimal() == type) {
+                            cout << i << " - " << m_enclos[i]->getName() << endl;
+                        }
+                    }
 
-               int choice;
-               while (true) {
-                   cin >> choice;
-                   if ((choice >= 0 && choice < m_enclos.size()) && m_enclos[choice]->getTypeAnimal() == type) {
-                       break;
-                   } else {
+                    int choice;
+                    while (true) {
+                        cin >> choice;
+                        cin.ignore();
+                        if ((choice >= 0 && choice < m_enclos.size()) && m_enclos[choice]->getTypeAnimal() == type) {
+                            break;
+                        } else {
 
-                   }
+                        }
 
-               }
+                    }
 
-               changeAnimalOfEnclos(habitat, m_enclos[choice], animal);
-           }
-       }
+                    changeAnimalOfEnclos(habitat, m_enclos[choice], animal);
+                }
+            }
+        } else {
+            vector<IAnimal*> poules;
+            vector<IAnimal*> merePoules;
+            for (auto &animal: habitat->m_animaux) {
+                bool isBebe = animal->getName().find("Bebe") != string::npos;
+
+                if (isBebe && animal->getAge() >= 6 * 31) {
+                    poules.push_back(animal);
+                } else if (!isBebe && !animal->getPortee()) {
+                    merePoules.push_back(animal);
+                }
+
+            }
+
+            if (!poules.empty()) {
+                cout << "Les bebe poules suivantes peuvent aller dans le Zoo !" << endl;
+                int c(0), p(0);
+                for (auto &poule: poules) {
+                    if (poule->getSexe() == 'M') {
+                        c++;
+                    } else {
+                        p++;
+                    }
+                }
+
+                cout << "Il y a " << c << " coqs et " << p << " poules qui peuvent aller dans le Zoo !" << endl;
+                cout << "Ou voulez-vous les placer ?" << endl;
+                for (int i = 0; i < m_enclos.size(); i++) {
+                    if (m_enclos[i]->getTypeAnimal() == type) {
+                        cout << i << " - " << m_enclos[i]->getName() << endl;
+                    }
+                }
+
+                int choice;
+                while (true) {
+                    cin >> choice;
+                    cin.ignore();
+                    if ((choice >= 0 && choice < m_enclos.size()) && m_enclos[choice]->getTypeAnimal() == type) {
+                        break;
+                    }
+                }
+
+                for (auto &poule: poules) {
+                    changeAnimalOfEnclos(habitat, m_enclos[choice], poule);
+                }
+            }
+
+            if (!merePoules.empty()) {
+                for (auto &poule: merePoules) {
+                    cout << "La mere " << poule->getName() << " peut revenir dans le Zoo !" << endl
+                         << "Ou voulez-vous la placer ?" << endl;
+
+                    for (int i = 0; i < m_enclos.size(); i++) {
+                        if (m_enclos[i]->getTypeAnimal() == type) {
+                            cout << i << " - " << m_enclos[i]->getName() << endl;
+                        }
+                    }
+
+                    int choice;
+                    while (true) {
+                        cin >> choice;
+                        cin.ignore();
+                        if ((choice >= 0 && choice < m_enclos.size()) && m_enclos[choice]->getTypeAnimal() == type) {
+                            break;
+                        }
+                    }
+
+                    changeAnimalOfEnclos(habitat, m_enclos[choice], poule);
+                }
+            }
+        }
     }
     cout << "-------------------" << endl;
     if (month == "DECMEMBRE") {
